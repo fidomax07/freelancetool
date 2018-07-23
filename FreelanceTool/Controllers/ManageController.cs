@@ -11,8 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using FreelanceTool.Models;
-using FreelanceTool.Models.ManageViewModels;
 using FreelanceTool.Services;
+using FreelanceTool.ViewModels.ManageViewModels;
 
 namespace FreelanceTool.Controllers
 {

@@ -1,0 +1,175 @@
+﻿@using FreelanceTool.Models
+@model Applicant
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Applicant</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Sex)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sex)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateOfBirth)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PhonePrefix)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PhonePrefix)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressInformation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AddressInformation)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Zip)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Zip)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Country)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Country)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SwissSocialSecurityNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SwissSocialSecurityNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CivilStatus)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CivilStatus)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ChildrenCount)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ChildrenCount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ResidencePermit)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ResidencePermit)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Occupation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Occupation)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Employer)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Employer)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CompanyName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyWebsite)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CompanyWebsite)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TShirtSize)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TShirtSize)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DriverLicenseB)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DriverLicenseB)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TrainingNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TrainingNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IbanNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IbanNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MainLanguage)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MainLanguage.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Nationality)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nationality.Alpha2)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

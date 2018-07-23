@@ -33,3 +33,30 @@
         display: none;
     }
 }
+
+/* Position navigation-header in the center on large screens */
+@media screen and (min-width: 768px) {
+	.container > .navbar-header,
+	.container-fluid > .navbar-header,
+	.container > .navbar-collapse,
+	.container-fluid > .navbar-collapse {
+		float: none;
+		width: 100%;
+		margin: 0 auto;
+	}
+}
+
+.navbar-brand {
+	display: block;
+	float: none;
+	width: 100%;
+	height: 80px;
+	padding: 30px 15px;
+	font-size: 36px;
+	line-height: 20px;
+	text-align: center;
+}
+
+body {
+	padding-top: 80px;
+}
