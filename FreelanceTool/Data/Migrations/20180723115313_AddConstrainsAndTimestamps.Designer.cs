@@ -12,9 +12,10 @@ using System;
 namespace FreelanceTool.Data.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180723115313_AddConstrainsAndTimestamps")]
+    partial class AddConstrainsAndTimestamps
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

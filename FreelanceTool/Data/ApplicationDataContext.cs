@@ -46,12 +46,33 @@ namespace FreelanceTool.Data
 
 
 			// Configuration of auto-generated columns
+			builder.Entity<Language>()
+				.Property(b => b.CreatedAt)
+				.HasDefaultValueSql("getdate()");
+			builder.Entity<Language>()
+				.Property(b => b.UpdatedAt)
+				.HasDefaultValueSql("getdate()");
+
 			builder.Entity<Applicant>()
 				.Property(b => b.CreatedAt)
-				.HasDefaultValue(DateTime.Now);
+				.HasDefaultValueSql("getdate()");
 			builder.Entity<Applicant>()
 				.Property(b => b.UpdatedAt)
-				.HasDefaultValue(DateTime.Now);
+				.HasDefaultValueSql("getdate()");
+
+			builder.Entity<JSTrainingCertificate>()
+				.Property(b => b.CreatedAt)
+				.HasDefaultValueSql("getdate()");
+			builder.Entity<JSTrainingCertificate>()
+				.Property(b => b.UpdatedAt)
+				.HasDefaultValueSql("getdate()");
+
+			builder.Entity<ApplicantFile>()
+				.Property(b => b.CreatedAt)
+				.HasDefaultValueSql("getdate()");
+			builder.Entity<ApplicantFile>()
+				.Property(b => b.UpdatedAt)
+				.HasDefaultValueSql("getdate()");
 		}
 	}
 }
