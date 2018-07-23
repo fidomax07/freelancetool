@@ -56,10 +56,19 @@
 	line-height: 20px;
 	text-align: center;
 }
-
+/* Shift body for more pixels down since navbar height is increased */
 body {
 	padding-top: 100px;
 }
 .body-title {
 	text-align: center;
+}
+.form-group-inline {
+	margin-bottom: 15px;
+}
+.form-group-middle-inline {
+	margin-top: 20px;
+}
+.form-group-second-inline {
+	margin-left: 10px;
 }

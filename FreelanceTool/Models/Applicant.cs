@@ -12,8 +12,8 @@ namespace FreelanceTool.Models
 	{
 		// Properties
 		[NotMapped]
-		public static string[] PhonePrefixes = { "079", "078", "077", "076", "075", "0774" };
-
+		public static string[] PhonePrefixes = 
+			{ "079", "078", "077", "076", "075", "0774" };
 
 		// Database columns
 		public int Id { get; set; }
@@ -38,7 +38,7 @@ namespace FreelanceTool.Models
 		[Required, StringLength(5)]
 		public string PhonePrefix { get; set; }
 
-		[Required, StringLength(30)]
+		[Required, StringLength(30), RegularExpression(@"^[0-9]*$")]
 		public string PhoneNumber { get; set; }
 
 		[Required, StringLength(80), DataType(DataType.EmailAddress)]
@@ -51,13 +51,14 @@ namespace FreelanceTool.Models
 		[Display(Name = "Address information")]
 		public string AddressInformation { get; set; }
 
-		[Required, StringLength(4)]
+		[Required, StringLength(4), RegularExpression(@"^([1-9][0-9]{3})$")]
 		public string Zip { get; set; }
 
 		[Required, StringLength(40)]
 		public string City { get; set; }
 
-		[Required] public Country Country { get; set; }
+		[Required]
+		public Country Country { get; set; }
 
 		[Required, RegularExpression(@"^756\.?[0-9]{4}\.?[0-9]{4}\.?[0-9]{2}$")]
 		public string SwissSocialSecurityNumber { get; set; }
