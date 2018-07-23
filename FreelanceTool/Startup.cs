@@ -53,7 +53,7 @@ namespace FreelanceTool
                 app.UseExceptionHandler("/Home/Error");
             }
 
-	        app.UseRewriter(new RewriteOptions().AddRedirectToHttpsPermanent());
+	        //app.UseRewriter(new RewriteOptions().AddRedirectToHttpsPermanent());
             app.UseStaticFiles();
 	        //app.UseCookiePolicy();
 
