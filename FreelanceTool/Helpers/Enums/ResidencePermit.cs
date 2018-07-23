@@ -2,7 +2,7 @@
 {
 	public enum ResidencePermit
 	{
-		L,
+		L = 1,
 		B,
 		C,
 		A

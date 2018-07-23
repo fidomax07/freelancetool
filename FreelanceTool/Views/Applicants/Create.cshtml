@@ -1,165 +1,193 @@
 ﻿@using FreelanceTool.Helpers.Enums
-@model Applicant
+@model ApplicationCreateViewModel
 
 @{
-    ViewData["Title"] = "Create application";
+	ViewData["Title"] = "Create application";
 }
 
-<h2>Create</h2>
+<h2 class="body-title">Create an appliction</h2>
 
-<h4>Applicant</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Sex" class="control-label"></label>
-                <input asp-for="Sex" class="form-control" />
-                <span asp-validation-for="Sex" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DateOfBirth" class="control-label"></label>
-                <input asp-for="DateOfBirth" class="form-control" />
-                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhonePrefix" class="control-label"></label>
-                <input asp-for="PhonePrefix" class="form-control" />
-                <span asp-validation-for="PhonePrefix" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AddressInformation" class="control-label"></label>
-                <input asp-for="AddressInformation" class="form-control" />
-                <span asp-validation-for="AddressInformation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Zip" class="control-label"></label>
-                <input asp-for="Zip" class="form-control" />
-                <span asp-validation-for="Zip" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
-                <input asp-for="City" class="form-control" />
-                <span asp-validation-for="City" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Country" class="control-label"></label>
-	            <select asp-for="Country" asp-items="Html.GetEnumSelectList<Country>()" class="form-control">
-		            <option value="">(none)</option>
-	            </select>
-                <span asp-validation-for="Country" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SwissSocialSecurityNumber" class="control-label"></label>
-                <input asp-for="SwissSocialSecurityNumber" class="form-control" />
-                <span asp-validation-for="SwissSocialSecurityNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CivilStatus" class="control-label"></label>
-                <select asp-for="CivilStatus" class="form-control"></select>
-                <span asp-validation-for="CivilStatus" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ChildrenCount" class="control-label"></label>
-                <input asp-for="ChildrenCount" class="form-control" />
-                <span asp-validation-for="ChildrenCount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ResidencePermit" class="control-label"></label>
-                <select asp-for="ResidencePermit" class="form-control"></select>
-                <span asp-validation-for="ResidencePermit" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Occupation" class="control-label"></label>
-                <select asp-for="Occupation" class="form-control"></select>
-                <span asp-validation-for="Occupation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Employer" class="control-label"></label>
-                <input asp-for="Employer" class="form-control" />
-                <span asp-validation-for="Employer" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CompanyName" class="control-label"></label>
-                <input asp-for="CompanyName" class="form-control" />
-                <span asp-validation-for="CompanyName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CompanyWebsite" class="control-label"></label>
-                <input asp-for="CompanyWebsite" class="form-control" />
-                <span asp-validation-for="CompanyWebsite" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TShirtSize" class="control-label"></label>
-                <select asp-for="TShirtSize" class="form-control"></select>
-                <span asp-validation-for="TShirtSize" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="DriverLicenseB" /> @Html.DisplayNameFor(model => model.DriverLicenseB)
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="TrainingNumber" class="control-label"></label>
-                <input asp-for="TrainingNumber" class="form-control" />
-                <span asp-validation-for="TrainingNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IbanNumber" class="control-label"></label>
-                <input asp-for="IbanNumber" class="form-control" />
-                <span asp-validation-for="IbanNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MainLanguage" class="control-label"></label>
-	            <select asp-for="LanguageId" class="form-control" 
-	                    asp-items="ViewBag.LanguageId">
-		            <option value="">-- Select Language --</option>
-	            </select>
-	            <span asp-validation-for="MainLanguage" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NationalityId" class="control-label"></label>
-                <select asp-for="NationalityId" class ="form-control" asp-items="ViewBag.NationalityId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
-    </div>
+	<div class="col-md-8 col-md-offset-2">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			
+			@* Personal data *@
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Personal data</h3>
+				</div>
+				<div class="panel-body">
+					<div class="form-group">
+						<label asp-for="@Model.Applicant.Sex" class="control-label"></label>
+						<select asp-for="@Model.Applicant.Sex"
+						        asp-items="Html.GetEnumSelectList<Sex>()"
+						        class="form-control">
+							<option value="">(Please select)</option>
+						</select>
+						<span asp-validation-for="@Model.Applicant.Sex" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="@Model.Applicant.LastName" class="control-label"></label>
+						<input asp-for="@Model.Applicant.LastName" class="form-control" />
+						<span asp-validation-for="@Model.Applicant.LastName" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="@Model.Applicant.FirstName" class="control-label"></label>
+						<input asp-for="@Model.Applicant.FirstName" class="form-control" />
+						<span asp-validation-for="@Model.Applicant.FirstName" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="@Model.Applicant.DateOfBirth" class="control-label"></label>
+						<input asp-for="@Model.Applicant.DateOfBirth" class="form-control" />
+						<span asp-validation-for="@Model.Applicant.DateOfBirth" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="@Model.Applicant.MainLanguage" class="control-label"></label>
+						<select asp-for="@Model.Applicant.LanguageId" class="form-control"
+						        asp-items="@Model.LanguagesList">
+						</select>
+						<span asp-validation-for="@Model.Applicant.MainLanguage" class="text-danger"></span>
+					</div>
+				</div>
+			</div>
+			
+
+			<div class="form-group">
+				<label asp-for="@Model.Applicant.PhonePrefix" class="control-label"></label>
+				<input asp-for="@Model.Applicant.PhonePrefix" class="form-control" />
+				<span asp-validation-for="@Model.Applicant.PhonePrefix" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Applicant.PhoneNumber" class="control-label"></label>
+				<input asp-for="@Model.Applicant.PhoneNumber" class="form-control" />
+				<span asp-validation-for="@Model.Applicant.PhoneNumber" class="text-danger"></span>
+			</div>
+			
+			<div class="form-group">
+				<label asp-for="@Model.Applicant.Email" class="control-label"></label>
+				<input asp-for="@Model.Applicant.Email" class="form-control" />
+				<span asp-validation-for="@Model.Applicant.Email" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Applicant.Address" class="control-label"></label>
+				<input asp-for="@Model.Applicant.Address" class="form-control" />
+				<span asp-validation-for="@Model.Applicant.Address" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Applicant.AddressInformation" class="control-label"></label>
+				<input asp-for="@Model.Applicant.AddressInformation" class="form-control" />
+				<span asp-validation-for="@Model.Applicant.AddressInformation" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Applicant.Zip" class="control-label"></label>
+				<input asp-for="@Model.Applicant.Zip" class="form-control" />
+				<span asp-validation-for="@Model.Applicant.Zip" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Applicant.City" class="control-label"></label>
+				<input asp-for="@Model.Applicant.City" class="form-control" />
+				<span asp-validation-for="@Model.Applicant.City" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Applicant.Country" class="control-label"></label>
+				<select asp-for="@Model.Applicant.Country"
+						asp-items="Html.GetEnumSelectList<Country>()"
+						class="form-control">
+					<option value="">(Please select)</option>
+				</select>
+				<span asp-validation-for="@Model.Applicant.Country" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Applicant.SwissSocialSecurityNumber" class="control-label"></label>
+				<input asp-for="@Model.Applicant.SwissSocialSecurityNumber" class="form-control" />
+				<span asp-validation-for="@Model.Applicant.SwissSocialSecurityNumber" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Applicant.CivilStatus" class="control-label"></label>
+				<select asp-for="@Model.Applicant.CivilStatus" class="form-control"></select>
+				<span asp-validation-for="@Model.Applicant.CivilStatus" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Applicant.ChildrenCount" class="control-label"></label>
+				<input asp-for="@Model.Applicant.ChildrenCount" class="form-control" />
+				<span asp-validation-for="@Model.Applicant.ChildrenCount" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Applicant.ResidencePermit" class="control-label"></label>
+				<select asp-for="@Model.Applicant.ResidencePermit" class="form-control"></select>
+				<span asp-validation-for="@Model.Applicant.ResidencePermit" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Applicant.Occupation" class="control-label"></label>
+				<select asp-for="@Model.Applicant.Occupation" class="form-control"></select>
+				<span asp-validation-for="@Model.Applicant.Occupation" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Applicant.Employer" class="control-label"></label>
+				<input asp-for="@Model.Applicant.Employer" class="form-control" />
+				<span asp-validation-for="@Model.Applicant.Employer" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Applicant.CompanyName" class="control-label"></label>
+				<input asp-for="@Model.Applicant.CompanyName" class="form-control" />
+				<span asp-validation-for="@Model.Applicant.CompanyName" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Applicant.CompanyWebsite" class="control-label"></label>
+				<input asp-for="@Model.Applicant.CompanyWebsite" class="form-control" />
+				<span asp-validation-for="@Model.Applicant.CompanyWebsite" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Applicant.TShirtSize" class="control-label"></label>
+				<select asp-for="@Model.Applicant.TShirtSize" class="form-control"></select>
+				<span asp-validation-for="@Model.Applicant.TShirtSize" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<div class="checkbox">
+					<label>
+						<input asp-for="@Model.Applicant.DriverLicenseB" />
+						@Html.DisplayNameFor(model => model.Applicant.DriverLicenseB)
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Applicant.TrainingNumber" class="control-label"></label>
+				<input asp-for="@Model.Applicant.TrainingNumber" class="form-control" />
+				<span asp-validation-for="@Model.Applicant.TrainingNumber" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Applicant.IbanNumber" class="control-label"></label>
+				<input asp-for="@Model.Applicant.IbanNumber" class="form-control" />
+				<span asp-validation-for="@Model.Applicant.IbanNumber" class="text-danger"></span>
+			</div>
+			
+			<div class="form-group">
+				<label asp-for="@Model.Applicant.NationalityId" class="control-label"></label>
+				<select asp-for="@Model.Applicant.NationalityId" class="form-control" asp-items="ViewBag.NationalityId"></select>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Create" class="btn btn-default" />
+			</div>
+		</form>
+	</div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+	<a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	<script>
+		$(function () {
+
+			// Initialize date-picker for the applicant's date of birth
+			$("#Applicant_DateOfBirth").datepicker({ dateFormat: "dd.mm.yy" });
+
+
+
+		});
+	</script>
 }

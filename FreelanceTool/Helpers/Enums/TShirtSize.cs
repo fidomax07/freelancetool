@@ -2,7 +2,7 @@
 {
 	public enum TShirtSize
 	{
-		XS,
+		XS = 1,
 		S,
 		M,
 		L,

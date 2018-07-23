@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -30,8 +31,8 @@ namespace FreelanceTool.Models
 		[Required, StringLength(80)]
 		public string FirstName { get; set; }
 
-		[Required, DataType(DataType.Date)]
-		[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+		[Required, DataType(DataType.Text)]
+		[DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
 		public DateTime DateOfBirth { get; set; }
 
 		[Required, StringLength(5)]
@@ -56,8 +57,7 @@ namespace FreelanceTool.Models
 		[Required, StringLength(40)]
 		public string City { get; set; }
 
-		[Required]
-		public Country Country { get; set; }
+		[Required] public Country Country { get; set; }
 
 		[Required, RegularExpression(@"^756\.?[0-9]{4}\.?[0-9]{4}\.?[0-9]{2}$")]
 		public string SwissSocialSecurityNumber { get; set; }
@@ -121,6 +121,7 @@ namespace FreelanceTool.Models
 			// Set default values for database columns
 			var now = DateTime.Now;
 			DateOfBirth = new DateTime(now.Year - 20, now.Month, now.Day);
+			Country = Country.Switzerland;
 		}
 	}
 }

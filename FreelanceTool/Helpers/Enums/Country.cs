@@ -2,7 +2,7 @@
 {
 	public enum Country
 	{
-		Switzerland,
+		Switzerland = 1,
 		Germany,
 		France,
 		Austria,

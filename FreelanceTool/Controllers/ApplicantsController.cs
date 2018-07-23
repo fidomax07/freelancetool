@@ -3,6 +3,7 @@ using System.Linq;
 using FreelanceTool.Data;
 using FreelanceTool.Helpers.Enums;
 using FreelanceTool.Models;
+using FreelanceTool.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -38,12 +39,9 @@ namespace FreelanceTool.Controllers
         // GET: Applicants/Create
         public ActionResult Create()
         {
-			var applicant = new Applicant();
-	        applicant.Country = Country.Switzerland;
+	        var viewModel = new ApplicationCreateViewModel(_context);
 
-			PopulateLanguagesDropDownList();
-
-            return View();
+            return View(viewModel);
         }
 
         // POST: Applicants/Create
@@ -51,6 +49,8 @@ namespace FreelanceTool.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
         {
+	        return Json(collection);
+
             try
             {
                 // TODO: Add insert logic here
@@ -62,13 +62,5 @@ namespace FreelanceTool.Controllers
                 return View();
             }
         }
-
-	    private void PopulateLanguagesDropDownList(object selectedLanguage = null)
-	    {
-		    var languages = _context.Languages
-			    .OrderBy(l => l.Name)
-			    .AsNoTracking();
-		    ViewBag.LanguageId = new SelectList(languages, "Id", "Name", selectedLanguage);
-	    }
 	}
 }

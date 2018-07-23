@@ -2,7 +2,7 @@
 {
 	public enum ApplicantFileType
 	{
-		ProfilePicture,
+		ProfilePicture = 1,
 		OfficialFreelanceStatement
 	}
 }

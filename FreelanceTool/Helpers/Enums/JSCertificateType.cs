@@ -2,7 +2,7 @@
 {
 	public enum JSCertificateType
 	{
-		ChildrenSport,
+		ChildrenSport = 1,
 		YouthSport
 	}
 }

@@ -2,7 +2,7 @@
 {
 	public enum CivilStatus
 	{
-		Single,
+		Single = 1,
 		Married,
 		Separated,
 		Divorced,

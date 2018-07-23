@@ -58,5 +58,8 @@
 }
 
 body {
-	padding-top: 80px;
+	padding-top: 100px;
+}
+.body-title {
+	text-align: center;
 }

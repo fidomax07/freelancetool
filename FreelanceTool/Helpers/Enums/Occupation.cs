@@ -2,7 +2,7 @@
 {
 	public enum Occupation
 	{
-		Student,
+		Student = 1,
 		PartTime,
 		FullTime,
 		Unemployed,
