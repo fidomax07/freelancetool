@@ -60,13 +60,15 @@ namespace FreelanceTool.Models
 		[Required]
 		public Country Country { get; set; }
 
-		[Required, RegularExpression(@"^756\.?[0-9]{4}\.?[0-9]{4}\.?[0-9]{2}$")]
+		[Required, StringLength(20)]
+		[RegularExpression(@"^[0-9]{3}\.?[0-9]{4}\.?[0-9]{4}\.?[0-9]{2}$")]
 		public string SwissSocialSecurityNumber { get; set; }
 
-		[Required, StringLength(20)]
+		[Required]
 		public CivilStatus CivilStatus { get; set; }
 
 		[Required, Range(0, 10)]
+		[Display(Name = "Number of Kids")]
 		public int ChildrenCount { get; set; }
 
 		public ResidencePermit ResidencePermit { get; set; }
