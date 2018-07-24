@@ -179,10 +179,11 @@
 						<input asp-for="@Model.Applicant.CompanyWebsite" class="form-control" />
 						<span asp-validation-for="@Model.Applicant.CompanyWebsite" class="text-danger"></span>
 					</div>
-					<div class="form-group">
+					<div class="form-group" style="display: none;">
 						<label asp-for="@Model.OfficialFreelanceStatement" class="control-label"></label>
-						<input asp-for="@Model.OfficialFreelanceStatement" class="form-control"
-							   type="file" />
+						<input asp-for="@Model.OfficialFreelanceStatement" class="form-control" style="display: none;" />
+						<button type="button" data-input-file-id="@nameof(Model.OfficialFreelanceStatement)" class="btn btn-info btn-upload">Choose file</button>
+						<p id="@nameof(Model.OfficialFreelanceStatement)_Info" class="help-block">Accepted formats: PDF, JPG, JPEG, TIFF, PNG, GIF</p>
 						<span asp-validation-for="@Model.OfficialFreelanceStatement" class="text-danger"></span>
 					</div>
 				</div>
@@ -201,12 +202,33 @@
 							<div class="checkbox">
 								<label>
 									<input type="checkbox" name="Applicant.SpokenLanguages"
-									       value="@language.Id"/>
+										   value="@language.Id" />
 									@language.Name
 								</label>
 							</div>
 						</div>
 					}
+					<div class="form-group">
+						<label asp-for="@Model.Applicant.TShirtSize" class="control-label"></label>
+						<select asp-for="@Model.Applicant.TShirtSize" class="form-control"
+								asp-items="Html.GetEnumSelectList<TShirtSize>()"></select>
+						<span asp-validation-for="@Model.Applicant.TShirtSize" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<div class="checkbox">
+							<label>
+								<input asp-for="@Model.Applicant.DriverLicenseB" />
+								@Html.DisplayNameFor(model => model.Applicant.DriverLicenseB)
+							</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label asp-for="@Model.ProfilePicture" class="control-label"></label>
+						<input asp-for="@Model.ProfilePicture" class="form-control" style="display: none;" />
+						<button type="button" data-input-file-id="@nameof(Model.ProfilePicture)" class="btn btn-info btn-upload">Choose file</button>
+						<p id="@nameof(Model.ProfilePicture)_Info" class="help-block">Accepted formats: JPG and JPEG</p>
+						<span asp-validation-for="@Model.ProfilePicture" class="text-danger"></span>
+					</div>
 				</div>
 			</div>
 
@@ -216,7 +238,11 @@
 					<h3 class="panel-title">J+S Training Certificates</h3>
 				</div>
 				<div class="panel-body">
-
+					<div class="form-group">
+						<label asp-for="@Model.Applicant.TrainingNumber" class="control-label"></label>
+						<input asp-for="@Model.Applicant.TrainingNumber" class="form-control" />
+						<span asp-validation-for="@Model.Applicant.TrainingNumber" class="text-danger"></span>
+					</div>
 				</div>
 			</div>
 
@@ -226,7 +252,11 @@
 					<h3 class="panel-title">Bank Data</h3>
 				</div>
 				<div class="panel-body">
-
+					<div class="form-group">
+						<label asp-for="@Model.Applicant.IbanNumber" class="control-label"></label>
+						<input asp-for="@Model.Applicant.IbanNumber" class="form-control" />
+						<span asp-validation-for="@Model.Applicant.IbanNumber" class="text-danger"></span>
+					</div>
 				</div>
 			</div>
 
@@ -236,45 +266,23 @@
 					<h3 class="panel-title">Frame Contract</h3>
 				</div>
 				<div class="panel-body">
-
+					<textarea class="form-control" rows="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel ornare neque. Praesent mattis mi in ullamcorper rutrum. Proin ac urna tellus. In aliquam purus massa, vel euismod felis convallis et. Nam facilisis nulla ac euismod blandit. Proin cursus felis leo, at pretium ligula tempus ac. Praesent porta porttitor scelerisque. Sed mattis, dui interdum euismod ornare, velit mauris posuere elit, sit amet pulvinar turpis eros egestas sapien. Aenean dapibus urna velit, non feugiat elit congue id. Quisque cursus sodales erat, non finibus nisl elementum at. Nullam at commodo nibh, vitae mollis felis. Etiam erat nulla, vulputate vitae varius ut, eleifend id ex. Maecenas erat metus, elementum in interdum et, iaculis eu nulla. Vestibulum in velit arcu. Maecenas dapibus arcu non nulla scelerisque posuere. Donec metus turpis, consectetur vel vestibulum lacinia, iaculis ut tortor. Nulla neque mi, tincidunt sit amet ipsum vel, pharetra dignissim nunc. Ut sed neque eu purus tempor tincidunt sed nec nisl. Vestibulum interdum, ligula ut sagittis tempor, dolor mi finibus metus, in placerat magna lorem ut ipsum. Proin eleifend, neque a scelerisque malesuada, est lectus bibendum tellus, id euismod velit ante quis augue.
+					</textarea>
+					<div class="form-group">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" id="terms" /> I accept the contractual terms
+							</label>
+						</div>
+					</div>
 				</div>
 			</div>
 
-
 			<div class="form-group">
-				<label asp-for="@Model.Applicant.TShirtSize" class="control-label"></label>
-				<select asp-for="@Model.Applicant.TShirtSize" class="form-control"></select>
-				<span asp-validation-for="@Model.Applicant.TShirtSize" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<div class="checkbox">
-					<label>
-						<input asp-for="@Model.Applicant.DriverLicenseB" />
-						@Html.DisplayNameFor(model => model.Applicant.DriverLicenseB)
-					</label>
-				</div>
-			</div>
-			<div class="form-group">
-				<label asp-for="@Model.Applicant.TrainingNumber" class="control-label"></label>
-				<input asp-for="@Model.Applicant.TrainingNumber" class="form-control" />
-				<span asp-validation-for="@Model.Applicant.TrainingNumber" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="@Model.Applicant.IbanNumber" class="control-label"></label>
-				<input asp-for="@Model.Applicant.IbanNumber" class="form-control" />
-				<span asp-validation-for="@Model.Applicant.IbanNumber" class="text-danger"></span>
-			</div>
-
-
-			<div class="form-group">
-				<input type="submit" value="Create" class="btn btn-default" />
+				<input type="submit" value="Submit" class="btn btn-primary pull-right" />
 			</div>
 		</form>
 	</div>
-</div>
-
-<div>
-	<a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
@@ -287,7 +295,7 @@
 
 
 			// Make residence-permit visible if nationality is not CH
-			$("#Applicant_NationalityId").change(function () {
+			$("#Applicant_NationalityId").on("change", function () {
 				var nativeNationalityId = parseInt($(this).data("native-nationality-id"));
 				var nationalityId = parseInt($(this).val());
 				var residencePermit = $("#Applicant_ResidencePermit").parent("div");
@@ -296,12 +304,13 @@
 			});
 
 
-			$("#Applicant_Occupation").change(function () {
+			// Handle occupation selection change
+			$("#Applicant_Occupation").on("change", function () {
 
 				//var occupationSelected = $(this).children(":selected").text();
 				var selectedOccupation = parseInt($(this).val());
 
-				// Make emplyer visible and required, if the
+				// Make employer visible and required, if the
 				// occupation is either part or full time.
 				var occupationEmployerValues = [2, 3];
 				var employer = $("#Applicant_Employer"),
@@ -316,21 +325,96 @@
 
 				// Make company-name and company-website visible
 				// and also make, company-name required, only
-				// if occupation is, of type: self-emplyed.
+				// if occupation, is of type: self-emplyed.
+				// Make official-freelance-statement visible only
+				// if the occupation, is of type self-employed.
 				var occupationSelfEmployedValue = 5;
 				var companyName = $("#Applicant_CompanyName"),
 					companyNameContainer = companyName.parent("div");
 				var companyWebsite = $("#Applicant_CompanyWebsite"),
 					companyWebsiteContainer = companyWebsite.parent("div");
+				var ofsContainer = $("#OfficialFreelanceStatement").parent("div");
 				if (occupationSelfEmployedValue === selectedOccupation) {
 					companyName.attr("required", true);
 					companyNameContainer.show();
 					companyWebsiteContainer.show();
+					ofsContainer.show();
 				} else {
 					companyName.removeAttr("required");
 					companyNameContainer.hide();
 					companyWebsiteContainer.hide();
+					ofsContainer.hide();
 				}
+			});
+
+
+			// Handle input file uploads
+			$(".btn-upload").on("click", function () {
+				var inputFileId = "#" + $(this).data("input-file-id");
+				$(inputFileId).click();
+			});
+			$("#OfficialFreelanceStatement").on("change", function () {
+
+				var filePath = $(this).val();
+				var fileInfoId = "#" + $(this).attr("id") + "_Info";
+				var fileInfoText = "Accepted formats: PDF, JPG, JPEG, TIFF, PNG, GIF";
+
+				if (filePath === "") {
+					$(fileInfoId).text(fileInfoText);
+					return;
+				}
+
+				var validExtensions = [".pdf", ".jpg", ".jpeg", ".tiff", ".png", ".gif"];
+				var fileName = getChosenFileName(filePath);
+				var isFileValid = isFileExtensionValid(filePath, validExtensions);
+
+				if (isFileValid) {
+					fileInfoText = "You've choosen file: " + fileName;
+				} else {
+
+					alert("Sorry, " + fileName + " is invalid, allowed extensions are: " +
+						validExtensions.join(", "));
+
+					// Reset file's value because no valid file format was provided.
+					$(this).val("");
+				}
+
+				$(fileInfoId).text(fileInfoText);
+			});
+			$("#ProfilePicture").on("change", function () {
+
+				var filePath = $(this).val();
+				var fileInfoId = "#" + $(this).attr("id") + "_Info";
+				var fileInfoText = "Accepted formats: JPG and JPEG";
+
+				if (filePath === "") {
+					$(fileInfoId).text(fileInfoText);
+					return;
+				}
+
+				var validExtensions = [".jpg", ".jpeg"];
+				var fileName = getChosenFileName(filePath);
+				var isFileValid = isFileExtensionValid(filePath, validExtensions);
+
+				if (isFileValid) {
+					fileInfoText = "You've choosen file: " + fileName;
+				} else {
+
+					alert("Sorry, " + fileName + " is invalid, allowed extensions are: " +
+						validExtensions.join(", "));
+
+					// Reset file's value because no valid file format was provided.
+					$(this).val("");
+				}
+
+				$(fileInfoId).text(fileInfoText);
+			});
+
+
+			// Check terms of agreement
+			$("form").on("submit", function (event) {
+				event.preventDefault();
+				return $("#terms").prop("checked");
 			});
 		});
 	</script>

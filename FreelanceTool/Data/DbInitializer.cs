@@ -16,7 +16,8 @@ namespace FreelanceTool.Data
 		    {
 			    new Language { Name = "German"},
 			    new Language { Name = "French"},
-			    new Language { Name = "Italian"}
+			    new Language { Name = "Italian"},
+			    new Language { Name = "English"}
 		    };
 		    context.Languages.AddRange(languages);
 		    context.SaveChanges();
