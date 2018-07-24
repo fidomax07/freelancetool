@@ -1,7 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using FreelanceTool.Helpers.Enums;
+using Microsoft.AspNetCore.Http;
 
 namespace FreelanceTool.Models
 {

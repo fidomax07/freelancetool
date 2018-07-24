@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using FreelanceTool.Helpers.CustomValidators;
 using FreelanceTool.Helpers.Enums;
 
 namespace FreelanceTool.Models
@@ -12,7 +13,7 @@ namespace FreelanceTool.Models
 	{
 		// Properties
 		[NotMapped]
-		public static string[] PhonePrefixes = 
+		public static string[] PhonePrefixes =
 			{ "079", "078", "077", "076", "075", "0774" };
 
 		// Database columns
@@ -71,17 +72,28 @@ namespace FreelanceTool.Models
 		[Display(Name = "Number of Kids")]
 		public int ChildrenCount { get; set; }
 
-		public ResidencePermit ResidencePermit { get; set; }
+		public ResidencePermit? ResidencePermit { get; set; }
 
 		[Required]
 		public Occupation Occupation { get; set; }
 
+		// TODO:
+		// Make this property required, if Occupation is
+		// Occupation.PartTime or Occupation.FullTime.
 		[StringLength(40)]
+		[EmployerConditionalRequired]
 		public string Employer { get; set; }
 
+		// TODO:
+		// Make this property required, only if the
+		// Occupation is Occupation.SelfEmployed.
 		[StringLength(80)]
+		[CompanyNameConditionalRequired]
 		public string CompanyName { get; set; }
 
+		// TODO:
+		// Populate this property, only if property
+		// Occupation is Occupation.SelfEmployed.
 		[StringLength(80)]
 		public string CompanyWebsite { get; set; }
 

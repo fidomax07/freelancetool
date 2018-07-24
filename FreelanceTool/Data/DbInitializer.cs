@@ -265,8 +265,7 @@ namespace FreelanceTool.Data
 				(882, 'WS', 'WSM', 'Samoa', 'Samoa'),
 				(887, 'YE', 'YEM', 'Yemen', 'Yémen'),
 				(891, 'CS', 'SCG', 'Serbia and Montenegro', 'Serbie-et-Monténégro'),
-				(894, 'ZM', 'ZMB', 'Zambia', 'Zambie')
-			");
+				(894, 'ZM', 'ZMB', 'Zambia', 'Zambie')");
 
 			#endregion
 			context.SaveChanges();

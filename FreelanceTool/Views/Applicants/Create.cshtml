@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
-		<form asp-action="Create">
+		<form asp-action="Create" enctype="multipart/form-data">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 			@* Personal Data *@
@@ -133,7 +133,7 @@
 					<div class="form-group">
 						<label asp-for="@Model.Applicant.CivilStatus" class="control-label"></label>
 						<select asp-for="@Model.Applicant.CivilStatus" class="form-control"
-						        asp-items="Html.GetEnumSelectList<CivilStatus>()"></select>
+								asp-items="Html.GetEnumSelectList<CivilStatus>()"></select>
 						<span asp-validation-for="@Model.Applicant.CivilStatus" class="text-danger"></span>
 					</div>
 					<div class="form-group">
@@ -144,33 +144,46 @@
 					<div class="form-group">
 						<label asp-for="@Model.Applicant.Nationality" class="control-label"></label>
 						<select asp-for="@Model.Applicant.NationalityId" class="form-control"
-								asp-items="@Model.NationalitiesList"></select>
+								asp-items="@Model.NationalitiesList"
+								data-native-nationality-id="@Model.NativeNationality.Id">
+							<option value="">(Please select)</option>
+						</select>
 						<span asp-validation-for="@Model.Applicant.Nationality" class="text-danger"></span>
 					</div>
-					<div class="form-group">
+					<div class="form-group" style="display: none;">
 						<label asp-for="@Model.Applicant.ResidencePermit" class="control-label"></label>
-						<select asp-for="@Model.Applicant.ResidencePermit" class="form-control"></select>
+						<select asp-for="@Model.Applicant.ResidencePermit" class="form-control"
+								asp-items="Html.GetEnumSelectList<ResidencePermit>()"></select>
 						<span asp-validation-for="@Model.Applicant.ResidencePermit" class="text-danger"></span>
 					</div>
 					<div class="form-group">
 						<label asp-for="@Model.Applicant.Occupation" class="control-label"></label>
-						<select asp-for="@Model.Applicant.Occupation" class="form-control"></select>
+						<select asp-for="@Model.Applicant.Occupation" class="form-control"
+								asp-items="Html.GetEnumSelectList<Occupation>()">
+							<option value="">(Please select)</option>
+						</select>
 						<span asp-validation-for="@Model.Applicant.Occupation" class="text-danger"></span>
 					</div>
-					<div class="form-group">
+					<div class="form-group" style="display: none;">
 						<label asp-for="@Model.Applicant.Employer" class="control-label"></label>
 						<input asp-for="@Model.Applicant.Employer" class="form-control" />
 						<span asp-validation-for="@Model.Applicant.Employer" class="text-danger"></span>
 					</div>
-					<div class="form-group">
+					<div class="form-group" style="display: none;">
 						<label asp-for="@Model.Applicant.CompanyName" class="control-label"></label>
 						<input asp-for="@Model.Applicant.CompanyName" class="form-control" />
 						<span asp-validation-for="@Model.Applicant.CompanyName" class="text-danger"></span>
 					</div>
-					<div class="form-group">
+					<div class="form-group" style="display: none;">
 						<label asp-for="@Model.Applicant.CompanyWebsite" class="control-label"></label>
 						<input asp-for="@Model.Applicant.CompanyWebsite" class="form-control" />
 						<span asp-validation-for="@Model.Applicant.CompanyWebsite" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="@Model.OfficialFreelanceStatement" class="control-label"></label>
+						<input asp-for="@Model.OfficialFreelanceStatement" class="form-control"
+							   type="file" />
+						<span asp-validation-for="@Model.OfficialFreelanceStatement" class="text-danger"></span>
 					</div>
 				</div>
 			</div>
@@ -181,7 +194,19 @@
 					<h3 class="panel-title">Miscellaneous Information</h3>
 				</div>
 				<div class="panel-body">
-
+					<label asp-for="@Model.Applicant.SpokenLanguages" class="control-label"></label>
+					@foreach (var language in Model.ApplicantLanguages)
+					{
+						<div class="form-group">
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" name="Applicant.SpokenLanguages"
+									       value="@language.Id"/>
+									@language.Name
+								</label>
+							</div>
+						</div>
+					}
 				</div>
 			</div>
 
@@ -240,7 +265,7 @@
 				<span asp-validation-for="@Model.Applicant.IbanNumber" class="text-danger"></span>
 			</div>
 
-			
+
 			<div class="form-group">
 				<input type="submit" value="Create" class="btn btn-default" />
 			</div>
@@ -261,7 +286,52 @@
 			$("#Applicant_DateOfBirth").datepicker({ dateFormat: "dd.mm.yy" });
 
 
+			// Make residence-permit visible if nationality is not CH
+			$("#Applicant_NationalityId").change(function () {
+				var nativeNationalityId = parseInt($(this).data("native-nationality-id"));
+				var nationalityId = parseInt($(this).val());
+				var residencePermit = $("#Applicant_ResidencePermit").parent("div");
+				if (nativeNationalityId === nationalityId) residencePermit.show();
+				else residencePermit.hide();
+			});
 
+
+			$("#Applicant_Occupation").change(function () {
+
+				//var occupationSelected = $(this).children(":selected").text();
+				var selectedOccupation = parseInt($(this).val());
+
+				// Make emplyer visible and required, if the
+				// occupation is either part or full time.
+				var occupationEmployerValues = [2, 3];
+				var employer = $("#Applicant_Employer"),
+					employerContainer = employer.parent("div");
+				if (occupationEmployerValues.includes(selectedOccupation)) {
+					employer.attr("required", true);
+					employerContainer.show();
+				} else {
+					employer.removeAttr("required");
+					employerContainer.hide();
+				}
+
+				// Make company-name and company-website visible
+				// and also make, company-name required, only
+				// if occupation is, of type: self-emplyed.
+				var occupationSelfEmployedValue = 5;
+				var companyName = $("#Applicant_CompanyName"),
+					companyNameContainer = companyName.parent("div");
+				var companyWebsite = $("#Applicant_CompanyWebsite"),
+					companyWebsiteContainer = companyWebsite.parent("div");
+				if (occupationSelfEmployedValue === selectedOccupation) {
+					companyName.attr("required", true);
+					companyNameContainer.show();
+					companyWebsiteContainer.show();
+				} else {
+					companyName.removeAttr("required");
+					companyNameContainer.hide();
+					companyWebsiteContainer.hide();
+				}
+			});
 		});
 	</script>
 }
