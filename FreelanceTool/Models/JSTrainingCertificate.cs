@@ -15,7 +15,7 @@ namespace FreelanceTool.Models
 
 		[StringLength(80)]
 		public string Name { get; set; }
-		public JSCertificateType Type { get; set; }
+		public JSCertificateType? Type { get; set; }
 
 
 		// Relationships and Navigation Properties

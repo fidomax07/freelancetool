@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 using System.Linq;
 using FreelanceTool.Helpers.CustomValidators;
 using FreelanceTool.Helpers.Enums;
@@ -76,7 +76,7 @@ namespace FreelanceTool.Models
 
 		[Required]
 		public Occupation Occupation { get; set; }
-		
+
 		// Make this property required, if Occupation is
 		// Occupation.PartTime or Occupation.FullTime.
 		[StringLength(40)]
@@ -102,17 +102,17 @@ namespace FreelanceTool.Models
 		[StringLength(80)]
 		public string TrainingNumber { get; set; }
 
-		[Required, StringLength(34)]
+		[Required, StringLength(34), RegularExpression(@"^[0-9]*$")]
 		public string IbanNumber { get; set; }
 
 
 		// Relationships and Navigation Properties
-		public int LanguageId { get; set; }
 		[Required, Display(Name = "Main language")]
+		public int LanguageId { get; set; }
 		public Language MainLanguage { get; set; }
 
+		[Required, Display(Name = "Nationality")]
 		public int NationalityId { get; set; }
-		[Required]
 		public Nationality Nationality { get; set; }
 
 		public ICollection<ApplicantLanguage> SpokenLanguages { get; set; }
@@ -128,7 +128,6 @@ namespace FreelanceTool.Models
 					f => f.Type == ApplicantFileType.ProfilePicture);
 			}
 		}
-
 		public ApplicantFile OfficialFrelanceStatement
 		{
 			get

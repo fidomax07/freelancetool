@@ -44,10 +44,10 @@
 						<span asp-validation-for="@Model.Applicant.DateOfBirth" class="text-danger"></span>
 					</div>
 					<div class="form-group">
-						<label asp-for="@Model.Applicant.MainLanguage" class="control-label"></label>
+						<label asp-for="@Model.Applicant.LanguageId" class="control-label"></label>
 						<select asp-for="@Model.Applicant.LanguageId" class="form-control"
 								asp-items="@Model.LanguagesList"></select>
-						<span asp-validation-for="@Model.Applicant.MainLanguage" class="text-danger"></span>
+						<span asp-validation-for="@Model.Applicant.LanguageId" class="text-danger"></span>
 					</div>
 				</div>
 			</div>
@@ -142,13 +142,13 @@
 						<span asp-validation-for="@Model.Applicant.ChildrenCount" class="text-danger"></span>
 					</div>
 					<div class="form-group">
-						<label asp-for="@Model.Applicant.Nationality" class="control-label"></label>
+						<label asp-for="@Model.Applicant.NationalityId" class="control-label"></label>
 						<select asp-for="@Model.Applicant.NationalityId" class="form-control"
 								asp-items="@Model.NationalitiesList"
 								data-native-nationality-id="@Model.NativeNationality.Id">
 							<option value="">(Please select)</option>
 						</select>
-						<span asp-validation-for="@Model.Applicant.Nationality" class="text-danger"></span>
+						<span asp-validation-for="@Model.Applicant.NationalityId" class="text-danger"></span>
 					</div>
 					<div class="form-group" style="display: none;">
 						<label asp-for="@Model.Applicant.ResidencePermit" class="control-label"></label>
@@ -255,7 +255,7 @@
 							<span asp-validation-for="@Model.JsTrainingCertificate_1.Type" class="text-danger"></span>
 						</div>
 					</div>
-					
+
 					<div id="additional-js-certificate-2" style="display: none;">
 						<hr />
 						<div class="form-group">
@@ -272,7 +272,7 @@
 							<span asp-validation-for="@Model.JsTrainingCertificate_2.Type" class="text-danger"></span>
 						</div>
 					</div>
-					
+
 					<div id="additional-js-certificate-3" style="display: none;">
 						<hr />
 						<div class="form-group">
@@ -289,7 +289,7 @@
 							<span asp-validation-for="@Model.JsTrainingCertificate_3.Type" class="text-danger"></span>
 						</div>
 					</div>
-					
+
 					<div id="additional-js-certificate-4" style="display: none;">
 						<hr />
 						<div class="form-group">
@@ -306,7 +306,7 @@
 							<span asp-validation-for="@Model.JsTrainingCertificate_4.Type" class="text-danger"></span>
 						</div>
 					</div>
-					
+
 					<div id="additional-js-certificate-5" style="display: none;">
 						<hr />
 						<div class="form-group">
@@ -340,7 +340,8 @@
 				<div class="panel-body">
 					<div class="form-group">
 						<label asp-for="@Model.Applicant.IbanNumber" class="control-label"></label>
-						<input asp-for="@Model.Applicant.IbanNumber" class="form-control" />
+						<input asp-for="@Model.Applicant.IbanNumber" class="form-control"
+							   type="number" />
 						<span asp-validation-for="@Model.Applicant.IbanNumber" class="text-danger"></span>
 					</div>
 				</div>
@@ -358,9 +359,9 @@
 						<div class="checkbox">
 							<label>
 								<input type="checkbox" id="terms" /> I accept the contractual terms
-								<span class="text-danger" id="terms-error"></span>
 							</label>
 						</div>
+						<span id="terms-error" class="text-danger"></span>
 					</div>
 				</div>
 			</div>
@@ -374,6 +375,7 @@
 
 @section Scripts {
 	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	<script src="~/lib/moment/moment.js"></script>
 	<script>
 		$(function () {
 
@@ -504,42 +506,50 @@
 			});
 
 			// Handle displaying and hiding of additional js-certificates
-			$("#JsTrainingCertificate_1_Name").on("change", function () {
-				var certificateName = $(this).val();
-				var certificateType = $("#JsTrainingCertificate_1_Type").val();
+			function handleShowingNextJsCertification(certificationIndex) {
 
-				var certification2 = $("#additional-js-certificate-2");
-				if (certificateName.trim() !== "" && certificateType !== "") {
-					certification2.show();
-				} else {
-					certification2.hide();
-				}
-			});
-			$("#JsTrainingCertificate_1_Type").on("change", function () {
-				var certificateName = $("#JsTrainingCertificate_1_Name").val();
-				var certificateType = $(this).val();
+				var index = certificationIndex;
+				var currentCertName = "#JsTrainingCertificate_" + index + "_Name";
+				var currentCertType = "#JsTrainingCertificate_" + index + "_Type";
+				var nextCertContainer = "#additional-js-certificate-" + (index + 1);
 
-				var certification2 = $("#additional-js-certificate-2");
-				if (certificateName.trim() !== "" && certificateType !== "") {
-					certification2.show();
-				} else {
-					certification2.hide();
-				}
-			});
+				$(currentCertName).on("change", function () {
+					var isNameValid = $(this).val().trim() !== "";
+					var isTypeValid = $(currentCertType).val() !== "";
+					if (isNameValid && isTypeValid) $(nextCertContainer).show();
+				});
 
+				$(currentCertType).on("change", function () {
+					var isNameValid = $(currentCertName).val().trim() !== "";
+					var isTypeValid = $(this).val() !== "";
+					if (isNameValid && isTypeValid) {
+						$(nextCertContainer).show();
+					}
+				});
+			}
+			handleShowingNextJsCertification(1);
+			handleShowingNextJsCertification(2);
+			handleShowingNextJsCertification(3);
+			handleShowingNextJsCertification(4);
 
 			// Check terms of agreement
 			$("form").on("submit", function (event) {
 				event.preventDefault();
-
 				var termsChecked = $("#terms").prop("checked");
 
-				if (termsChecked) {
-					$("form").off("submit").submit();
-				}
 
-				$("#terms-error").text = !termsChecked ?
-					"Please accept the contractual terms!" : "";
+				// Convert client date format, to a format that
+				// is understandable for server side binding.
+				var dateOfBirth = $("#Applicant_DateOfBirth");
+				var dobFormatted = moment(dateOfBirth.val(), "DD.MM.YYYY")
+					.format("MM.DD.YYYY");
+				dateOfBirth.val(dobFormatted);
+
+
+				// Finally submit the form if terms are checked
+				$("#terms-error").text(!termsChecked ?
+					"Please accept the contractual terms!" : "");
+				if (termsChecked) $("form").off("submit").submit();
 			});
 		});
 	</script>

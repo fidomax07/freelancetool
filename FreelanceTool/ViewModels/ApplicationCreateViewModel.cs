@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using FreelanceTool.Data;
@@ -12,7 +13,7 @@ namespace FreelanceTool.ViewModels
 	public class ApplicationCreateViewModel
 	{
 		// Fields
-		private readonly ApplicationDataContext _context;
+		private ApplicationDataContext _context;
 
 		// Properties
 		public SelectList LanguagesList { get; private set; }
@@ -44,13 +45,13 @@ namespace FreelanceTool.ViewModels
 		{
 			_context = context;
 
-			InitializeProperties();
+			InitializeStaticProperties();
 
 			// TODO: After loading all languages, choose one based on the borwser-language.
 			Applicant = new Applicant();
 		}
 
-		private void InitializeProperties()
+		public ApplicationCreateViewModel InitializeStaticProperties()
 		{
 			var languages = _context.Languages.AsNoTracking();
 			LanguagesList = new SelectList(
@@ -66,6 +67,15 @@ namespace FreelanceTool.ViewModels
 				.OrderBy(n => n.NameEnglish);
 			NationalitiesList = new SelectList(nationalities, "Id", "NameEnglish");
 			NativeNationality = nationalities.SingleOrDefault(n => n.Alpha2 == "CH");
+
+			return this;
+		}
+
+		public ApplicationCreateViewModel SetDataContext(ApplicationDataContext context)
+		{
+			_context = context;
+
+			return this;
 		}
 	}
 }

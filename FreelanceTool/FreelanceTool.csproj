@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>netcoreapp2.0</TargetFramework>
 		<UserSecretsId>aspnet-FreelanceTool-6837969A-351C-4C48-9978-E247940AAECC</UserSecretsId>
+		<TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

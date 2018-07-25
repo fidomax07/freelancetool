@@ -1,17 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using FreelanceTool.Data;
-using FreelanceTool.Helpers.Enums;
 using FreelanceTool.Models;
 using FreelanceTool.ViewModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
 namespace FreelanceTool.Controllers
 {
-    public class ApplicantsController : Controller
+	public class ApplicantsController : Controller
     {
 	    private readonly ApplicationDataContext _context;
 
@@ -47,16 +42,24 @@ namespace FreelanceTool.Controllers
         // POST: Applicants/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ApplicationCreateViewModel viewModel, 
-	        string[] spokenLanguages)
+        public ActionResult Create(
+	        ApplicationCreateViewModel viewModel, string[] spokenLanguages)
         {
-	        return Json(new List<object>{viewModel, spokenLanguages});
+			if (!ModelState.IsValid) {
+				return View(viewModel
+					.SetDataContext(_context)
+					.InitializeStaticProperties());
+	        }
 
-            try
+			try
             {
-                // TODO: Add insert logic here
+				return Json(new Dictionary<string, object>
+				{
+					{"ViewModel", viewModel},
+					{"SpokenLanguages", spokenLanguages}
+				});
 
-                return RedirectToAction(nameof(Index));
+				//return RedirectToAction(nameof(Index));
             }
             catch
             {
