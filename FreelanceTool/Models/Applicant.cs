@@ -76,22 +76,19 @@ namespace FreelanceTool.Models
 
 		[Required]
 		public Occupation Occupation { get; set; }
-
-		// TODO:
+		
 		// Make this property required, if Occupation is
 		// Occupation.PartTime or Occupation.FullTime.
 		[StringLength(40)]
 		[EmployerConditionalRequired]
 		public string Employer { get; set; }
 
-		// TODO:
 		// Make this property required, only if the
 		// Occupation is Occupation.SelfEmployed.
 		[StringLength(80)]
 		[CompanyNameConditionalRequired]
 		public string CompanyName { get; set; }
 
-		// TODO:
 		// Populate this property, only if property
 		// Occupation is Occupation.SelfEmployed.
 		[StringLength(80)]
@@ -123,11 +120,23 @@ namespace FreelanceTool.Models
 		public ICollection<JSTrainingCertificate> JsTrainingCertificates { get; set; }
 
 		public ICollection<ApplicantFile> ApplicantFiles { get; set; }
-		public ApplicantFile ProfilePicture => ApplicantFiles.FirstOrDefault(
-			f => f.Type == ApplicantFileType.ProfilePicture);
-		public ApplicantFile OfficialFrelanceStatement => ApplicantFiles.FirstOrDefault(
-			f => f.Type == ApplicantFileType.OfficialFreelanceStatement);
+		public ApplicantFile ProfilePicture
+		{
+			get
+			{
+				return ApplicantFiles.FirstOrDefault(
+					f => f.Type == ApplicantFileType.ProfilePicture);
+			}
+		}
 
+		public ApplicantFile OfficialFrelanceStatement
+		{
+			get
+			{
+				return ApplicantFiles.FirstOrDefault(
+					f => f.Type == ApplicantFileType.OfficialFreelanceStatement);
+			}
+		}
 
 
 		// Lifecycle
@@ -137,6 +146,11 @@ namespace FreelanceTool.Models
 			var now = DateTime.Now;
 			DateOfBirth = new DateTime(now.Year - 20, now.Month, now.Day);
 			Country = Country.Switzerland;
+
+			// Initialize collections
+			SpokenLanguages = new List<ApplicantLanguage>();
+			JsTrainingCertificates = new List<JSTrainingCertificate>();
+			ApplicantFiles = new List<ApplicantFile>();
 		}
 	}
 }

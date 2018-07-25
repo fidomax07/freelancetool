@@ -201,7 +201,8 @@
 						<div class="form-group">
 							<div class="checkbox">
 								<label>
-									<input type="checkbox" name="Applicant.SpokenLanguages"
+									<input type="checkbox" class="control-label"
+										   name="spokenLanguages"
 										   value="@language.Id" />
 									@language.Name
 								</label>
@@ -238,6 +239,91 @@
 					<h3 class="panel-title">J+S Training Certificates</h3>
 				</div>
 				<div class="panel-body">
+
+					<div>
+						<div class="form-group">
+							<label asp-for="@Model.JsTrainingCertificate_1.Name" class="control-label"></label>
+							<input asp-for="@Model.JsTrainingCertificate_1.Name" class="form-control" />
+							<span asp-validation-for="@Model.JsTrainingCertificate_1.Name" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<label asp-for="@Model.JsTrainingCertificate_1.Type" class="control-label"></label>
+							<select asp-for="@Model.JsTrainingCertificate_1.Type" class="form-control"
+									asp-items="Html.GetEnumSelectList<JSCertificateType>()">
+								<option value="">(Please select)</option>
+							</select>
+							<span asp-validation-for="@Model.JsTrainingCertificate_1.Type" class="text-danger"></span>
+						</div>
+					</div>
+					
+					<div id="additional-js-certificate-2" style="display: none;">
+						<hr />
+						<div class="form-group">
+							<label asp-for="@Model.JsTrainingCertificate_2.Name" class="control-label"></label>
+							<input asp-for="@Model.JsTrainingCertificate_2.Name" class="form-control" />
+							<span asp-validation-for="@Model.JsTrainingCertificate_2.Name" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<label asp-for="@Model.JsTrainingCertificate_2.Type" class="control-label"></label>
+							<select asp-for="@Model.JsTrainingCertificate_2.Type" class="form-control"
+									asp-items="Html.GetEnumSelectList<JSCertificateType>()">
+								<option value="">(Please select)</option>
+							</select>
+							<span asp-validation-for="@Model.JsTrainingCertificate_2.Type" class="text-danger"></span>
+						</div>
+					</div>
+					
+					<div id="additional-js-certificate-3" style="display: none;">
+						<hr />
+						<div class="form-group">
+							<label asp-for="@Model.JsTrainingCertificate_3.Name" class="control-label"></label>
+							<input asp-for="@Model.JsTrainingCertificate_3.Name" class="form-control" />
+							<span asp-validation-for="@Model.JsTrainingCertificate_3.Name" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<label asp-for="@Model.JsTrainingCertificate_3.Type" class="control-label"></label>
+							<select asp-for="@Model.JsTrainingCertificate_3.Type" class="form-control"
+									asp-items="Html.GetEnumSelectList<JSCertificateType>()">
+								<option value="">(Please select)</option>
+							</select>
+							<span asp-validation-for="@Model.JsTrainingCertificate_3.Type" class="text-danger"></span>
+						</div>
+					</div>
+					
+					<div id="additional-js-certificate-4" style="display: none;">
+						<hr />
+						<div class="form-group">
+							<label asp-for="@Model.JsTrainingCertificate_4.Name" class="control-label"></label>
+							<input asp-for="@Model.JsTrainingCertificate_4.Name" class="form-control" />
+							<span asp-validation-for="@Model.JsTrainingCertificate_4.Name" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<label asp-for="@Model.JsTrainingCertificate_4.Type" class="control-label"></label>
+							<select asp-for="@Model.JsTrainingCertificate_4.Type" class="form-control"
+									asp-items="Html.GetEnumSelectList<JSCertificateType>()">
+								<option value="">(Please select)</option>
+							</select>
+							<span asp-validation-for="@Model.JsTrainingCertificate_4.Type" class="text-danger"></span>
+						</div>
+					</div>
+					
+					<div id="additional-js-certificate-5" style="display: none;">
+						<hr />
+						<div class="form-group">
+							<label asp-for="@Model.JsTrainingCertificate_5.Name" class="control-label"></label>
+							<input asp-for="@Model.JsTrainingCertificate_5.Name" class="form-control" />
+							<span asp-validation-for="@Model.JsTrainingCertificate_5.Name" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<label asp-for="@Model.JsTrainingCertificate_5.Type" class="control-label"></label>
+							<select asp-for="@Model.JsTrainingCertificate_5.Type" class="form-control"
+									asp-items="Html.GetEnumSelectList<JSCertificateType>()">
+								<option value="">(Please select)</option>
+							</select>
+							<span asp-validation-for="@Model.JsTrainingCertificate_5.Type" class="text-danger"></span>
+						</div>
+					</div>
+
 					<div class="form-group">
 						<label asp-for="@Model.Applicant.TrainingNumber" class="control-label"></label>
 						<input asp-for="@Model.Applicant.TrainingNumber" class="form-control" />
@@ -272,6 +358,7 @@
 						<div class="checkbox">
 							<label>
 								<input type="checkbox" id="terms" /> I accept the contractual terms
+								<span class="text-danger" id="terms-error"></span>
 							</label>
 						</div>
 					</div>
@@ -291,7 +378,13 @@
 		$(function () {
 
 			// Initialize date-picker for the applicant's date of birth
-			$("#Applicant_DateOfBirth").datepicker({ dateFormat: "dd.mm.yy" });
+			$("#Applicant_DateOfBirth").datepicker({
+				dateFormat: "dd.mm.yy",
+				changeMonth: true,
+				changeYear: true,
+				showButtonPanel: true,
+				yearRange: "-100:+0"
+			});
 
 
 			// Make residence-permit visible if nationality is not CH
@@ -410,11 +503,43 @@
 				$(fileInfoId).text(fileInfoText);
 			});
 
+			// Handle displaying and hiding of additional js-certificates
+			$("#JsTrainingCertificate_1_Name").on("change", function () {
+				var certificateName = $(this).val();
+				var certificateType = $("#JsTrainingCertificate_1_Type").val();
+
+				var certification2 = $("#additional-js-certificate-2");
+				if (certificateName.trim() !== "" && certificateType !== "") {
+					certification2.show();
+				} else {
+					certification2.hide();
+				}
+			});
+			$("#JsTrainingCertificate_1_Type").on("change", function () {
+				var certificateName = $("#JsTrainingCertificate_1_Name").val();
+				var certificateType = $(this).val();
+
+				var certification2 = $("#additional-js-certificate-2");
+				if (certificateName.trim() !== "" && certificateType !== "") {
+					certification2.show();
+				} else {
+					certification2.hide();
+				}
+			});
+
 
 			// Check terms of agreement
 			$("form").on("submit", function (event) {
 				event.preventDefault();
-				return $("#terms").prop("checked");
+
+				var termsChecked = $("#terms").prop("checked");
+
+				if (termsChecked) {
+					$("form").off("submit").submit();
+				}
+
+				$("#terms-error").text = !termsChecked ?
+					"Please accept the contractual terms!" : "";
 			});
 		});
 	</script>

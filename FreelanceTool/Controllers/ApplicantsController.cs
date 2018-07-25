@@ -47,9 +47,10 @@ namespace FreelanceTool.Controllers
         // POST: Applicants/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(ApplicationCreateViewModel viewModel, 
+	        string[] spokenLanguages)
         {
-	        return Json(collection);
+	        return Json(new List<object>{viewModel, spokenLanguages});
 
             try
             {

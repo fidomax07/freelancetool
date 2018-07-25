@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using FreelanceTool.Helpers.Enums;
+using FreelanceTool.Models;
 using FreelanceTool.ViewModels;
 
 namespace FreelanceTool.Helpers.CustomValidators
@@ -15,10 +16,10 @@ namespace FreelanceTool.Helpers.CustomValidators
 
 		protected override ValidationResult IsValid(object value, ValidationContext validationContext)
 		{
-			var applicationCreateVM = (ApplicationCreateViewModel)validationContext.ObjectInstance;
-			var currentOccupation = applicationCreateVM.Applicant.Occupation;
+			var applicant = (Applicant)validationContext.ObjectInstance;
+			var currentOccupation = applicant.Occupation;
 			if (currentOccupation == _selfEmployedOccupation &&
-			    string.IsNullOrWhiteSpace(value.ToString()))
+				string.IsNullOrWhiteSpace(value.ToString()))
 			{
 				return new ValidationResult(GetErrorMessage());
 			}

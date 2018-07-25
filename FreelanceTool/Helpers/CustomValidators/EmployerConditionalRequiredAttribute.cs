@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using FreelanceTool.Helpers.Enums;
+using FreelanceTool.Models;
 using FreelanceTool.ViewModels;
 
 namespace FreelanceTool.Helpers.CustomValidators
@@ -18,8 +19,8 @@ namespace FreelanceTool.Helpers.CustomValidators
 
 	    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
 	    {
-		    var applicationCreateVM = (ApplicationCreateViewModel) validationContext.ObjectInstance;
-		    var currentOccupation = applicationCreateVM.Applicant.Occupation;
+		    var applicant = (Applicant) validationContext.ObjectInstance;
+		    var currentOccupation = applicant.Occupation;
 			if (_occupationEmployerValues.Contains(currentOccupation) &&
 		        string.IsNullOrWhiteSpace(value.ToString()))
 		    {
