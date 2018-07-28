@@ -72,7 +72,9 @@ namespace FreelanceTool.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(34);
 
-                    b.Property<int>("LanguageId");
+	                b.Property<string>("CsvPath");
+
+					b.Property<int>("LanguageId");
 
                     b.Property<string>("LastName")
                         .IsRequired()

@@ -39,14 +39,14 @@
 						<span asp-validation-for="@Model.Applicant.FirstName" class="text-danger"></span>
 					</div>
 					<div class="form-group">
-						<label asp-for="@Model.Applicant.DateOfBirth" class="control-label"></label>
-						<input asp-for="@Model.Applicant.DateOfBirth" class="form-control" />
-						<span asp-validation-for="@Model.Applicant.DateOfBirth" class="text-danger"></span>
+						<label asp-for="@Model.ApplicantDateOfBirth" class="control-label"></label>
+						<input asp-for="@Model.ApplicantDateOfBirth" class="form-control" />
+						<span asp-validation-for="@Model.ApplicantDateOfBirth" class="text-danger"></span>
 					</div>
 					<div class="form-group">
 						<label asp-for="@Model.Applicant.LanguageId" class="control-label"></label>
 						<select asp-for="@Model.Applicant.LanguageId" class="form-control"
-								asp-items="@Model.LanguagesList"></select>
+								asp-items="@Model.MainLanguageList"></select>
 						<span asp-validation-for="@Model.Applicant.LanguageId" class="text-danger"></span>
 					</div>
 				</div>
@@ -196,14 +196,15 @@
 				</div>
 				<div class="panel-body">
 					<label asp-for="@Model.Applicant.SpokenLanguages" class="control-label"></label>
-					@foreach (var language in Model.ApplicantLanguages)
+					@foreach (var language in Model.SpokenLanguages)
 					{
 						<div class="form-group">
 							<div class="checkbox">
 								<label>
 									<input type="checkbox" class="control-label"
 										   name="spokenLanguages"
-										   value="@language.Id" />
+									       value="@language.Id"
+									       @(language.IsChecked ? "checked" : "")/>
 									@language.Name
 								</label>
 							</div>
@@ -380,7 +381,7 @@
 		$(function () {
 
 			// Initialize date-picker for the applicant's date of birth
-			$("#Applicant_DateOfBirth").datepicker({
+			$("#ApplicantDateOfBirth").datepicker({
 				dateFormat: "dd.mm.yy",
 				changeMonth: true,
 				changeYear: true,
@@ -535,21 +536,13 @@
 			// Check terms of agreement
 			$("form").on("submit", function (event) {
 				event.preventDefault();
-				var termsChecked = $("#terms").prop("checked");
+				var areTermsChecked = $("#terms").prop("checked");
 
-
-				// Convert client date format, to a format that
-				// is understandable for server side binding.
-				var dateOfBirth = $("#Applicant_DateOfBirth");
-				var dobFormatted = moment(dateOfBirth.val(), "DD.MM.YYYY")
-					.format("MM.DD.YYYY");
-				dateOfBirth.val(dobFormatted);
-
+				$("#terms-error").text(!areTermsChecked ?
+					"Please accept the contractual terms!" : "");
 
 				// Finally submit the form if terms are checked
-				$("#terms-error").text(!termsChecked ?
-					"Please accept the contractual terms!" : "");
-				if (termsChecked) $("form").off("submit").submit();
+				if (areTermsChecked) $("form").off("submit").submit();
 			});
 		});
 	</script>

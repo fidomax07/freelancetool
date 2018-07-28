@@ -32,8 +32,7 @@ namespace FreelanceTool.Models
 		[Required, StringLength(80)]
 		public string FirstName { get; set; }
 
-		[Required, DataType(DataType.Text)]
-		[DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+		[Required, DataType(DataType.Date)]
 		public DateTime DateOfBirth { get; set; }
 
 		[Required, StringLength(5)]
@@ -105,6 +104,8 @@ namespace FreelanceTool.Models
 		[Required, StringLength(34), RegularExpression(@"^[0-9]*$")]
 		public string IbanNumber { get; set; }
 
+		public string CsvPath { get; set; }
+
 
 		// Relationships and Navigation Properties
 		[Required, Display(Name = "Main language")]
@@ -138,12 +139,13 @@ namespace FreelanceTool.Models
 		}
 
 
+
 		// Lifecycle
 		public Applicant()
 		{
 			// Set default values for database columns
-			var now = DateTime.Now;
-			DateOfBirth = new DateTime(now.Year - 20, now.Month, now.Day);
+			//var now = DateTime.Now;
+			//DateOfBirth = new DateTime(now.Year - 20, now.Month, now.Day);
 			Country = Country.Switzerland;
 
 			// Initialize collections

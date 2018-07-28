@@ -6,18 +6,35 @@ namespace FreelanceTool.Controllers
 {
     public class TestController : Controller
     {
-        public object Index()
-        {
-	        DateTime.TryParse("25.07.1990", out var incomingDt);
+	    private string _applicantDateOfBirth;
+	    public string ApplicantDateOfBirth
+	    {
+		    get => _applicantDateOfBirth;
+		    set
+		    {
+			    DateTime.TryParseExact(
+				    value,
+				    "dd.MM.yyyy",
+				    CultureInfo.InvariantCulture,
+				    DateTimeStyles.None,
+				    out var dateParsed);
 
+			    _applicantDateOfBirth = dateParsed.ToString(CultureInfo.InvariantCulture);
+			    ApplicantRealDateOfBirth = dateParsed;
+		    }
+	    }
+		public DateTime ApplicantRealDateOfBirth { get; set; }
 
-	        //var parsed = DateTime.TryParseExact("25.07.1990", 
-		       // "dd.MM.yyyy", 
-		       // CultureInfo.InvariantCulture, 
-		       // DateTimeStyles.None,
-		       // out var dt);
+		public object Index()
+		{
+			//var parsed = DateTime.TryParseExact("25.07.1990", 
+			// "dd.MM.yyyy", 
+			// CultureInfo.InvariantCulture, 
+			// DateTimeStyles.None,
+			// out var dt);
 
-	        return Json(incomingDt.ToString(CultureInfo.InvariantCulture));
+			ApplicantDateOfBirth = "26.07.1990";
+			return Json(ApplicantDateOfBirth);
         }
     }
 }
