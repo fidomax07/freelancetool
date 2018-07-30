@@ -34,3 +34,20 @@ function isFileExtensionValid(filePath, fileValidExtensions) {
 	return isExtensionValid;
 }
 
+function isFieldEmpty(inputField) {
+	return inputField.val() === "";
+}
+
+function updateErrorMessage(inputField, errorSpanId) {
+	var errorSpan = $(errorSpanId);
+	if (isFieldEmpty(inputField))
+		errorSpan.text(inputField.data("val-required-cond"));
+	else
+		errorSpan.text("");
+}
+
+function scrollToError(elementId) {
+	$('html, body').animate({
+		scrollTop: ($(elementId).offset().top)
+	}, 200);
+}

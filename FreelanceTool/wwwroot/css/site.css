@@ -80,3 +80,7 @@ body {
 	width: 150px;
 	display: block;
 }
+/* Make terms of agreement textarea non-resizable */
+.terms-of-agreement {
+	resize: none;
+}

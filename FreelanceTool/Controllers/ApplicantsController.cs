@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using FreelanceTool.Data;
 using FreelanceTool.Helpers.Enums;
@@ -13,7 +14,7 @@ namespace FreelanceTool.Controllers
 	public class ApplicantsController : Controller
 	{
 		private readonly ApplicationDataContext _context;
-		private readonly  IHostingEnvironment _host;
+		private readonly IHostingEnvironment _host;
 
 
 		public ApplicantsController(
@@ -49,48 +50,47 @@ namespace FreelanceTool.Controllers
 		public async Task<IActionResult> Create(
 			ApplicationCreateViewModel viewModel, string[] spokenLanguages)
 		{
-			//return new JsonResult(new Dictionary<string, object>
-			//{
-			//	{"ViewModel", viewModel},
-			//	{"SpokenLanguages", spokenLanguages}
-			//});
-
-			if (!ModelState.IsValid)
+			if (ModelState.IsValid)
 			{
-				return View(viewModel
-					.SetDataContext(_context)
-					.PopulateViewData(spokenLanguages));
+				if (spokenLanguages != null)
+					viewModel.AttachSpokenLanguages(spokenLanguages);
+
+				viewModel.AttachJSTrainingCertificates();
+
+				if (viewModel.HasOfficialFreelanceStatement)
+				{
+					await viewModel.TryAttachFile(_host,
+						ApplicantFileType.OfficialFreelanceStatement);
+				}
+
+				try
+				{
+					var isAttached = await viewModel.TryAttachFile(
+						_host, ApplicantFileType.ProfilePicture);
+					if (!isAttached)
+					{
+						throw new FileNotFoundException("Profile picture cannot be uploaded!");
+					}
+
+					_context.Add(viewModel.Applicant);
+					await _context.SaveChangesAsync();
+					return RedirectToAction(nameof(Index));
+				}
+				catch (FileNotFoundException e)
+				{
+					ModelState.AddModelError("", e.Message);
+				}
+				catch (Exception)
+				{
+					ModelState.AddModelError("", "Unable to save changes. " +
+												 "Try again, and if the problem persists, " +
+												 "see your system administrator.");
+				}
 			}
 
-			// Spoken lanugages
-			if (spokenLanguages != null)
-				viewModel.AttachSpokenLanguages(spokenLanguages);
-			
-			// Certificates
-			viewModel.AttachJSTrainingCertificates();
-
-			// Files
-			if (viewModel.ProfilePicture.Length > 0)
-				await viewModel.AttachFile(_host, ApplicantFileType.ProfilePicture);
-			if (viewModel.OfficialFreelanceStatement.Length > 0)
-				await viewModel.AttachFile(_host, ApplicantFileType.OfficialFreelanceStatement);
-
-			_context.Add(viewModel.Applicant);
-
-			try
-			{
-				await _context.SaveChangesAsync();
-				return RedirectToAction(nameof(Index));
-			}
-			catch (Exception e)
-			{
-				ModelState.AddModelError("", "Unable to save changes. " +
-				                             "Try again, and if the problem persists, " +
-				                             "see your system administrator.");
-			}
-
-			viewModel.SetDataContext(_context).PopulateViewData(spokenLanguages);
-			return View(viewModel);
+			return View(viewModel
+				.SetDataContext(_context)
+				.PopulateViewData(spokenLanguages));
 		}
 	}
 }

@@ -18,7 +18,6 @@ namespace FreelanceTool.Models
 		public DateTime UpdatedAt { get; set; }
 
 		public ApplicantFileType Type { get; set; }
-		public string Path { get; set; }
 		[Required]
 		public string OriginalName { get; set; }
 		public string UniqueName { get; set; }

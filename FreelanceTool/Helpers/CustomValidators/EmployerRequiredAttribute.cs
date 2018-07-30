@@ -3,15 +3,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using FreelanceTool.Helpers.Enums;
 using FreelanceTool.Models;
-using FreelanceTool.ViewModels;
 
 namespace FreelanceTool.Helpers.CustomValidators
 {
-    public class EmployerConditionalRequiredAttribute : ValidationAttribute
+	public class EmployerRequiredAttribute : ValidationAttribute
     {
 	    private readonly IEnumerable<Occupation> _occupationEmployerValues;
 
-	    public EmployerConditionalRequiredAttribute()
+	    public EmployerRequiredAttribute()
 	    {
 			_occupationEmployerValues = new List<Occupation>
 				{ Occupation.PartTime, Occupation.FullTime };
@@ -20,9 +19,8 @@ namespace FreelanceTool.Helpers.CustomValidators
 	    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
 	    {
 		    var applicant = (Applicant) validationContext.ObjectInstance;
-		    var currentOccupation = applicant.Occupation;
-			if (_occupationEmployerValues.Contains(currentOccupation) &&
-		        string.IsNullOrWhiteSpace(value.ToString()))
+			if (_occupationEmployerValues.Contains(applicant.Occupation) &&
+			    string.IsNullOrWhiteSpace(value.ToString()))
 		    {
 			    return new ValidationResult(GetErrorMessage());
 			}

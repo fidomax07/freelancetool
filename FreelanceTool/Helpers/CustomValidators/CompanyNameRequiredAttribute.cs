@@ -1,15 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using FreelanceTool.Helpers.Enums;
 using FreelanceTool.Models;
-using FreelanceTool.ViewModels;
 
 namespace FreelanceTool.Helpers.CustomValidators
 {
-	public class CompanyNameConditionalRequiredAttribute : ValidationAttribute
+	public class CompanyNameRequiredAttribute : ValidationAttribute
 	{
 		private readonly Occupation _selfEmployedOccupation;
 
-		public CompanyNameConditionalRequiredAttribute()
+		public CompanyNameRequiredAttribute()
 		{
 			_selfEmployedOccupation = Occupation.SelfEmployed;
 		}

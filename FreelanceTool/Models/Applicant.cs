@@ -32,6 +32,7 @@ namespace FreelanceTool.Models
 		[Required, StringLength(80)]
 		public string FirstName { get; set; }
 
+		[Column(TypeName = "date")]
 		[Required, DataType(DataType.Date)]
 		public DateTime DateOfBirth { get; set; }
 
@@ -71,6 +72,7 @@ namespace FreelanceTool.Models
 		[Display(Name = "Number of Kids")]
 		public int ChildrenCount { get; set; }
 
+		[ResidencePermitRequired]
 		public ResidencePermit? ResidencePermit { get; set; }
 
 		[Required]
@@ -79,13 +81,13 @@ namespace FreelanceTool.Models
 		// Make this property required, if Occupation is
 		// Occupation.PartTime or Occupation.FullTime.
 		[StringLength(40)]
-		[EmployerConditionalRequired]
+		[EmployerRequired]
 		public string Employer { get; set; }
 
 		// Make this property required, only if the
 		// Occupation is Occupation.SelfEmployed.
 		[StringLength(80)]
-		[CompanyNameConditionalRequired]
+		[CompanyNameRequired]
 		public string CompanyName { get; set; }
 
 		// Populate this property, only if property

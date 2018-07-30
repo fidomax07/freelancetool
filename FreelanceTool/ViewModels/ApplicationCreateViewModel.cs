@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using FreelanceTool.Data;
@@ -50,7 +49,7 @@ namespace FreelanceTool.ViewModels
 		}
 		[DataType(DataType.Upload)]
 		public IFormFile OfficialFreelanceStatement { get; set; }
-		[DataType(DataType.Upload)]
+		[Required, DataType(DataType.Upload)]
 		public IFormFile ProfilePicture { get; set; }
 		public JSTrainingCertificate JsTrainingCertificate_1 { get; set; }
 		public JSTrainingCertificate JsTrainingCertificate_2 { get; set; }
@@ -73,6 +72,9 @@ namespace FreelanceTool.ViewModels
 				};
 			}
 		}
+		public bool HasProfilePicture => ProfilePicture?.Length > 0;
+		public bool HasOfficialFreelanceStatement => OfficialFreelanceStatement?.Length > 0;
+
 
 
 		// Lifecycle
@@ -125,6 +127,7 @@ namespace FreelanceTool.ViewModels
 				.OrderBy(n => n.NameEnglish);
 			NationalitiesList = new SelectList(nationalities, "Id", "NameEnglish");
 			NativeNationality = nationalities.SingleOrDefault(n => n.Alpha2 == "CH");
+			Applicant.NationalityId = NativeNationality?.Id ?? 1;
 
 			return this;
 		}
@@ -163,29 +166,32 @@ namespace FreelanceTool.ViewModels
 			return this;
 		}
 
-		public async Task<ApplicationCreateViewModel> AttachFile(
+		public async Task<bool> TryAttachFile(
 			IHostingEnvironment host, ApplicantFileType type)
 		{
+			// Select
 			var file = type == ApplicantFileType.ProfilePicture ?
 				ProfilePicture : OfficialFreelanceStatement;
-			if (file.Length <= 0) return this;
 
-			var fileUniqueName = Path.GetRandomFileName() + ".jpg";
-			var filePath = Path.Combine(host.ContentRootPath, "App_Data", fileUniqueName);
-			using (var stream = new FileStream(filePath, FileMode.Create))
-				await file.CopyToAsync(stream);
+			// Validate
+			if (file.Length <= 0) return false;
 
+			// Try upload
+			var uniqueFileName = await file.TryUploadFile(host);
+			if (uniqueFileName == null) return false;
+
+			// Attach
 			Applicant.ApplicantFiles.Add(new ApplicantFile(type)
 			{
-				Path = filePath,
-				OriginalName = file.FileName,
-				UniqueName = fileUniqueName,
-				//Extension = file.Name,
 				ApplicantId = Applicant.Id,
+				OriginalName = file.FileName,
+				UniqueName = uniqueFileName,
+				Extension = file.GetExtension()
 			});
 
-			return this;
+			return true;
 		}
+
 
 		// Private methods
 		private void PopulateSpokenLanguages(
@@ -195,12 +201,14 @@ namespace FreelanceTool.ViewModels
 			foreach (var language in languages)
 			{
 				var langViewModel = new ApplicantLanguageViewModel
-				{ Id = language.Id, Name = language.Name };
+					{ Id = language.Id, Name = language.Name };
+
 				if (spokenLanguages != null)
 				{
 					langViewModel.IsChecked = spokenLanguages
 						.Contains(language.Id.ToString());
 				}
+
 				SpokenLanguages?.Add(langViewModel);
 			}
 		}
