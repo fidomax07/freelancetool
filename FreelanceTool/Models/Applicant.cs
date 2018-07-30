@@ -24,6 +24,7 @@ namespace FreelanceTool.Models
 		public DateTime UpdatedAt { get; set; }
 
 		[Required, StringLength(30)]
+		[Display(Name = "Sex")]
 		public string Sex { get; set; }
 
 		[Required, StringLength(80)]

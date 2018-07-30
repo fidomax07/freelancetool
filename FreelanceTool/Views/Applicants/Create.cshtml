@@ -1,11 +1,14 @@
 ﻿@using FreelanceTool.Helpers.Enums
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
 @model ApplicationCreateViewModel
 
 @{
-	ViewData["Title"] = "Create application";
+	ViewData["Title"] = Localizer["Fill an application"];
 }
 
-<h2 class="body-title">Create an appliction</h2>
+<h2 class="body-title">@Localizer["Fill an application"]</h2>
 
 <hr />
 <div class="row">
@@ -20,7 +23,9 @@
 				</div>
 				<div class="panel-body">
 					<div class="form-group">
-						<label asp-for="@Model.Applicant.Sex" class="control-label"></label>
+						<label asp-for="@Model.Applicant.Sex" class="control-label">
+							@Localizer[nameof(Model.Applicant.Sex)]
+						</label>
 						<select asp-for="@Model.Applicant.Sex"
 								asp-items="Html.GetEnumSelectList<Sex>()"
 								class="form-control">
@@ -185,9 +190,9 @@
 					</div>
 					<div class="form-group" style="display: none;">
 						<label asp-for="@Model.OfficialFreelanceStatement" class="control-label"></label>
-						<input asp-for="@Model.OfficialFreelanceStatement" class="form-control" 
-						       style="display: none;"
-						       data-val-accepted-formats="Accepted formats: PDF, JPG, JPEG, TIFF, PNG, GIF"/>
+						<input asp-for="@Model.OfficialFreelanceStatement" class="form-control"
+							   style="display: none;"
+							   data-val-accepted-formats="Accepted formats: PDF, JPG, JPEG, TIFF, PNG, GIF" />
 						<button type="button" data-input-file-id="@nameof(Model.OfficialFreelanceStatement)" class="btn btn-info btn-upload">Choose file</button>
 						<p id="@nameof(Model.OfficialFreelanceStatement)_Info" class="help-block">Accepted formats: PDF, JPG, JPEG, TIFF, PNG, GIF</p>
 						<span asp-validation-for="@Model.OfficialFreelanceStatement" class="text-danger"></span>
@@ -233,12 +238,12 @@
 					<div class="form-group">
 						<label asp-for="@Model.ProfilePicture" class="control-label"></label>
 						<input asp-for="@Model.ProfilePicture" class="form-control" style="display: none;"
-						       data-val-required-cond="Profile picture is mandatory."
-						       data-val-accepted-formats="Accepted formats: JPG and JPEG"/>
+							   data-val-required-cond="Profile picture is mandatory."
+							   data-val-accepted-formats="Accepted formats: JPG and JPEG" />
 						<button type="button" data-input-file-id="@nameof(Model.ProfilePicture)" class="btn btn-info btn-upload">Choose file</button>
 						<p id="@nameof(Model.ProfilePicture)_Info" class="help-block">Accepted formats: JPG and JPEG</p>
-						<span asp-validation-for="@Model.ProfilePicture" class="text-danger" 
-						      id="profile-picture-error"></span>
+						<span asp-validation-for="@Model.ProfilePicture" class="text-danger"
+							  id="profile-picture-error"></span>
 					</div>
 				</div>
 			</div>
@@ -516,7 +521,7 @@
 					var fileInput = $(this);
 					var fileInfoText = fileInput.data("val-accepted-formats");
 					var fileInfoId = "#" + fileInput.attr("id") + "_Info";
-					
+
 					if (isFieldEmpty(fileInput)) {
 						updateErrorMessage(fileInput, "#profile-picture-error");
 						$(fileInfoId).text(fileInfoText);
@@ -620,7 +625,10 @@
 
 					// Finally submit the form if terms are checked
 					$("#terms-error").text(!areTermsChecked ? "Please accept the contractual terms!" : "");
-					if (areTermsChecked) $("form").off("submit").submit();
+					if (areTermsChecked) {
+						$("input[type=submit]").first().attr("disabled", true);
+						$("form").off("submit").submit();
+					}
 				});
 		});
 	</script>

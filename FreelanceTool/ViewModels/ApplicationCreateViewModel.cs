@@ -31,6 +31,7 @@ namespace FreelanceTool.ViewModels
 		private string _applicantDateOfBirth;
 		[Required]
 		[DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+		[Display(Name = "Date of Birth")]
 		public string ApplicantDateOfBirth
 		{
 			get => _applicantDateOfBirth;
