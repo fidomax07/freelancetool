@@ -21,12 +21,14 @@ namespace FreelanceTool.ViewModels
 		private ApplicationDataContext _dataContext;
 		private HttpContext _httpContext;
 
+
 		// View Data
 		public SelectList MainLanguageList { get; private set; }
 		public List<ApplicantLanguageViewModel> SpokenLanguages { get; }
 		public List<SelectListItem> PhonePrefixesList { get; }
 		public SelectList NationalitiesList { get; private set; }
 		public Nationality NativeNationality { get; private set; }
+
 
 		// Binding properties
 		public Applicant Applicant { get; set; }
@@ -60,6 +62,7 @@ namespace FreelanceTool.ViewModels
 		public JSTrainingCertificate JsTrainingCertificate_3 { get; set; }
 		public JSTrainingCertificate JsTrainingCertificate_4 { get; set; }
 		public JSTrainingCertificate JsTrainingCertificate_5 { get; set; }
+
 
 		// Helper properties
 		public List<JSTrainingCertificate> JsTrainingCertificates
@@ -135,8 +138,7 @@ namespace FreelanceTool.ViewModels
 			var currentCultureLanguage = languages.SingleOrDefault(
 				l => l.NameEnglish == uiCulture.EnglishName);
 			Applicant.SetMainLanguage(currentCultureLanguage);
-
-			PopulateSpokenLanguages(languages.ToList(), spokenLanguages);
+			PopulateSpokenLanguages(languages.ToList(), uiCulture, spokenLanguages);
 
 			// Phone prefixes data
 			foreach (var prefix in Applicant.PhonePrefixes)
@@ -148,24 +150,8 @@ namespace FreelanceTool.ViewModels
 			// Nationality related data
 			var nationalities = _dataContext.Nationalities
 				.AsNoTracking();
-
-			// TODO: Simplify this structure
-			switch (uiCulture.EnglishName)
-			{
-				case "English":
-					nationalities = nationalities.OrderBy(n => n.NameEnglish);
-					break;
-				case "German":
-					nationalities = nationalities.OrderBy(n => n.NameGerman);
-					break;
-				case "French":
-					nationalities = nationalities.OrderBy(n => n.NameFrench);
-					break;
-				default:
-					nationalities = nationalities.OrderBy(n => n.NameEnglish);
-					break;
-			}
-
+			nationalities = OrderLocalizedNationalities(
+				nationalities, uiCulture.EnglishName);
 			NationalitiesList = new SelectList(
 				nationalities, 
 				"Id", 
@@ -240,19 +226,15 @@ namespace FreelanceTool.ViewModels
 		// Private methods
 		private void PopulateSpokenLanguages(
 			IEnumerable<Language> languages,
+			CultureInfo culture,
 			string[] spokenLanguages = null)
 		{
-			var uiCulture = _httpContext.Features
-				.Get<IRequestCultureFeature>()
-				.RequestCulture
-				.UICulture;
-
 			foreach (var language in languages)
 			{
 				var langViewModel = new ApplicantLanguageViewModel
 				{
 					Id = language.Id,
-					Name = language.GetLocalizedName(uiCulture)
+					Name = language.GetLocalizedName(culture)
 				};
 
 				if (spokenLanguages != null)
@@ -263,6 +245,29 @@ namespace FreelanceTool.ViewModels
 
 				SpokenLanguages?.Add(langViewModel);
 			}
+		}
+
+		private IQueryable<Nationality> OrderLocalizedNationalities(
+			IQueryable<Nationality> nationalities, string cultureEnglishName)
+		{
+			IQueryable<Nationality> nationalitiesOrdered;
+			switch (cultureEnglishName)
+			{
+				case "English":
+					nationalitiesOrdered = nationalities.OrderBy(n => n.NameEnglish);
+					break;
+				case "German":
+					nationalitiesOrdered = nationalities.OrderBy(n => n.NameGerman);
+					break;
+				case "French":
+					nationalitiesOrdered = nationalities.OrderBy(n => n.NameFrench);
+					break;
+				default:
+					nationalitiesOrdered = nationalities.OrderBy(n => n.NameEnglish);
+					break;
+			}
+
+			return nationalitiesOrdered;
 		}
 	}
 }

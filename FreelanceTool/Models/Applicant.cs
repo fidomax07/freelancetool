@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using FreelanceTool.Helpers.CustomValidators;
+using FreelanceTool.CustomValidators;
 using FreelanceTool.Models.Enums;
 
 namespace FreelanceTool.Models

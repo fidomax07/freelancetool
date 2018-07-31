@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 namespace Microsoft.AspNetCore.Http
 {
 	public static class IFormFileExtensions
-    {
+	{
 	    public static string GetExtension(this IFormFile file)
 	    {
 		    return Path.GetExtension(file.FileName);
@@ -25,11 +25,11 @@ namespace Microsoft.AspNetCore.Http
 	    }
 
 	    public static async Task<string> TrySaveFile(
-		    this IFormFile file, IHostingEnvironment host)
+		    this IFormFile file, IHostingEnvironment env)
 	    {
 		    var uniqueFileName = file.GetUniqueFileName();
 		    var filePath = Path.Combine(
-			    host.ContentRootPath, Constants.UPLOAD_PATH, uniqueFileName);
+			    env.ContentRootPath, Constants.UPLOAD_PATH, uniqueFileName);
 		    try
 		    {
 			    using (var stream = new FileStream(filePath, FileMode.Create))

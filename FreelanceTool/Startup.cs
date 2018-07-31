@@ -1,5 +1,7 @@
 ﻿using System.Globalization;
+using FreelanceTool.Controllers;
 using FreelanceTool.Data;
+using FreelanceTool.Helpers;
 using FreelanceTool.Models;
 using FreelanceTool.Services;
 using Microsoft.AspNetCore.Builder;
@@ -38,6 +40,8 @@ namespace FreelanceTool
 
 			// Add application services.
 			services.AddTransient<IEmailSender, EmailSender>();
+			services.AddTransient<EnumsLocalizer>();
+			services.AddTransient<ClassesLocalizer>();
 
 			services.AddLocalization(options => options.ResourcesPath = "Resources");
 

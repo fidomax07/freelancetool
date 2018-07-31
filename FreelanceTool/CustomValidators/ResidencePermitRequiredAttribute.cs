@@ -1,15 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using FreelanceTool.Helpers;
 using FreelanceTool.Models;
-using static FreelanceTool.Helpers.Constants;
 
-namespace FreelanceTool.Helpers.CustomValidators
+namespace FreelanceTool.CustomValidators
 {
 	public class ResidencePermitRequiredAttribute : ValidationAttribute
     {
 	    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
 	    {
 			var applicant = (Applicant)validationContext.ObjectInstance;
-		    if (applicant.NationalityId != NATIVE_NATIONALITY_ID &&
+		    if (applicant.NationalityId != Constants.NATIVE_NATIONALITY_ID &&
 		        string.IsNullOrWhiteSpace(value.ToString()))
 		    {
 				return new ValidationResult(GetErrorMessage());

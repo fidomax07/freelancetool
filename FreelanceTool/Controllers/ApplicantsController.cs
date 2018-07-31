@@ -14,14 +14,14 @@ namespace FreelanceTool.Controllers
 	public class ApplicantsController : Controller
 	{
 		private readonly ApplicationDataContext _dataContext;
-		private readonly IHostingEnvironment _host;
+		private readonly IHostingEnvironment _env;
 
 
 		public ApplicantsController(
-			ApplicationDataContext dataContext, IHostingEnvironment host)
+			ApplicationDataContext dataContext, IHostingEnvironment env)
 		{
 			_dataContext = dataContext;
-			_host = host;
+			_env = env;
 		}
 
 
@@ -59,14 +59,14 @@ namespace FreelanceTool.Controllers
 
 				if (viewModel.HasOfficialFreelanceStatement)
 				{
-					await viewModel.TryAttachFile(_host,
+					await viewModel.TryAttachFile(_env,
 						ApplicantFileType.OfficialFreelanceStatement);
 				}
 
 				try
 				{
 					var isAttached = await viewModel.TryAttachFile(
-						_host, ApplicantFileType.ProfilePicture);
+						_env, ApplicantFileType.ProfilePicture);
 					if (!isAttached)
 					{
 						throw new FileNotFoundException("Profile picture cannot be uploaded!");

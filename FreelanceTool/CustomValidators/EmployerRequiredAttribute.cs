@@ -4,7 +4,7 @@ using System.Linq;
 using FreelanceTool.Models;
 using FreelanceTool.Models.Enums;
 
-namespace FreelanceTool.Helpers.CustomValidators
+namespace FreelanceTool.CustomValidators
 {
 	public class EmployerRequiredAttribute : ValidationAttribute
     {

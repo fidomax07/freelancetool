@@ -1,44 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FreelanceTool.Data;
+﻿using FreelanceTool.Data;
+using FreelanceTool.Helpers;
+using FreelanceTool.Models;
+using FreelanceTool.ViewModels;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Internal;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 
 namespace FreelanceTool.Controllers
 {
 	public class TestController : Controller
-    {
-	    private readonly IHostingEnvironment _host;
-	    private readonly ApplicationDataContext _context;
-	    private readonly IStringLocalizer<TestController> _localizer;
+	{
+		private readonly IHostingEnvironment _host;
+		private readonly ApplicationDataContext _context;
+		private readonly IStringLocalizer<Applicant> _localizer;
+		private readonly EnumsLocalizer _enumsLocalizer;
+		private readonly ClassesLocalizer _classesLocalizer;
+
 
 		public TestController(
-			IHostingEnvironment host, 
+			IHostingEnvironment host,
 			ApplicationDataContext context,
-			IStringLocalizer<TestController> localizer)
-	    {	
-		    _host = host;
-		    _context = context;
-		    _localizer = localizer;
-	    }
+			IStringLocalizer<Applicant> localizer,
+			EnumsLocalizer enumsLocalizer,
+			ClassesLocalizer classesLocalizer)
+		{
+			_host = host;
+			_context = context;
+			_localizer = localizer;
+			_enumsLocalizer = enumsLocalizer;
+			_classesLocalizer = classesLocalizer;
+		}
 
 		public string Index()
 		{
-			var requestCultureFeature = HttpContext.Features.Get<IRequestCultureFeature>();
-
-			var uiCulture = requestCultureFeature.RequestCulture.UICulture;
-
-			return uiCulture.EnglishName;
+			return _classesLocalizer.Localize<ApplicationCreateViewModel>(
+				nameof(ApplicationCreateViewModel.ApplicantDateOfBirth));
 		}
-
 	}
 }
