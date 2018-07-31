@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace FreelanceTool.Models
 {
@@ -29,5 +30,28 @@ namespace FreelanceTool.Models
 
 		// Relationships and Navigation Properties
 		public ICollection<Applicant> Applicants { get; set; }
+
+
+
+		// Interface
+		public string GetLocalizedName(CultureInfo culture)
+		{
+			switch (culture.EnglishName)
+			{
+				case "English":
+					return NameEnglish;
+				case "German":
+					return NameGerman;
+				case "French":
+					return NameFrench;
+				default:
+					return NameEnglish;
+			}
+		}
+
+		public static string GetLocalizedColumnName(CultureInfo culture)
+		{
+			return $"Name{culture.EnglishName}";
+		}
 	}
 }

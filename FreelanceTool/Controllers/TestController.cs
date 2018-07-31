@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FreelanceTool.Data;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
@@ -30,8 +33,12 @@ namespace FreelanceTool.Controllers
 
 		public string Index()
 		{
-			return _localizer["Create an application"];
+			var requestCultureFeature = HttpContext.Features.Get<IRequestCultureFeature>();
+
+			var uiCulture = requestCultureFeature.RequestCulture.UICulture;
+
+			return uiCulture.EnglishName;
 		}
 
-    }
+	}
 }

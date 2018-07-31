@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using FreelanceTool.Helpers.Enums;
 using FreelanceTool.Models;
+using FreelanceTool.Models.Enums;
 
 namespace FreelanceTool.Helpers.CustomValidators
 {

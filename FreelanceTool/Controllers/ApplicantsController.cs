@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using FreelanceTool.Data;
-using FreelanceTool.Helpers.Enums;
 using FreelanceTool.Models;
+using FreelanceTool.Models.Enums;
 using FreelanceTool.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -13,14 +13,14 @@ namespace FreelanceTool.Controllers
 {
 	public class ApplicantsController : Controller
 	{
-		private readonly ApplicationDataContext _context;
+		private readonly ApplicationDataContext _dataContext;
 		private readonly IHostingEnvironment _host;
 
 
 		public ApplicantsController(
-			ApplicationDataContext context, IHostingEnvironment host)
+			ApplicationDataContext dataContext, IHostingEnvironment host)
 		{
-			_context = context;
+			_dataContext = dataContext;
 			_host = host;
 		}
 
@@ -41,7 +41,7 @@ namespace FreelanceTool.Controllers
 		// GET: Applicants/Create
 		public IActionResult Create()
 		{
-			return View(new ApplicationCreateViewModel(_context));
+			return View(new ApplicationCreateViewModel(_dataContext, HttpContext));
 		}
 
 		// POST: Applicants/Create
@@ -72,8 +72,8 @@ namespace FreelanceTool.Controllers
 						throw new FileNotFoundException("Profile picture cannot be uploaded!");
 					}
 
-					_context.Add(viewModel.Applicant);
-					await _context.SaveChangesAsync();
+					_dataContext.Add(viewModel.Applicant);
+					await _dataContext.SaveChangesAsync();
 					return RedirectToAction(nameof(Index));
 				}
 				catch (FileNotFoundException e)
@@ -89,7 +89,8 @@ namespace FreelanceTool.Controllers
 			}
 
 			return View(viewModel
-				.SetDataContext(_context)
+				.SetDataContext(_dataContext)
+				.SetHttpContext(HttpContext)
 				.PopulateViewData(spokenLanguages));
 		}
 	}

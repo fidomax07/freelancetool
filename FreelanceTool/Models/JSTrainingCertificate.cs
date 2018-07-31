@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using FreelanceTool.Helpers.Enums;
+using FreelanceTool.Models.Enums;
 
 namespace FreelanceTool.Models
 {

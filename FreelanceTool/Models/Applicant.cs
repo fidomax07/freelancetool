@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Globalization;
 using System.Linq;
 using FreelanceTool.Helpers.CustomValidators;
-using FreelanceTool.Helpers.Enums;
+using FreelanceTool.Models.Enums;
 
 namespace FreelanceTool.Models
 {
@@ -23,14 +22,20 @@ namespace FreelanceTool.Models
 		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		public DateTime UpdatedAt { get; set; }
 
-		[Required, StringLength(30)]
+
+		[Required(ErrorMessage = "The {0} field is required.")]
+		[StringLength(30)]
 		[Display(Name = "Sex")]
 		public string Sex { get; set; }
 
-		[Required, StringLength(80)]
+		[Required(ErrorMessage = "The {0} field is required.")]
+		[StringLength(80, ErrorMessage = "The <b>{0}</b> field must be at most {1} characters long.")]
+		[Display(Name = "Last name")]
 		public string LastName { get; set; }
 
-		[Required, StringLength(80)]
+		[Required(ErrorMessage = "The {0} field is required.")]
+		[StringLength(80)]
+		[Display(Name = "First name")]
 		public string FirstName { get; set; }
 
 		[Column(TypeName = "date")]
@@ -60,6 +65,7 @@ namespace FreelanceTool.Models
 		public string City { get; set; }
 
 		[Required]
+		[Display(Name = "Country")]
 		public Country Country { get; set; }
 
 		[Required, StringLength(20)]
@@ -146,15 +152,40 @@ namespace FreelanceTool.Models
 		// Lifecycle
 		public Applicant()
 		{
-			// Set default values for database columns
-			//var now = DateTime.Now;
-			//DateOfBirth = new DateTime(now.Year - 20, now.Month, now.Day);
+			// Initialize default values
 			Country = Country.Switzerland;
+			DateOfBirth = DateTime.UtcNow.AddYears(-20);
 
 			// Initialize collections
 			SpokenLanguages = new List<ApplicantLanguage>();
 			JsTrainingCertificates = new List<JSTrainingCertificate>();
 			ApplicantFiles = new List<ApplicantFile>();
+		}
+
+
+
+		// Interface
+		public Applicant SetMainLanguage(Language language)
+		{
+			if (language != null)
+			{
+				LanguageId = language.Id;
+				MainLanguage = language;
+			}
+
+			return this;
+		}
+
+		public Applicant SetNationality(Nationality nationality)
+		{
+			if (nationality != null)
+			{
+				NationalityId = nationality.Id;
+				Nationality = nationality;
+			}
+
+
+			return this;
 		}
 	}
 }

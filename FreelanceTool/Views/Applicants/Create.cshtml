@@ -1,4 +1,4 @@
-﻿@using FreelanceTool.Helpers.Enums
+﻿@using FreelanceTool.Models.Enums
 @using Microsoft.AspNetCore.Mvc.Localization
 
 @inject IViewLocalizer Localizer
@@ -23,9 +23,7 @@
 				</div>
 				<div class="panel-body">
 					<div class="form-group">
-						<label asp-for="@Model.Applicant.Sex" class="control-label">
-							@Localizer[nameof(Model.Applicant.Sex)]
-						</label>
+						<label asp-for="@Model.Applicant.Sex" class="control-label"></label>
 						<select asp-for="@Model.Applicant.Sex"
 								asp-items="Html.GetEnumSelectList<Sex>()"
 								class="form-control">
@@ -240,8 +238,8 @@
 						<input asp-for="@Model.ProfilePicture" class="form-control" style="display: none;"
 							   data-val-required-cond="Profile picture is mandatory."
 							   data-val-accepted-formats="Accepted formats: JPG and JPEG" />
-						<button type="button" data-input-file-id="@nameof(Model.ProfilePicture)" class="btn btn-info btn-upload">Choose file</button>
-						<p id="@nameof(Model.ProfilePicture)_Info" class="help-block">Accepted formats: JPG and JPEG</p>
+						<button type="button" data-input-file-id="@nameof(Model.ProfilePicture)" class="btn btn-info btn-upload">@Localizer["Choose file"]</button>
+						<p id="@nameof(Model.ProfilePicture)_Info" class="help-block">@Localizer["Accepted formats: JPG and JPEG"]</p>
 						<span asp-validation-for="@Model.ProfilePicture" class="text-danger"
 							  id="profile-picture-error"></span>
 					</div>

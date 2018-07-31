@@ -1,11 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using FreelanceTool.Helpers.Enums;
-using Microsoft.AspNetCore.Http;
+using FreelanceTool.Models.Enums;
 
 namespace FreelanceTool.Models
 {
@@ -18,9 +14,11 @@ namespace FreelanceTool.Models
 		public DateTime UpdatedAt { get; set; }
 
 		public ApplicantFileType Type { get; set; }
-		[Required]
+		[Required, StringLength(100)]
 		public string OriginalName { get; set; }
+		[Required, StringLength(100)]
 		public string UniqueName { get; set; }
+		[Required, StringLength(5)]
 		public string Extension { get; set; }
 
 

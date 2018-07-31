@@ -5,26 +5,50 @@ using Microsoft.EntityFrameworkCore;
 namespace FreelanceTool.Data
 {
 	public static class DbInitializer
-    {
-	    public static void Seed(ApplicationDataContext context)
-	    {
-		    if (context.Languages.Any()) return;
+	{
+		public static void Seed(ApplicationDataContext context)
+		{
+			if (context.Languages.Any()) return;
 
-		    context.Database.Migrate();
+			context.Database.Migrate();
 
-		    var languages = new[]
-		    {
-			    new Language { Name = "German"},
-			    new Language { Name = "French"},
-			    new Language { Name = "Italian"},
-			    new Language { Name = "English"}
-		    };
-		    context.Languages.AddRange(languages);
-		    context.SaveChanges();
+			var languages = new[]
+			{
+				new Language
+				{
+					Alpha2 = "de",
+					NameEnglish = "German",
+					NameGerman = "Deutsch",
+					NameFrench = "Deutsch"
+				},
+				new Language
+				{
+					Alpha2 = "fr",
+					NameEnglish = "French",
+					NameGerman = "Français",
+					NameFrench = "Français"
+				},
+				new Language
+				{
+					Alpha2 = "it",
+					NameEnglish = "Italian",
+					NameGerman = "Italiano",
+					NameFrench = "Italiano"
+				},
+				new Language
+				{
+					Alpha2 = "en",
+					NameEnglish = "English",
+					NameGerman = "Englisch",
+					NameFrench = "Anglais"
+				}
+			};
+			context.Languages.AddRange(languages);
+			context.SaveChanges();
 
 			#region Raw query for populating nationalities
 
-		    context.Database.ExecuteSqlCommand(@"
+			context.Database.ExecuteSqlCommand(@"
 				INSERT INTO Nationality (Code, Alpha2, Alpha3, NameEnglish, NameFrench) VALUES
 				(4, 'AF', 'AFG', 'Afghanistan', 'Afghanistan'),
 				(8, 'AL', 'ALB', 'Albania', 'Albanie'),
@@ -270,6 +294,6 @@ namespace FreelanceTool.Data
 
 			#endregion
 			context.SaveChanges();
-	    }
+		}
 	}
 }

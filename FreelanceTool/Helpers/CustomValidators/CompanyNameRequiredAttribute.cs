@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using FreelanceTool.Helpers.Enums;
 using FreelanceTool.Models;
+using FreelanceTool.Models.Enums;
 
 namespace FreelanceTool.Helpers.CustomValidators
 {

@@ -12,9 +12,10 @@ using System;
 namespace FreelanceTool.Data.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180731140350_AddColumnsForMultilingualLanguage")]
+    partial class AddColumnsForMultilingualLanguage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,7 +80,7 @@ namespace FreelanceTool.Data.Migrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(80);
+                        .HasMaxLength(8);
 
                     b.Property<int>("NationalityId");
 

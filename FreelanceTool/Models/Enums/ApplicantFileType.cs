@@ -1,4 +1,4 @@
-﻿namespace FreelanceTool.Helpers.Enums
+﻿namespace FreelanceTool.Models.Enums
 {
 	public enum ApplicantFileType
 	{

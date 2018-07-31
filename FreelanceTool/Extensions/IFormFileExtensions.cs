@@ -24,7 +24,7 @@ namespace Microsoft.AspNetCore.Http
 			    .ToString();
 	    }
 
-	    public static async Task<string> TryUploadFile(
+	    public static async Task<string> TrySaveFile(
 		    this IFormFile file, IHostingEnvironment host)
 	    {
 		    var uniqueFileName = file.GetUniqueFileName();
