@@ -54,8 +54,6 @@ namespace FreelanceTool.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("getdate()");
 
-                    b.Property<string>("CsvPath");
-
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("date");
 

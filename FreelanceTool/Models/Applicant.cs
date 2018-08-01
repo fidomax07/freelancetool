@@ -113,8 +113,6 @@ namespace FreelanceTool.Models
 		[Required, StringLength(34), RegularExpression(@"^[0-9]*$")]
 		public string IbanNumber { get; set; }
 
-		public string CsvPath { get; set; }
-
 
 		// Relationships and Navigation Properties
 		[Required, Display(Name = "Main language")]

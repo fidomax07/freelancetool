@@ -197,7 +197,7 @@ namespace FreelanceTool.ViewModels
 		}
 
 		public async Task<bool> TryAttachFile(
-			IHostingEnvironment host, ApplicantFileType type)
+			IHostingEnvironment env, ApplicantFileType type)
 		{
 			// Select
 			var file = type == ApplicantFileType.ProfilePicture ?
@@ -207,7 +207,7 @@ namespace FreelanceTool.ViewModels
 			if (file.Length <= 0) return false;
 
 			// Try upload
-			var uniqueFileName = await file.TrySaveFile(host);
+			var uniqueFileName = await file.TrySaveFile(env);
 			if (uniqueFileName == null) return false;
 
 			// Attach

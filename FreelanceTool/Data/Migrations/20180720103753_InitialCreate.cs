@@ -69,7 +69,6 @@ namespace FreelanceTool.Data.Migrations
 					DriverLicenseB = table.Column<bool>(nullable: false),
 					TrainingNumber = table.Column<string>(maxLength: 80, nullable: true),
 					IbanNumber = table.Column<string>(maxLength: 34, nullable: false),
-					CsvPath = table.Column<string>(nullable: true),
 					LanguageId = table.Column<int>(nullable: false),
 					NationalityId = table.Column<int>(nullable: false)
 				},

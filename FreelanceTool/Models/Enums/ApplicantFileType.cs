@@ -3,6 +3,7 @@
 	public enum ApplicantFileType
 	{
 		ProfilePicture = 1,
-		OfficialFreelanceStatement
+		OfficialFreelanceStatement,
+		Csv
 	}
 }
