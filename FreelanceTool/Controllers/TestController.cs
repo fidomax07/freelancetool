@@ -1,6 +1,6 @@
 ﻿using FreelanceTool.Data;
 using FreelanceTool.Helpers;
-using FreelanceTool.Models;
+using FreelanceTool.Models.Enums;
 using FreelanceTool.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -12,29 +12,28 @@ namespace FreelanceTool.Controllers
 	{
 		private readonly IHostingEnvironment _host;
 		private readonly ApplicationDataContext _context;
-		private readonly IStringLocalizer<Applicant> _localizer;
-		private readonly EnumsLocalizer _enumsLocalizer;
-		private readonly ClassesLocalizer _classesLocalizer;
+		private readonly AppLocalizer _localizer;
+		private readonly IStringLocalizer<Country> _countryLocalizer;
 
 
 		public TestController(
 			IHostingEnvironment host,
 			ApplicationDataContext context,
-			IStringLocalizer<Applicant> localizer,
-			EnumsLocalizer enumsLocalizer,
-			ClassesLocalizer classesLocalizer)
+			AppLocalizer localizer,
+			IStringLocalizer<Country> countryLocalizer)
 		{
 			_host = host;
 			_context = context;
 			_localizer = localizer;
-			_enumsLocalizer = enumsLocalizer;
-			_classesLocalizer = classesLocalizer;
+			_countryLocalizer = countryLocalizer;
 		}
 
 		public string Index()
 		{
-			return _classesLocalizer.Localize<ApplicationCreateViewModel>(
+			return _localizer.LocalizeClassMember<ApplicationCreateViewModel>(
 				nameof(ApplicationCreateViewModel.ApplicantDateOfBirth));
+
+			//return _localizer.LocalizeEnum(Country.Germany);
 		}
 	}
 }
