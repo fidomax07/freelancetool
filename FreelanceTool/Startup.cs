@@ -41,6 +41,7 @@ namespace FreelanceTool
 			// Add application services.
 			services.AddTransient<IEmailSender, EmailSender>();
 			services.AddTransient<AppLocalizer>();
+			services.AddTransient<PathHandler>();
 
 			services.AddLocalization(options => options.ResourcesPath = "Resources");
 
