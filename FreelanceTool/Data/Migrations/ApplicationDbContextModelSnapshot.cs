@@ -93,9 +93,7 @@ namespace FreelanceTool.Data.Migrations
 
                     b.Property<int?>("ResidencePermit");
 
-                    b.Property<string>("Sex")
-                        .IsRequired()
-                        .HasMaxLength(30);
+                    b.Property<int>("Sex");
 
                     b.Property<string>("SwissSocialSecurityNumber")
                         .IsRequired()

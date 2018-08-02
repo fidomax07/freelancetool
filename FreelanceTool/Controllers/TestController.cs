@@ -1,5 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using FreelanceTool.Data;
+using FreelanceTool.Helpers;
+using FreelanceTool.Models;
 using FreelanceTool.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,28 +19,39 @@ namespace FreelanceTool.Controllers
 		private readonly IConfiguration _config;
 		private readonly ApplicationDataContext _dataContext;
 		private readonly IEmailSender _emailService;
+		private readonly AppLocalizer _localizer;
+		private readonly PathHandler _pathService;
 
 
 		public TestController(
 			IConfiguration config,
 			ApplicationDataContext dataContext, 
-			IEmailSender emailService)
+			IEmailSender emailService,
+			AppLocalizer localizer,
+			PathHandler pathService)
 		{
 			_config = config;
 			_dataContext = dataContext;
 			_emailService = emailService;
+			_localizer = localizer;
+			_pathService = pathService;
 		}
 
-		public string Index()
+		public async Task<IActionResult> Index()
 		{
-			var applicant = _dataContext.Applicants
+
+			var applicant = await _dataContext.Applicants
+				.Include(a => a.MainLanguage)
+				.Include(a => a.Nationality)
+				.Include(a => a.SpokenLanguages)
+				.Include(a => a.JsTrainingCertificates)
 				.Include(a => a.ApplicantFiles)
-				.SingleOrDefault(a => a.Id == 1);
+				.SingleOrDefaultAsync(a => a.Id == 1);
+			
 
-			if (applicant != null)
-				_emailService.SendNewApplicationEmailAsync(applicant);
+			var csvModel = new CsvModel(applicant);
 
-			return _config.GetSection("targetEmailAddress").Value;
+			return new JsonResult(_localizer.LocalizeEnum(csvModel.Country));
 		}
 	}
 }

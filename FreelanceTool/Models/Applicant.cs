@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
 using System.Linq;
 using FreelanceTool.CustomValidators;
-using FreelanceTool.Helpers;
 using FreelanceTool.Models.Enums;
 
 namespace FreelanceTool.Models
@@ -26,9 +24,8 @@ namespace FreelanceTool.Models
 
 
 		[Required(ErrorMessage = "The {0} field is required.")]
-		[StringLength(30)]
 		[Display(Name = "Sex")]
-		public string Sex { get; set; }
+		public Sex Sex { get; set; }
 
 		[Required(ErrorMessage = "The {0} field is required.")]
 		[StringLength(80, ErrorMessage = "The <b>{0}</b> field must be at most {1} characters long.")]
@@ -42,6 +39,7 @@ namespace FreelanceTool.Models
 
 		[Column(TypeName = "date")]
 		[Required, DataType(DataType.Date)]
+		[Display(Name = "Date of birth")]
 		public DateTime DateOfBirth { get; set; }
 
 		[Required, StringLength(5)]
@@ -117,12 +115,12 @@ namespace FreelanceTool.Models
 
 
 		// Relationships and Navigation Properties
-		[Required, Display(Name = "Main language")]
 		public int LanguageId { get; set; }
+		[Required, Display(Name = "Main language")]
 		public Language MainLanguage { get; set; }
 
-		[Required, Display(Name = "Nationality")]
 		public int NationalityId { get; set; }
+		[Required, Display(Name = "Nationality")]
 		public Nationality Nationality { get; set; }
 
 		public ICollection<ApplicantLanguage> SpokenLanguages { get; set; }

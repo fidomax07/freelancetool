@@ -45,7 +45,7 @@ namespace FreelanceTool.Data.Migrations
 				{
 					Id = table.Column<int>(nullable: false)
 						.Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-					Sex = table.Column<string>(maxLength: 30, nullable: false),
+					Sex = table.Column<int>(nullable: false),
 					LastName = table.Column<string>(maxLength: 80, nullable: false),
 					FirstName = table.Column<string>(maxLength: 80, nullable: false),
 					DateOfBirth = table.Column<DateTime>(nullable: false),
