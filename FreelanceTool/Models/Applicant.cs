@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
 using System.Linq;
 using FreelanceTool.CustomValidators;
+using FreelanceTool.Helpers;
 using FreelanceTool.Models.Enums;
 
 namespace FreelanceTool.Models
@@ -142,6 +144,14 @@ namespace FreelanceTool.Models
 			{
 				return ApplicantFiles.FirstOrDefault(
 					f => f.Type == ApplicantFileType.OfficialFreelanceStatement);
+			}
+		}
+		public ApplicantFile Csv
+		{
+			get
+			{
+				return ApplicantFiles.FirstOrDefault(
+					f => f.Type == ApplicantFileType.Csv);
 			}
 		}
 

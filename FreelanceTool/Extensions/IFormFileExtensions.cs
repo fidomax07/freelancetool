@@ -2,8 +2,9 @@
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using FreelanceTool.Helpers;
 using Microsoft.AspNetCore.Hosting;
+using static System.IO.Path;
+using static FreelanceTool.Helpers.Constants;
 
 namespace Microsoft.AspNetCore.Http
 {
@@ -17,7 +18,7 @@ namespace Microsoft.AspNetCore.Http
 		public static string GetUniqueFileName(this IFormFile file)
 	    {
 		    var currentTimestamp = DateTime.UtcNow.ToString("yyyMMddHHmmss");
-		    var uniqueFileName = Path.GetRandomFileName();
+		    var uniqueFileName = GetRandomFileName();
 		    return new StringBuilder($"{currentTimestamp}_{uniqueFileName}")
 			    .Replace(".", string.Empty)
 			    .Append(file.GetExtension())
@@ -27,12 +28,10 @@ namespace Microsoft.AspNetCore.Http
 	    public static async Task<string> TrySaveFile(
 		    this IFormFile file, IHostingEnvironment env, string path = null)
 	    {
-		    var internalPath = Path.Combine(Constants.UPLOAD_PATH, path);
+		    var internalPath = Combine(UPLOAD_PATH, path ?? "");
 			var uniqueFileName = file.GetUniqueFileName();
-		    var filePath = Path.Combine(
-			    env.ContentRootPath, 
-			    internalPath, 
-			    uniqueFileName);
+		    var filePath = Combine(
+			    env.ContentRootPath, internalPath, uniqueFileName);
 		    try
 		    {
 			    using (var stream = new FileStream(filePath, FileMode.Create))

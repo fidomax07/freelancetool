@@ -92,7 +92,7 @@ namespace FreelanceTool.ViewModels
 			PhonePrefixesList = new List<SelectListItem>();
 
 			Applicant = new Applicant();
-			ApplicantDateOfBirth = Applicant.DateOfBirth.ToString("dd.MM.yyyy");
+			ApplicantDateOfBirth = Applicant.DateOfBirth.ToStringLocale();
 		}
 
 		public ApplicationCreateViewModel(ApplicationDataContext dataContext, HttpContext httpContext)

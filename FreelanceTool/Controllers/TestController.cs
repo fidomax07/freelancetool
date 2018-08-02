@@ -1,39 +1,39 @@
-﻿using FreelanceTool.Data;
-using FreelanceTool.Helpers;
-using FreelanceTool.Models.Enums;
-using FreelanceTool.ViewModels;
-using Microsoft.AspNetCore.Hosting;
+﻿using System.Linq;
+using FreelanceTool.Data;
+using FreelanceTool.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace FreelanceTool.Controllers
 {
 	public class TestController : Controller
 	{
-		private readonly IHostingEnvironment _host;
-		private readonly ApplicationDataContext _context;
-		private readonly AppLocalizer _localizer;
-		private readonly IStringLocalizer<Country> _countryLocalizer;
+		private readonly IConfiguration _config;
+		private readonly ApplicationDataContext _dataContext;
+		private readonly IEmailSender _emailService;
 
 
 		public TestController(
-			IHostingEnvironment host,
-			ApplicationDataContext context,
-			AppLocalizer localizer,
-			IStringLocalizer<Country> countryLocalizer)
+			IConfiguration config,
+			ApplicationDataContext dataContext, 
+			IEmailSender emailService)
 		{
-			_host = host;
-			_context = context;
-			_localizer = localizer;
-			_countryLocalizer = countryLocalizer;
+			_config = config;
+			_dataContext = dataContext;
+			_emailService = emailService;
 		}
 
 		public string Index()
 		{
-			return _localizer.LocalizeClassMember<ApplicationCreateViewModel>(
-				nameof(ApplicationCreateViewModel.ApplicantDateOfBirth));
+			var applicant = _dataContext.Applicants
+				.Include(a => a.ApplicantFiles)
+				.SingleOrDefault(a => a.Id == 1);
 
-			//return _localizer.LocalizeEnum(Country.Germany);
+			if (applicant != null)
+				_emailService.SendNewApplicationEmailAsync(applicant);
+
+			return _config.GetSection("targetEmailAddress").Value;
 		}
 	}
 }
