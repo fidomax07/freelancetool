@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using FreelanceTool.Data;
 using FreelanceTool.Helpers;
 using FreelanceTool.Models;
@@ -50,8 +45,12 @@ namespace FreelanceTool.Controllers
 			
 
 			var csvModel = new CsvModel(applicant);
+			csvModel.MapComplexProperty(
+				applicant,
+				nameof(applicant.MainLanguage),
+				nameof(applicant.MainLanguage.NameEnglish));
 
-			return new JsonResult(_localizer.LocalizeEnum(csvModel.Country));
+			return new JsonResult(csvModel);
 		}
 	}
 }
