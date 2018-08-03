@@ -49,9 +49,11 @@ namespace FreelanceTool.Models
 		public string PhoneNumber { get; set; }
 
 		[Required, StringLength(80), DataType(DataType.EmailAddress)]
+		[Display(Name = "Email")]
 		public string Email { get; set; }
 
 		[Required, StringLength(80)]
+		[Display(Name = "Address")]
 		public string Address { get; set; }
 
 		[StringLength(80)]
@@ -59,9 +61,11 @@ namespace FreelanceTool.Models
 		public string AddressInformation { get; set; }
 
 		[Required, StringLength(4), RegularExpression(@"^([1-9][0-9]{3})$")]
+		[Display(Name = "Zip")]
 		public string Zip { get; set; }
 
 		[Required, StringLength(40)]
+		[Display(Name = "City")]
 		public string City { get; set; }
 
 		[Required]
@@ -70,19 +74,23 @@ namespace FreelanceTool.Models
 
 		[Required, StringLength(20)]
 		[RegularExpression(@"^[0-9]{3}\.?[0-9]{4}\.?[0-9]{4}\.?[0-9]{2}$")]
+		[Display(Name = "Swiss social security number")]
 		public string SwissSocialSecurityNumber { get; set; }
 
 		[Required]
+		[Display(Name = "Civil status")]
 		public CivilStatus CivilStatus { get; set; }
 
 		[Required, Range(0, 10)]
-		[Display(Name = "Number of Kids")]
+		[Display(Name = "Number of kids")]
 		public int ChildrenCount { get; set; }
 
 		[ResidencePermitRequired]
+		[Display(Name = "Residence permit")]
 		public ResidencePermit? ResidencePermit { get; set; }
 
 		[Required]
+		[Display(Name = "Occupation")]
 		public Occupation Occupation { get; set; }
 
 		// Make this property required, if Occupation is

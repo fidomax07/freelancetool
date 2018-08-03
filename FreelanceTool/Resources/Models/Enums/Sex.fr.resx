@@ -117,58 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Address" xml:space="preserve">
-    <value>Strasse</value>
+  <data name="Female" xml:space="preserve">
+    <value>Madame</value>
   </data>
-  <data name="Address information" xml:space="preserve">
-    <value>Zustaz</value>
-  </data>
-  <data name="City" xml:space="preserve">
-    <value>Ort</value>
-  </data>
-  <data name="Civil status" xml:space="preserve">
-    <value>_ZIVILSTAND</value>
-  </data>
-  <data name="Country" xml:space="preserve">
-    <value>Land</value>
-  </data>
-  <data name="Date of birth" xml:space="preserve">
-    <value>_GEBURTSDATUM</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>Email</value>
-  </data>
-  <data name="First name" xml:space="preserve">
-    <value>Vorname</value>
-  </data>
-  <data name="Last name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="Main language" xml:space="preserve">
-    <value>Sprache</value>
-  </data>
-  <data name="Nationality" xml:space="preserve">
-    <value>_NATIONALITAET</value>
-  </data>
-  <data name="Number of kids" xml:space="preserve">
-    <value>_ANZKINDER</value>
-  </data>
-  <data name="Occupation" xml:space="preserve">
-    <value>_BERUF</value>
-  </data>
-  <data name="PhoneNumber" xml:space="preserve">
-    <value>Telefon1</value>
-  </data>
-  <data name="Residence permit" xml:space="preserve">
-    <value>_ARBBEWILLIGUNG</value>
-  </data>
-  <data name="Sex" xml:space="preserve">
-    <value>Anrede</value>
-  </data>
-  <data name="Swiss social security number" xml:space="preserve">
-    <value>_AHVNUMMER</value>
-  </data>
-  <data name="Zip" xml:space="preserve">
-    <value>PLZ</value>
+  <data name="Male" xml:space="preserve">
+    <value>Monsieur</value>
   </data>
 </root>
