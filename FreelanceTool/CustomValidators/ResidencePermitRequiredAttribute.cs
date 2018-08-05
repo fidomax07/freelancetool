@@ -10,7 +10,7 @@ namespace FreelanceTool.CustomValidators
 	    {
 			var applicant = (Applicant)validationContext.ObjectInstance;
 		    if (applicant.NationalityId != Constants.NATIVE_NATIONALITY_ID &&
-		        string.IsNullOrWhiteSpace(value.ToString()))
+		        applicant.ResidencePermit == null)
 		    {
 				return new ValidationResult(GetErrorMessage());
 		    }

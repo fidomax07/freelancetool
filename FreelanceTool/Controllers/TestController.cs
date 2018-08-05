@@ -47,87 +47,16 @@ namespace FreelanceTool.Controllers
 				.Include(a => a.MainLanguage)
 				.Include(a => a.Nationality)
 				.Include(a => a.SpokenLanguages)
+					.ThenInclude(al => al.Language)
 				.Include(a => a.JsTrainingCertificates)
 				.Include(a => a.ApplicantFiles)
 				.SingleOrDefaultAsync(a => a.Id == 1);
 
 
-			var csvModel = new CsvModel(applicant);
-			//.MapComplexProperty(applicant,
-			//	nameof(applicant.MainLanguage),
-			//	nameof(applicant.MainLanguage.NameEnglish))
-			//.MapComplexProperty(applicant,
-			//	nameof(applicant.Nationality),
-			//	nameof(applicant.Nationality.NameEnglish));
-
-			var csvContent = new StringBuilder();
-			var csvProperties = csvModel.GetType().GetProperties();
-			// Write headers first
-			foreach (var propInfo in csvProperties)
-			{
-				if (propInfo.GetValue(csvModel) == null)
-					continue;
-
-				var localizedPropName = _localizer
-					.LocalizeClassMember<CsvModel>(propInfo.Name);
-				csvContent.Append($"{localizedPropName}|");
-			}
-			// Remove last pipe
-			csvContent.Remove(csvContent.Length - 1, 1);
-			csvContent.AppendLine();
-
-			// Write values next
-			foreach (var propInfo in csvProperties)
-			{
-				var propType = propInfo.PropertyType;
-				var propValue = propInfo.GetValue(csvModel);
-
-				if (propValue == null)
-					continue;
-
-				// Handle language value retrieving
-				if (propType == typeof(Language))
-				{
-					var propValueLocalized = csvModel
-						.MainLanguage
-						.GetLocalizedName(currentCulture);
-					csvContent.Append($"\"{propValueLocalized}\"|");
-
-					continue;
-				}
-
-				// Handle nationality value retrieving
-				if (propType == typeof(Nationality))
-				{
-					var propValueLocalized = csvModel
-						.Nationality
-						.GetLocalizedName(currentCulture);
-					csvContent.Append($"\"{propValueLocalized}\"|");
-
-					continue;
-				}
-
-				// Handle strings value retrieving
-				if (propType == typeof(string))
-				{
-					csvContent.Append($"\"{propValue}\"|");
-
-					continue;
-				}
-
-				// Handle enums value retrieving
-				if (propType.IsEnum)
-				{
-					var propValueCasted = propValue as Enum;
-					var propValueLocalized = _localizer
-						.LocalizeEnum(propValueCasted);
-					csvContent.Append($"{propValueLocalized}|");
-
-					continue;
-				}
-
-				csvContent.Append($"{propValue}|");
-			}
+			var csvModel = new CsvModel(_localizer, applicant)
+				.MapSpokenLanguages(applicant.SpokenLanguages)
+				.MapJsTrainingCertificates(applicant.JsTrainingCertificates)
+				.BuildContent(currentCulture);
 
 
 			// Write to Csv file
@@ -136,10 +65,10 @@ namespace FreelanceTool.Controllers
 				$"{applicant.Id.ToString()}.csv");
 			using (var outputFile = new StreamWriter(path, false, Encoding.UTF8))
 			{
-				outputFile.Write(csvContent.ToString());
+				outputFile.Write(csvModel.GetContent());
 			}
 
-			return csvContent.ToString();
+			return csvModel.GetContent();
 		}
 	}
 }

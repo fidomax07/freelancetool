@@ -97,28 +97,35 @@ namespace FreelanceTool.Models
 		// Occupation.PartTime or Occupation.FullTime.
 		[StringLength(40)]
 		[EmployerRequired]
+		[Display(Name = "Employer")]
 		public string Employer { get; set; }
 
 		// Make this property required, only if the
 		// Occupation is Occupation.SelfEmployed.
 		[StringLength(80)]
 		[CompanyNameRequired]
+		[Display(Name = "Company name")]
 		public string CompanyName { get; set; }
 
 		// Populate this property, only if property
 		// Occupation is Occupation.SelfEmployed.
 		[StringLength(80)]
+		[Display(Name = "Company website")]
 		public string CompanyWebsite { get; set; }
 
 		[Required]
+		[Display(Name = "T shirt size")]
 		public TShirtSize TShirtSize { get; set; }
 
+		[Display(Name = "Driver license B")]
 		public bool DriverLicenseB { get; set; }
 
 		[StringLength(80)]
+		[Display(Name = "Training number")]
 		public string TrainingNumber { get; set; }
 
 		[Required, StringLength(34), RegularExpression(@"^[0-9]*$")]
+		[Display(Name = "IBAN number")]
 		public string IbanNumber { get; set; }
 
 

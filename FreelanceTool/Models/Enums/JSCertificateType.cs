@@ -1,8 +1,12 @@
-﻿namespace FreelanceTool.Models.Enums
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FreelanceTool.Models.Enums
 {
-	public enum JSCertificateType
+	public enum JsCertificateType
 	{
+		[Display(Name = "Children sport")]
 		ChildrenSport = 1,
+		[Display(Name = "Youth sport")]
 		YouthSport
 	}
 }
