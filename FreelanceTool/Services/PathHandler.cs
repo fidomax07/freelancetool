@@ -6,21 +6,14 @@ namespace FreelanceTool.Services
 {
 	public class PathHandler
     {
-	    private readonly IHostingEnvironment _env;
-
-	    public PathHandler(IHostingEnvironment env)
-	    {
-		    _env = env;
+	    public static string GetUploadPath(IHostingEnvironment env)
+		{
+		    return Combine(env.ContentRootPath, UPLOAD_PATH);
 	    }
 
-	    public string GetUploadPath()
+	    public static string GetCsvPath(IHostingEnvironment env)
 	    {
-		    return Combine(_env.ContentRootPath, UPLOAD_PATH);
-	    }
-
-	    public string GetCsvPath()
-	    {
-		    return Combine(GetUploadPath(), CSV_PATH);
+		    return Combine(GetUploadPath(env), CSV_PATH);
 	    }
     }
 }

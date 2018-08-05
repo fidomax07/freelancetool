@@ -41,13 +41,27 @@ namespace FreelanceTool
 			// Add application services.
 			services.AddTransient<IEmailSender, EmailSender>();
 			services.AddTransient<AppLocalizer>();
-			services.AddTransient<PathHandler>();
 
 			services.AddLocalization(options => options.ResourcesPath = "Resources");
 
 			services.AddMvc()
 				.AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
 				.AddDataAnnotationsLocalization();
+
+			// Configure supported cultures and localization options
+			services.Configure<RequestLocalizationOptions>(options =>
+			{
+				var enCulture = "en";
+				var supportedCultures = new[]
+				{
+					new CultureInfo(enCulture),
+					new CultureInfo("de"),
+					new CultureInfo("fr")
+				};
+				options.DefaultRequestCulture = new RequestCulture(enCulture);
+				options.SupportedCultures = supportedCultures;
+				options.SupportedUICultures = supportedCultures;
+			});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,12 +78,13 @@ namespace FreelanceTool
 				app.UseExceptionHandler("/Home/Error");
 			}
 
+			// Add supported cultures and localization options
 			var enCulture = "en";
 			var supportedCultures = new[]
 			{
 				new CultureInfo(enCulture),
-				new CultureInfo("fr"),
-				new CultureInfo("de")
+				new CultureInfo("de"),
+				new CultureInfo("fr")
 			};
 			app.UseRequestLocalization(new RequestLocalizationOptions
 			{

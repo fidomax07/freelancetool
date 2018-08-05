@@ -39,13 +39,13 @@ namespace Microsoft.AspNetCore.Http
 
 			    // Verify if upload was successful
 			    if (!File.Exists(filePath)) return null;
-		    }
+			}
 		    catch (Exception)
 		    {
 			    return null;
 		    }
 
-		    return uniqueFileName;
+			return uniqueFileName;
 	    }
 	}
 }

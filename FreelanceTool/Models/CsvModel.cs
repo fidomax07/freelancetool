@@ -154,7 +154,6 @@ namespace FreelanceTool.Models
 		}
 
 
-
 		// Interface
 		public CsvModel SetDbId(int dbId)
 		{
@@ -248,7 +247,7 @@ namespace FreelanceTool.Models
 
 		public CsvModel BuildContent(CultureInfo culture)
 		{
-			var csvProperties = GetType().GetProperties();
+			var csvProperties = GetProperties(this);
 			BuildHeaders(csvProperties);
 			BuildValues(csvProperties, culture);
 
@@ -269,7 +268,7 @@ namespace FreelanceTool.Models
 				.GetProperty(propertyName);
 		}
 
-		private static IEnumerable<PropertyInfo> GetProperties(object objectInstance)
+		private static PropertyInfo[] GetProperties(object objectInstance)
 		{
 			return objectInstance
 				.GetType()
@@ -366,7 +365,7 @@ namespace FreelanceTool.Models
 					var propValueCasted = propValue as Enum;
 					var propValueLocalized = _localizer
 						.LocalizeEnum(propValueCasted);
-					_csvBuilder.Append($"{propValueLocalized}|");
+					_csvBuilder.Append($"\"{propValueLocalized}\"|");
 
 					continue;
 				}

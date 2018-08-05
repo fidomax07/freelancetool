@@ -6,6 +6,7 @@ using FreelanceTool.Data;
 using FreelanceTool.Helpers;
 using FreelanceTool.Models;
 using FreelanceTool.Services;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,25 +16,22 @@ namespace FreelanceTool.Controllers
 {
 	public class TestController : Controller
 	{
-		private readonly IConfiguration _config;
 		private readonly ApplicationDataContext _dataContext;
-		private readonly IEmailSender _emailService;
+		private readonly IHostingEnvironment _env;
 		private readonly AppLocalizer _localizer;
-		private readonly PathHandler _pathService;
+		private readonly IEmailSender _emailService;
 
 
 		public TestController(
-			IConfiguration config,
 			ApplicationDataContext dataContext,
-			IEmailSender emailService,
+			IHostingEnvironment env,
 			AppLocalizer localizer,
-			PathHandler pathService)
+			IEmailSender emailService)
 		{
-			_config = config;
 			_dataContext = dataContext;
-			_emailService = emailService;
+			_env = env;
 			_localizer = localizer;
-			_pathService = pathService;
+			_emailService = emailService;
 		}
 
 		public async Task<string> Index()
@@ -52,16 +50,14 @@ namespace FreelanceTool.Controllers
 				.Include(a => a.ApplicantFiles)
 				.SingleOrDefaultAsync(a => a.Id == 1);
 
-
 			var csvModel = new CsvModel(_localizer, applicant)
 				.MapSpokenLanguages(applicant.SpokenLanguages)
 				.MapJsTrainingCertificates(applicant.JsTrainingCertificates)
 				.BuildContent(currentCulture);
 
-
 			// Write to Csv file
 			var path = Path.Combine(
-				_pathService.GetCsvPath(),
+				PathHandler.GetCsvPath(_env),
 				$"{applicant.Id.ToString()}.csv");
 			using (var outputFile = new StreamWriter(path, false, Encoding.UTF8))
 			{

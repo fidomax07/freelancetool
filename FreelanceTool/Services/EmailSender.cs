@@ -35,7 +35,7 @@ namespace FreelanceTool.Services
 				Port = 587,
 				EnableSsl = true,
 				UseDefaultCredentials = false,
-				Credentials = new NetworkCredential("fidomax07@hotmail.com", "")
+				Credentials = new NetworkCredential("fidomax07@hotmail.com", "MathProved.-3013")
 			};
 			var body = $@"
 				<h2>Hallo!</h2>
@@ -54,15 +54,14 @@ namespace FreelanceTool.Services
 			};
 
 			// Attach CSV file
+			var csvName = applicant.Csv.UniqueName;
 			var filePath = Path.Combine(
-				_env.ContentRootPath,
-				Constants.UPLOAD_PATH,
-				Constants.CSV_PATH,
-				applicant.Csv.UniqueName);
+				PathHandler.GetCsvPath(_env), csvName);
 			using(var stream = new FileStream(filePath, FileMode.Open))
 			{
-				mailMessage.Attachments.Add(
-					new Attachment(stream, "CSVData", "text/csv"));
+				var att = new Attachment(stream, csvName, "text/csv");
+				mailMessage.Attachments.Add(att);
+
 				await client.SendMailAsync(mailMessage);
 			}
 		}

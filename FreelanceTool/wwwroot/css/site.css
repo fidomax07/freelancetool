@@ -9,6 +9,9 @@
     padding-left: 15px;
     padding-right: 15px;
 }
+.body-inner {
+	min-height: 600px;
+}
 
 /* Carousel */
 .carousel-caption p {
@@ -83,4 +86,10 @@ body {
 /* Make terms of agreement textarea non-resizable */
 .terms-of-agreement {
 	resize: none;
+}
+/* Position index link */
+.index-link {
+	margin-top: 50px;
+	text-align: center;
+	font-size: 1.2em;
 }

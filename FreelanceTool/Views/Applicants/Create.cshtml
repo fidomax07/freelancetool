@@ -13,8 +13,15 @@
 <hr />
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
-		<form asp-action="Create" enctype="multipart/form-data">
-			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+		<form asp-action="Create" enctype="multipart/form-data" id="applicant-create-form">
+		
+			@* Validation errors summary *@
+			<div class="panel panel-danger" id="validation-summary-container" style="display: none;">
+				<div class="panel-heading">
+					<h3 class="panel-title">Model errors</h3>
+				</div>
+				<div asp-validation-summary="All" class="panel-body text-danger" id="validation-summary"></div>
+			</div>
 
 			@* Personal Data *@
 			<div class="panel panel-primary" id="personal-data">
@@ -391,6 +398,19 @@
 	<script src="~/lib/moment/moment.js"></script>
 	<script>
 		$(function () {
+
+			// Check validation summary container
+			(function() {
+				var modelHasErrors = $("#validation-summary")
+					.hasClass("validation-summary-errors");
+				var valSummaryContainer = $("#validation-summary-container");
+				if (modelHasErrors)
+					valSummaryContainer.show();
+				else
+					valSummaryContainer.hide();
+			}());
+
+
 			// Initialize date-picker for the applicant's date of birth
 			$("#ApplicantDateOfBirth").datepicker({
 				dateFormat: "dd.mm.yy",
@@ -575,7 +595,7 @@
 
 
 			// Check custom-clinet-side validations
-			$("form").on("submit",
+			$("form#applicant-create-form").on("submit",
 				function (event) {
 					event.preventDefault();
 

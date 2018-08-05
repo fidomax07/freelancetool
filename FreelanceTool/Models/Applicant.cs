@@ -130,12 +130,14 @@ namespace FreelanceTool.Models
 
 
 		// Relationships and Navigation Properties
+		[Required]
 		public int LanguageId { get; set; }
-		[Required, Display(Name = "Main language")]
+		[Display(Name = "Main language")]
 		public Language MainLanguage { get; set; }
 
+		[Required]
 		public int NationalityId { get; set; }
-		[Required, Display(Name = "Nationality")]
+		[Display(Name = "Nationality")]
 		public Nationality Nationality { get; set; }
 
 		public ICollection<ApplicantLanguage> SpokenLanguages { get; set; }
