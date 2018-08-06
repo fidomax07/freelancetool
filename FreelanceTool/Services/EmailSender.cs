@@ -30,12 +30,14 @@ namespace FreelanceTool.Services
 
 		public async Task SendNewApplicationEmailAsync(Applicant applicant)
 		{
-			var client = new SmtpClient("smtp.office365.com")
+			var client = new SmtpClient(_config.GetSection("emailHost").Value)
 			{
 				Port = 587,
 				EnableSsl = true,
 				UseDefaultCredentials = false,
-				Credentials = new NetworkCredential("fidomax07@hotmail.com", "MathProved.-3013")
+				Credentials = new NetworkCredential(
+					_config.GetSection("senderEmailAddress").Value,
+					_config.GetSection("senderEmailPassword").Value)
 			};
 			var body = $@"
 				<h2>Hallo!</h2>
@@ -46,7 +48,7 @@ namespace FreelanceTool.Services
 			";
 			var mailMessage = new MailMessage
 			{
-				From = new MailAddress("fidomax07@hotmail.com"),
+				From = new MailAddress(_config.GetSection("senderEmailAddress").Value),
 				To = { _config.GetSection("targetEmailAddress").Value },
 				Subject = "Neue Freelancer-Anmeldung",
 				IsBodyHtml = true,
