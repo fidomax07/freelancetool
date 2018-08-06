@@ -13,7 +13,7 @@ namespace FreelanceTool.CustomValidators
 	    public EmployerRequiredAttribute()
 	    {
 			_occupationEmployerValues = new List<Occupation>
-				{ Occupation.PartTime, Occupation.FullTime };
+				{ Occupation.PT, Occupation.FT };
 		}
 
 	    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
@@ -55,7 +55,7 @@ namespace FreelanceTool.CustomValidators
 		private string GetErrorMessage()
 	    {
 		    return "Employer field is required if occupation is: " +
-		           $"{Occupation.PartTime} or {Occupation.FullTime}";
+		           $"{Occupation.PT} or {Occupation.FT}";
 	    }
     }
 }

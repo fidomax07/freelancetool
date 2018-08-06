@@ -22,6 +22,13 @@ namespace FreelanceTool.Helpers
 			return _localizer[enumValue.GetDisplayName()];
 		}
 
+		public LocalizedString LocalizeEnumForCsv(Enum enumValue)
+		{
+			_localizer = _factory.Create(enumValue.GetType());
+
+			return _localizer[enumValue.GetName()];
+		}
+
 		public LocalizedString LocalizeClassMember<T>(string propertyName)
 			where T : class
 		{

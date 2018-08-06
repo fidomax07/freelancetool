@@ -253,6 +253,10 @@ namespace FreelanceTool.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Alpha1")
+                        .IsRequired()
+                        .HasMaxLength(1);
+
                     b.Property<string>("Alpha2")
                         .IsRequired()
                         .HasMaxLength(2);

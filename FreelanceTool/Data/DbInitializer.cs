@@ -16,6 +16,7 @@ namespace FreelanceTool.Data
 			{
 				new Language
 				{
+					Alpha1 = "D",
 					Alpha2 = "de",
 					NameEnglish = "German",
 					NameGerman = "Deutsch",
@@ -23,6 +24,7 @@ namespace FreelanceTool.Data
 				},
 				new Language
 				{
+					Alpha1 = "F",
 					Alpha2 = "fr",
 					NameEnglish = "French",
 					NameGerman = "Français",
@@ -30,6 +32,7 @@ namespace FreelanceTool.Data
 				},
 				new Language
 				{
+					Alpha1 = "I",
 					Alpha2 = "it",
 					NameEnglish = "Italian",
 					NameGerman = "Italiano",
@@ -37,6 +40,7 @@ namespace FreelanceTool.Data
 				},
 				new Language
 				{
+					Alpha1 = "E",
 					Alpha2 = "en",
 					NameEnglish = "English",
 					NameGerman = "Englisch",

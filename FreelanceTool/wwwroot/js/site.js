@@ -53,7 +53,17 @@ function scrollToError(elementId) {
 }
 
 (function () {
-	$("#selectLanguage select").change(function () {
-		$(this).parent().submit();
-	});
+	//$("#selectLanguage select").change(function () {
+	//	$(this).parent().submit();
+	//});
+	$(".language-select-provider").on("click",
+		function () {
+
+			var currentCulture = $("#language-select-current-culture").val();
+			var culture = $(this).data("culture-name");
+			if (currentCulture === culture) return;
+
+			$("input[name='culture']").val(culture);
+			$("form#language-select-form").submit();
+		});
 }());

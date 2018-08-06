@@ -5,14 +5,14 @@ namespace FreelanceTool.Models.Enums
 	public enum CivilStatus
 	{
 		[Display(Name = "Single")]
-		Single = 1,
+		SN = 1,
 		[Display(Name = "Married")]
-		Married,
+		MR,
 		[Display(Name = "Separated")]
-		Separated,
+		SP,
 		[Display(Name = "Divorced")]
-		Divorced,
+		DV,
 		[Display(Name = "Widow")]
-		Widow
+		WD
 	}
 }

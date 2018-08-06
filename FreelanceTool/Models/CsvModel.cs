@@ -21,6 +21,9 @@ namespace FreelanceTool.Models
 		[Display(Name = "Db Id")]
 		public int DbId { get; private set; }
 
+		[Display(Name = "LfdNumber")]
+		public int LfdNumber { get; set; }
+
 		[Display(Name = "Sex")]
 		public Sex Sex { get; set; }
 
@@ -31,7 +34,7 @@ namespace FreelanceTool.Models
 		public string FirstName { get; set; }
 
 		[Display(Name = "Date of birth")]
-		public string DateOfBirth { get; set; }
+		public DateTime DateOfBirth { get; set; }
 
 		[Display(Name = "Main language")]
 		public Language MainLanguage { get; set; }
@@ -144,6 +147,7 @@ namespace FreelanceTool.Models
 		{
 			_localizer = localizer;
 			_csvBuilder = new StringBuilder();
+			LfdNumber = 1;
 		}
 
 		public CsvModel(AppLocalizer localizer, Applicant applicant)
@@ -165,42 +169,32 @@ namespace FreelanceTool.Models
 		public CsvModel MapObject(object objectInstance)
 		{
 			var csvPropertiesNames = GetPropertiesNames(this);
-			foreach (var propInfo in GetProperties(objectInstance))
+			foreach (var objPropInfo in GetProperties(objectInstance))
 			{
 				// Filter out phone-prefix and phone, since they need to
 				// be concatenated together and then displayed as one.
-				if (propInfo.Name == nameof(Applicant.PhonePrefix) ||
-					propInfo.Name == nameof(Applicant.PhoneNumber))
+				if (objPropInfo.Name == nameof(Applicant.PhonePrefix) ||
+					objPropInfo.Name == nameof(Applicant.PhoneNumber))
 				{
-					HandlePhoneConcatenation(objectInstance, propInfo);
+					HandlePhoneConcatenation(objectInstance, objPropInfo);
 					continue;
 				}
 
 				// Filter out properties that are not part of CSV.
-				if (!csvPropertiesNames.Contains(propInfo.Name))
+				if (!csvPropertiesNames.Contains(objPropInfo.Name))
 					continue;
 
-				var objectPropType = propInfo.PropertyType;
-				var csvProperty = GetType().GetProperty(propInfo.Name);
-				var csvPropType = csvProperty.PropertyType;
-
-				// Since the type of DateTime is struct, if falls through with
-				// other structural types, but it cannot be simply assigned
-				// as other properties, without first locally formmating.
-				if (objectPropType == typeof(DateTime))
-				{
-					var propValue = propInfo.GetValue(objectInstance) as DateTime?;
-					GetProperty(this, propInfo.Name)
-						.SetValue(this, propValue?.ToStringLocale());
-					continue;
-				}
+				var objPropType = objPropInfo.PropertyType;
+				var csvPropInfo = GetProperty(this, objPropInfo.Name);
+				var csvPropType = csvPropInfo.PropertyType;
 
 				// Filter out properties that don't match with the
 				// corresponding property type of the CSV model.
-				if (!csvPropType.IsAssignableFrom(objectPropType))
+
+				if (!csvPropType.IsAssignableFrom(objPropType))
 					continue;
 
-				csvProperty.SetValue(this, propInfo.GetValue(objectInstance));
+				csvPropInfo.SetValue(this, objPropInfo.GetValue(objectInstance));
 			}
 
 			return this;
@@ -304,7 +298,7 @@ namespace FreelanceTool.Models
 			}
 		}
 
-		private void BuildHeaders(IEnumerable<PropertyInfo> csvProperties)
+		private void BuildHeaders(PropertyInfo[] csvProperties)
 		{
 			foreach (var propInfo in csvProperties)
 			{
@@ -321,7 +315,7 @@ namespace FreelanceTool.Models
 			_csvBuilder.AppendLine();
 		}
 
-		private void BuildValues(IEnumerable<PropertyInfo> csvProperties, CultureInfo culture)
+		private void BuildValues(PropertyInfo[] csvProperties, CultureInfo culture)
 		{
 			foreach (var propInfo in csvProperties)
 			{
@@ -334,9 +328,7 @@ namespace FreelanceTool.Models
 				// Handle language value retrieving
 				if (propType == typeof(Language))
 				{
-					var propValueLocalized = MainLanguage
-						.GetLocalizedName(culture);
-					_csvBuilder.Append($"\"{propValueLocalized}\"|");
+					_csvBuilder.Append($"\"{MainLanguage.Alpha1}\"|");
 
 					continue;
 				}
@@ -344,9 +336,7 @@ namespace FreelanceTool.Models
 				// Handle nationality value retrieving
 				if (propType == typeof(Nationality))
 				{
-					var propValueLocalized = Nationality
-						.GetLocalizedName(culture);
-					_csvBuilder.Append($"\"{propValueLocalized}\"|");
+					_csvBuilder.Append($"\"{Nationality.Code}\"|");
 
 					continue;
 				}
@@ -362,9 +352,9 @@ namespace FreelanceTool.Models
 				// Handle enums value retrieving
 				if (propType.IsEnum || IsNullableEnum(propType))
 				{
-					var propValueCasted = propValue as Enum;
-					var propValueLocalized = _localizer
-						.LocalizeEnum(propValueCasted);
+					var propValueCasted = (Enum) propValue;
+					var propValueLocalized = 
+						_localizer.LocalizeEnumForCsv(propValueCasted);
 					_csvBuilder.Append($"\"{propValueLocalized}\"|");
 
 					continue;
@@ -376,6 +366,14 @@ namespace FreelanceTool.Models
 					var propValueCasted = (bool)propValue ? 1 : 0;
 					_csvBuilder.Append($"{propValueCasted}|");
 
+					continue;
+				}
+
+				// Handle datetume value retrieving
+				if (propType == typeof(DateTime))
+				{
+					var propValueCasted = (DateTime) propValue;
+					_csvBuilder.Append($"{propValueCasted.ToStringLocale()}|");
 					continue;
 				}
 

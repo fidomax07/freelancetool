@@ -13,6 +13,13 @@ namespace FreelanceTool.Data.Migrations
                 table: "Language");
 
             migrationBuilder.AddColumn<string>(
+                name: "Alpha1",
+                table: "Language",
+                maxLength: 1,
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<string>(
                 name: "Alpha2",
                 table: "Language",
                 maxLength: 2,

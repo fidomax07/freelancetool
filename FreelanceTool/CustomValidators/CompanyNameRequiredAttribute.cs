@@ -10,7 +10,7 @@ namespace FreelanceTool.CustomValidators
 
 		public CompanyNameRequiredAttribute()
 		{
-			_selfEmployedOccupation = Occupation.SelfEmployed;
+			_selfEmployedOccupation = Occupation.SE;
 		}
 
 		protected override ValidationResult IsValid(object value, ValidationContext validationContext)

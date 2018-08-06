@@ -192,6 +192,9 @@
   <data name="Last name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="LfdNumber" xml:space="preserve">
+    <value>LfdNummer</value>
+  </data>
   <data name="Main language" xml:space="preserve">
     <value>Sprache</value>
   </data>

@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace FreelanceTool.Controllers
 {
@@ -18,23 +17,31 @@ namespace FreelanceTool.Controllers
 	{
 		private readonly ApplicationDataContext _dataContext;
 		private readonly IHostingEnvironment _env;
-		private readonly AppLocalizer _localizer;
+		private readonly AppLocalizer _appLocalizer;
 		private readonly IEmailSender _emailService;
 
 
 		public TestController(
 			ApplicationDataContext dataContext,
 			IHostingEnvironment env,
-			AppLocalizer localizer,
+			AppLocalizer appLocalizer,
 			IEmailSender emailService)
 		{
 			_dataContext = dataContext;
 			_env = env;
-			_localizer = localizer;
+			_appLocalizer = appLocalizer;
 			_emailService = emailService;
 		}
 
 		public async Task<string> Index()
+		{
+			var applicant = await _dataContext.Applicants
+				.SingleOrDefaultAsync(a => a.Id == 1);
+
+			return await TrySaveCsvFile(applicant);
+		}
+
+		private async Task<CsvModel> BuildCsvModel(int applicantId)
 		{
 			var currentCulture = HttpContext.Features
 				.Get<IRequestCultureFeature>()
@@ -45,26 +52,52 @@ namespace FreelanceTool.Controllers
 				.Include(a => a.MainLanguage)
 				.Include(a => a.Nationality)
 				.Include(a => a.SpokenLanguages)
-					.ThenInclude(al => al.Language)
+				.ThenInclude(al => al.Language)
 				.Include(a => a.JsTrainingCertificates)
 				.Include(a => a.ApplicantFiles)
-				.SingleOrDefaultAsync(a => a.Id == 1);
+				.SingleOrDefaultAsync(a => a.Id == applicantId);
 
-			var csvModel = new CsvModel(_localizer, applicant)
+
+			return new CsvModel(_appLocalizer, applicant)
 				.MapSpokenLanguages(applicant.SpokenLanguages)
 				.MapJsTrainingCertificates(applicant.JsTrainingCertificates)
 				.BuildContent(currentCulture);
+		}
 
-			// Write to Csv file
-			var path = Path.Combine(
-				PathHandler.GetCsvPath(_env),
-				$"{applicant.Id.ToString()}.csv");
-			using (var outputFile = new StreamWriter(path, false, Encoding.UTF8))
+		private async Task<string> TrySaveCsvFile(Applicant applicant)
+		{
+			var csvModel = await BuildCsvModel(applicant.Id);
+			var csvName = $"{csvModel.DbId}.csv";
+			var csvPath = Path.Combine(
+				PathHandler.GetCsvPath(_env), csvName);
+			var isSaved = true;
+			try
 			{
-				outputFile.Write(csvModel.GetContent());
+				using (var csvFile = new StreamWriter(csvPath, false, Encoding.UTF8))
+					await csvFile.WriteAsync(csvModel.GetContent());
+
+				// Verify if file was saved successful
+				if (!System.IO.File.Exists(csvPath))
+					isSaved = false;
+			}
+			catch (Exception)
+			{
+				isSaved = false;
 			}
 
+			if (!isSaved)
+				throw new FileNotFoundException("Csv file cannot be saved!");
+
 			return csvModel.GetContent();
+
+			//applicant.ApplicantFiles.Add(new ApplicantFile(ApplicantFileType.Csv)
+			//{
+			//	ApplicantId = applicant.Id,
+			//	OriginalName = csvName,
+			//	UniqueName = csvName,
+			//	Extension = ".csv"
+			//});
+			//await _dataContext.SaveChangesAsync();
 		}
 	}
 }

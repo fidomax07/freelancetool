@@ -117,34 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Divorced" xml:space="preserve">
-    <value>Divorcé</value>
+  <data name="AT" xml:space="preserve">
+    <value>AT</value>
   </data>
-  <data name="DV" xml:space="preserve">
-    <value>divorcé</value>
+  <data name="CH" xml:space="preserve">
+    <value>CH</value>
   </data>
-  <data name="Married" xml:space="preserve">
-    <value>Marié</value>
+  <data name="DE" xml:space="preserve">
+    <value>DE</value>
   </data>
-  <data name="MR" xml:space="preserve">
-    <value>marié</value>
+  <data name="FR" xml:space="preserve">
+    <value>FR</value>
   </data>
-  <data name="Separated" xml:space="preserve">
-    <value>Séparé</value>
+  <data name="IT" xml:space="preserve">
+    <value>IT</value>
   </data>
-  <data name="Single" xml:space="preserve">
-    <value>Célibataire</value>
-  </data>
-  <data name="SN" xml:space="preserve">
-    <value>célibataire</value>
-  </data>
-  <data name="SP" xml:space="preserve">
-    <value>séparé</value>
-  </data>
-  <data name="WD" xml:space="preserve">
-    <value>devenue veuve</value>
-  </data>
-  <data name="Widow" xml:space="preserve">
-    <value>Devenue veuve</value>
+  <data name="LI" xml:space="preserve">
+    <value>LI</value>
   </data>
 </root>

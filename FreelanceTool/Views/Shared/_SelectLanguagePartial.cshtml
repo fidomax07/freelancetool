@@ -14,17 +14,43 @@
 		.ToList();
 	var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ?
 		"~/" : $"~{Context.Request.Path.Value}";
+	var currentCulture = requestCulture.RequestCulture.UICulture;
+	var deCulture = LocOptions.Value.SupportedUICultures
+		.SingleOrDefault(c => c.Name == "de");
+	var frCulture = LocOptions.Value.SupportedUICultures
+		.SingleOrDefault(c => c.Name == "fr");
 }
 
-<div title="@Localizer["Request culture provider:"] @requestCulture?.Provider?.GetType().Name">
-	<form id="selectLanguage" method="post" class="form-horizontal" role="form"
-	      asp-controller="Home" 
-	      asp-action="SetLanguage" 
-	      asp-route-returnUrl="@Context.Request.Path">
-		@Localizer["Language:"] 
-		<select name="culture" 
-		        asp-for="@requestCulture.RequestCulture.UICulture.Name" 
-		        asp-items="cultureItems">
-		</select>
-	</form>
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+		<div title="@Localizer["Request culture provider:"] @requestCulture?.Provider?.GetType().Name"
+		     class="pull-right language-select-container">
+			<form id="language-select-form" method="post" class="form-horizontal" role="form"
+			      style="display: none;"
+			      asp-controller="Home"
+			      asp-action="SetLanguage"
+			      asp-route-returnUrl="@Context.Request.Path">
+				@*@Localizer["Language:"]*@
+				@*<select name="culture"
+					asp-for="@requestCulture.RequestCulture.UICulture.Name"
+					asp-items="cultureItems">
+				</select>*@
+				<input type="hidden" name="culture" id="language-select-culture" />
+				<input type="hidden" id="language-select-current-culture" 
+				       value="@currentCulture.Name" />
+			</form>
+			<a href="javascript:void(0);"
+			   class="language-select-provider 
+			   @(currentCulture.Name == deCulture?.Name ? 
+					   " language-select-focus" : "")"
+			   data-culture-name="@deCulture?.Name">German |</a>
+			<a href="javascript:void(0);"
+			   class="language-select-provider 
+			   @(currentCulture.Name == frCulture?.Name ? 
+				     " language-select-focus" : "")"
+			   data-culture-name="@frCulture?.Name">French</a>
+		</div>
+	</div>
 </div>
+
+

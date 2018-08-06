@@ -1,12 +1,20 @@
-﻿namespace FreelanceTool.Models.Enums
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FreelanceTool.Models.Enums
 {
 	public enum Occupation
 	{
-		Student = 1,
-		PartTime,
-		FullTime,
-		Unemployed,
-		SelfEmployed,
-		Housewife
+		[Display(Name = "Student")]
+		ST = 1,
+		[Display(Name = "Part time")]
+		PT,
+		[Display(Name = "Full time")]
+		FT,
+		[Display(Name = "Unemployed")]
+		UE,
+		[Display(Name = "Self employed")]
+		SE,
+		[Display(Name = "Housewife")]
+		HW
 	}
 }

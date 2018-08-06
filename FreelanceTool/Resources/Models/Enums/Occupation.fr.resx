@@ -117,34 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Divorced" xml:space="preserve">
-    <value>Divorcé</value>
+  <data name="FT" xml:space="preserve">
+    <value>plein-temps</value>
   </data>
-  <data name="DV" xml:space="preserve">
-    <value>divorcé</value>
+  <data name="Full time" xml:space="preserve">
+    <value>Plein-temps</value>
   </data>
-  <data name="Married" xml:space="preserve">
-    <value>Marié</value>
+  <data name="Housewife" xml:space="preserve">
+    <value>Femme(homme) au foyer</value>
   </data>
-  <data name="MR" xml:space="preserve">
-    <value>marié</value>
+  <data name="HW" xml:space="preserve">
+    <value>femme(homme) au foyer</value>
   </data>
-  <data name="Separated" xml:space="preserve">
-    <value>Séparé</value>
+  <data name="Part time" xml:space="preserve">
+    <value>À temps partiel</value>
   </data>
-  <data name="Single" xml:space="preserve">
-    <value>Célibataire</value>
+  <data name="PT" xml:space="preserve">
+    <value>à temps partiel</value>
   </data>
-  <data name="SN" xml:space="preserve">
-    <value>célibataire</value>
+  <data name="SE" xml:space="preserve">
+    <value>indépendant</value>
   </data>
-  <data name="SP" xml:space="preserve">
-    <value>séparé</value>
+  <data name="Self employed" xml:space="preserve">
+    <value>Indépendant</value>
   </data>
-  <data name="WD" xml:space="preserve">
-    <value>devenue veuve</value>
+  <data name="ST" xml:space="preserve">
+    <value>étudiant(e)</value>
   </data>
-  <data name="Widow" xml:space="preserve">
-    <value>Devenue veuve</value>
+  <data name="Student" xml:space="preserve">
+    <value>Étudiant(e)</value>
+  </data>
+  <data name="UE" xml:space="preserve">
+    <value>au chômage</value>
+  </data>
+  <data name="Unemployed" xml:space="preserve">
+    <value>Au chômage</value>
   </data>
 </root>

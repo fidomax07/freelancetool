@@ -15,6 +15,9 @@ namespace FreelanceTool.Models
 		public DateTime UpdatedAt { get; set; }
 
 
+		[Required, StringLength(1)]
+		public string Alpha1 { get; set; }
+
 		[Required, StringLength(2)]
 		public string Alpha2 { get; set; }
 

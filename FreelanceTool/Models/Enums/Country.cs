@@ -5,16 +5,16 @@ namespace FreelanceTool.Models.Enums
 	public enum Country
 	{
 		[Display(Name = "Switzerland")]
-		Switzerland = 1,
+		CH = 1,
 		[Display(Name = "Germany")]
-		Germany,
+		DE,
 		[Display(Name = "France")]
-		France,
+		FR,
 		[Display(Name = "Austria")]
-		Austria,
+		AT,
 		[Display(Name = "Italy")]
-		Italy,
+		IT,
 		[Display(Name = "Liechtenstein")]
-		Liechtenstein
+		LI
 	}
 }

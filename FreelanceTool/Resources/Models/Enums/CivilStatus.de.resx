@@ -118,33 +118,33 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Divorced" xml:space="preserve">
-    <value>Divorcé</value>
-  </data>
-  <data name="DV" xml:space="preserve">
-    <value>divorcé</value>
+    <value>Ledig</value>
   </data>
   <data name="Married" xml:space="preserve">
-    <value>Marié</value>
-  </data>
-  <data name="MR" xml:space="preserve">
-    <value>marié</value>
+    <value>Verheiratet</value>
   </data>
   <data name="Separated" xml:space="preserve">
-    <value>Séparé</value>
+    <value>Getrennt</value>
   </data>
   <data name="Single" xml:space="preserve">
-    <value>Célibataire</value>
-  </data>
-  <data name="SN" xml:space="preserve">
-    <value>célibataire</value>
-  </data>
-  <data name="SP" xml:space="preserve">
-    <value>séparé</value>
-  </data>
-  <data name="WD" xml:space="preserve">
-    <value>devenue veuve</value>
+    <value>Geschieden</value>
   </data>
   <data name="Widow" xml:space="preserve">
-    <value>Devenue veuve</value>
+    <value>Verwitwet</value>
+  </data>
+	<data name="DV" xml:space="preserve">
+    <value>ledig</value>
+  </data>
+	<data name="MR" xml:space="preserve">
+    <value>verheiratet</value>
+  </data>
+	<data name="SN" xml:space="preserve">
+    <value>geschieden</value>
+  </data>
+	<data name="SP" xml:space="preserve">
+    <value>getrennt</value>
+  </data>
+	<data name="WD" xml:space="preserve">
+    <value>verwitwet</value>
   </data>
 </root>

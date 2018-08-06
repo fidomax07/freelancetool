@@ -176,7 +176,7 @@ namespace FreelanceTool.Models
 		public Applicant()
 		{
 			// Initialize default values
-			Country = Country.Switzerland;
+			Country = Country.CH;
 			DateOfBirth = DateTime.UtcNow.AddYears(-20);
 
 			// Initialize collections

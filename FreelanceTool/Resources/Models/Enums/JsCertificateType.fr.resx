@@ -120,7 +120,13 @@
   <data name="Children sport" xml:space="preserve">
     <value>Sport des enfants</value>
   </data>
+  <data name="ChildrenSport" xml:space="preserve">
+    <value>Sport des enfants</value>
+  </data>
   <data name="Youth sport" xml:space="preserve">
+    <value>Sport des jeunes</value>
+  </data>
+  <data name="YouthSport" xml:space="preserve">
     <value>Sport des jeunes</value>
   </data>
 </root>
