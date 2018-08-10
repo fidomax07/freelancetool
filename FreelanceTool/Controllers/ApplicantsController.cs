@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FreelanceTool.Data;
@@ -42,15 +42,40 @@ namespace FreelanceTool.Controllers
 
 
 		// GET: Applicants
-		public IActionResult Index()
+		public async Task<IActionResult> Index(string applicantId)
 		{
-			return View(new List<Applicant>());
+			ViewData["CurrentApplicantId"] = applicantId;
+
+			var applicantsQuery = _dataContext.Applicants
+				.OrderByDescending(a => a.CreatedAt)
+				.AsNoTracking();
+
+			// Handle searching with applicant id if
+			// a value was provided from the user.
+			if (!string.IsNullOrEmpty(applicantId))
+			{
+				var isIdParsed = int.TryParse(applicantId, out var idParsed);
+				if (!isIdParsed) return NotFound();
+
+				var isApplicantFound = await applicantsQuery
+					.AnyAsync(a => a.Id == idParsed);
+				if (!isApplicantFound) return NotFound();
+
+				return RedirectToAction(nameof(Details), new {id = idParsed});
+			}
+
+			var applicants = await applicantsQuery.ToListAsync();
+			return View(applicants);
 		}
 
 		// GET: Applicants/Details/5
-		public IActionResult Details(int id)
+		public async Task<IActionResult> Details(int id)
 		{
-			return View();
+			var applicant = await _dataContext.Applicants
+				.Include(a => a.ApplicantFiles)
+				.SingleOrDefaultAsync(a => a.Id == id);
+
+			return View(applicant);
 		}
 
 		// GET: Applicants/Create
@@ -98,6 +123,26 @@ namespace FreelanceTool.Controllers
 			return View();
 		}
 
+		public async Task<IActionResult> DownloadFile(int id)
+		{
+			var file = await _dataContext
+				.ApplicantFiles
+				.AsNoTracking()
+				.SingleOrDefaultAsync(af => af.Id == id);
+			if (file == null) return NotFound();
+
+			var path = Constants.UPLOAD_PATH;
+			if (file.Type == ApplicantFileType.Csv)
+				path = Path.Combine(path, Constants.CSV_PATH);
+			path = Path.Combine(path, file.UniqueName);
+
+			var fileStream = _env
+				.ContentRootFileProvider
+				.GetFileInfo(path)
+				.CreateReadStream();
+
+			return File(fileStream, "text/csv", file.OriginalName);
+		}
 
 		// Private methods
 		private async Task AttachDependencies(
@@ -174,16 +219,17 @@ namespace FreelanceTool.Controllers
 			
 			if (!isSaved)
 				throw new FileNotFoundException("Csv file cannot be saved!");
-
+			
+			var csvFileInfo = _env.ContentRootFileProvider.GetFileInfo(csvPath);
 			applicant.ApplicantFiles.Add(new ApplicantFile(ApplicantFileType.Csv)
 			{
 				ApplicantId = applicant.Id,
 				OriginalName = csvName,
 				UniqueName = csvName,
-				Extension = ".csv"
+				Extension = ".csv",
+				Length = csvFileInfo.Length
 			});
 			await _dataContext.SaveChangesAsync();
 		}
-
 	}
 }

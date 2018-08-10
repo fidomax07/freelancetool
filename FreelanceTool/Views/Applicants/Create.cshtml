@@ -595,7 +595,8 @@
 
 
 			// Check custom-clinet-side validations
-			$("form#applicant-create-form").on("submit",
+			var createForm = $("form#applicant-create-form");
+			createForm.on("submit",
 				function (event) {
 					event.preventDefault();
 
@@ -645,7 +646,7 @@
 					$("#terms-error").text(!areTermsChecked ? "Please accept the contractual terms!" : "");
 					if (areTermsChecked) {
 						$("input[type=submit]").first().attr("disabled", true);
-						$("form").off("submit").submit();
+						createForm.off("submit").submit();
 					}
 				});
 		});

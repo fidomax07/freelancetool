@@ -136,6 +136,8 @@ namespace FreelanceTool.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(5);
 
+                    b.Property<long>("Length");
+
                     b.Property<string>("OriginalName")
                         .IsRequired()
                         .HasMaxLength(100);

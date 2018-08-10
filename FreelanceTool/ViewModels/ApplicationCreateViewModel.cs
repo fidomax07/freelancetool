@@ -209,14 +209,15 @@ namespace FreelanceTool.ViewModels
 			// Try upload
 			var uniqueFileName = await file.TrySaveFile(env);
 			if (uniqueFileName == null) return false;
-
+			
 			// Attach
 			Applicant.ApplicantFiles.Add(new ApplicantFile(type)
 			{
 				ApplicantId = Applicant.Id,
 				OriginalName = file.FileName,
 				UniqueName = uniqueFileName,
-				Extension = file.GetExtension()
+				Extension = file.GetExtension(),
+				Length = file.Length
 			});
 
 			return true;

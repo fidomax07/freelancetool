@@ -63,7 +63,7 @@ function scrollToError(elementId) {
 			var culture = $(this).data("culture-name");
 			if (currentCulture === culture) return;
 
-			$("input[name='culture']").val(culture);
+			$("input[name='culture']").first().val(culture);
 			$("form#language-select-form").submit();
 		});
 }());

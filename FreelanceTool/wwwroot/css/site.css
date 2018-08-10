@@ -109,3 +109,12 @@ body {
 .language-select-focus {
 	color: #23527c;
 }
+.extra-margin-vertical {
+	margin: 1.5em 0 0.5em 0;
+}
+.applicant-search-container {
+	margin: 5em 0;
+}
+.applicant-details-header {
+	margin: 2em 0 1em 0;
+}

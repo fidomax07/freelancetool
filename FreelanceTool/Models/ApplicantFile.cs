@@ -20,6 +20,8 @@ namespace FreelanceTool.Models
 		public string UniqueName { get; set; }
 		[Required, StringLength(5)]
 		public string Extension { get; set; }
+		[Required]
+		public long Length { get; set; }
 
 
 		// Relationships and Navigation Properties

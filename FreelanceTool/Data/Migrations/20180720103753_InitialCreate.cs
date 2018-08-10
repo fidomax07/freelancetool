@@ -100,6 +100,7 @@ namespace FreelanceTool.Data.Migrations
 					OriginalName = table.Column<string>(nullable: false),
 					UniqueName = table.Column<string>(nullable: true),
 					Extension = table.Column<string>(nullable: true),
+					Length = table.Column<long>(nullable: false, defaultValue: 0L),
 					ApplicantId = table.Column<int>(nullable: false)
 				},
 				constraints: table =>

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using FreelanceTool.Models;
+using FreelanceTool.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +37,10 @@ namespace FreelanceTool.Controllers
 
 		public IActionResult Error()
 		{
-			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+			return View(new ErrorViewModel
+			{
+				RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
+			});
 		}
 
 		[HttpPost]
