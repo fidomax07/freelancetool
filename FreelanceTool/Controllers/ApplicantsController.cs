@@ -13,6 +13,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static System.IO.Path;
+using static FreelanceTool.Helpers.Constants;
+using SystemFile = System.IO.File;
 
 namespace FreelanceTool.Controllers
 {
@@ -30,21 +33,25 @@ namespace FreelanceTool.Controllers
 		public ApplicantsController(
 			ApplicationDataContext dataContext,
 			IHostingEnvironment env,
-			AppLocalizer localizer,
+			AppLocalizer appLocalizer,
 			IEmailSender emailService)
 		{
 			_dataContext = dataContext;
 			_env = env;
-			_appLocalizer = localizer;
+			_appLocalizer = appLocalizer;
 			_emailService = emailService;
 		}
 
 
 
 		// GET: Applicants
-		public async Task<IActionResult> Index(string applicantId)
+		public async Task<IActionResult> Index(string applicantId, string message)
 		{
 			ViewData["CurrentApplicantId"] = applicantId;
+			if (!string.IsNullOrEmpty(message))
+			{
+				ViewBag.Message = message;
+			}
 
 			var applicantsQuery = _dataContext.Applicants
 				.OrderByDescending(a => a.CreatedAt)
@@ -73,7 +80,9 @@ namespace FreelanceTool.Controllers
 		{
 			var applicant = await _dataContext.Applicants
 				.Include(a => a.ApplicantFiles)
+				.AsNoTracking()
 				.SingleOrDefaultAsync(a => a.Id == id);
+			if (applicant == null) return NotFound();
 
 			return View(applicant);
 		}
@@ -123,18 +132,18 @@ namespace FreelanceTool.Controllers
 			return View();
 		}
 
-		public async Task<IActionResult> DownloadFile(int id)
+		public async Task<IActionResult> DownloadFile(int fileId)
 		{
 			var file = await _dataContext
 				.ApplicantFiles
 				.AsNoTracking()
-				.SingleOrDefaultAsync(af => af.Id == id);
+				.SingleOrDefaultAsync(af => af.Id == fileId);
 			if (file == null) return NotFound();
 
-			var path = Constants.UPLOAD_PATH;
+			var path = UPLOAD_PATH;
 			if (file.Type == ApplicantFileType.Csv)
-				path = Path.Combine(path, Constants.CSV_PATH);
-			path = Path.Combine(path, file.UniqueName);
+				path = Combine(path, CSV_PATH);
+			path = Combine(path, file.UniqueName);
 
 			var fileStream = _env
 				.ContentRootFileProvider
@@ -143,6 +152,47 @@ namespace FreelanceTool.Controllers
 
 			return File(fileStream, "text/csv", file.OriginalName);
 		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> DeleteFiles(int id)
+		{
+			var applicant = await _dataContext
+				.Applicants
+				.Include(a => a.ApplicantFiles)
+				.AsNoTracking()
+				.SingleOrDefaultAsync(a => a.Id == id);
+			if (applicant == null) return NotFound();
+
+			var filesToDelete = applicant
+				.ApplicantFiles
+				.Where(af => af.Type != ApplicantFileType.Csv)
+				.ToList();
+
+			foreach (var file in filesToDelete)
+			{
+				var path = Combine(_env.ContentRootPath, UPLOAD_PATH, file.UniqueName);
+				if (!SystemFile.Exists(path)) continue;
+
+				try
+				{
+					SystemFile.Delete(path);
+					_dataContext.Remove(file);
+				}
+				catch (Exception) { /* File failed to delete */ }
+			}
+
+			try
+			{
+				await _dataContext.SaveChangesAsync();
+			}
+			catch (Exception) { /* File deatach failed. */ }
+
+			return RedirectToAction(
+				nameof(Index), 
+				new { message = "Files have been deleted successfully." });
+		}
+
 
 		// Private methods
 		private async Task AttachDependencies(
@@ -200,7 +250,7 @@ namespace FreelanceTool.Controllers
 		{
 			var csvModel = await BuildCsvModel(applicant.Id);
 			var csvName = $"{csvModel.DbId}.csv";
-			var csvPath = Path.Combine(
+			var csvPath = Combine(
 				PathHandler.GetCsvPath(_env), csvName);
 			var isSaved = true;
 			try
@@ -209,7 +259,7 @@ namespace FreelanceTool.Controllers
 					await csvFile.WriteAsync(csvModel.GetContent());
 
 				// Verify if file was saved successful
-				if (!System.IO.File.Exists(csvPath))
+				if (!SystemFile.Exists(csvPath))
 					isSaved = false;
 			}
 			catch (Exception)

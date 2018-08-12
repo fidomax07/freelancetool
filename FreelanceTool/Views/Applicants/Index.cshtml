@@ -1,4 +1,6 @@
-﻿@using System.Globalization
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
 @model IEnumerable<Applicant>
 
 @{
@@ -6,15 +8,13 @@
 }
 
 <h2 class="extra-margin-vertical">@ViewData["Title"]</h2>
-@*<p>
-	<a asp-action="Create">Create New</a>
-</p>*@
 <p>
 	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in turpis eu nunc hendrerit faucibus. Aliquam lacus nisl, vestibulum eget pharetra nec, molestie in libero. Integer quis erat sit amet risus hendrerit lobortis. Curabitur molestie mi feugiat, ullamcorper tortor sed, dictum mi. Nam aliquet tortor ex, gravida ornare justo ultrices condimentum. Interdum et malesuada fames ac ante ipsum primis in faucibus. In nec dui ante. Vivamus quis neque nibh. Maecenas at est elementum, pretium est id, porta dolor. Nulla convallis ante vel erat fringilla, eu ornare sapien euismod. Curabitur dapibus eu diam quis volutpat.
 
 	Vestibulum ullamcorper nibh eu nisl volutpat lobortis. Morbi feugiat consectetur tortor, sed faucibus purus semper nec. Proin tincidunt tempus risus, eget sodales lorem vestibulum vitae. Etiam lobortis tortor sapien. Nam eget accumsan neque. Mauris id orci nisl. Vestibulum laoreet, sapien ut rhoncus bibendum, leo urna scelerisque leo, at volutpat dui tellus sed nisl.
 </p>
 
+@* Search box *@
 <form asp-action="Index" method="get" id="applicant-search-form">
 	<div class="form-group applicant-search-container">
 		<div class="row">
@@ -31,6 +31,21 @@
 		</div>
 	</div>
 </form>
+
+@* Custom message *@
+@if (ViewBag.Message != null)
+{
+	<div class="row">
+		<div class="col-md-6 col-md-offset-6">
+			<div class="alert alert-success alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				@Localizer[$"{ViewBag.Message}"]
+			</div>
+		</div>
+	</div>
+}
 
 <h3 class="extra-margin-vertical">List of registrations</h3>
 <table class="table">
@@ -81,7 +96,7 @@
 		$(function () {
 
 			// Client side validate the applicant-id to search for.
-			(function() {
+			(function () {
 				var applicantSearchForm = $("form#applicant-search-form");
 				var applicantIdInput = $("input[name='ApplicantId']").first();
 				applicantSearchForm.on("submit",
@@ -99,7 +114,7 @@
 						applicantSearchForm.off("submit").submit();
 					});
 			}());
-			
+
 		});
 	</script>
 }

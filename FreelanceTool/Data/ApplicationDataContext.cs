@@ -43,6 +43,9 @@ namespace FreelanceTool.Data
 			// Keys and indexes
 			builder.Entity<ApplicantLanguage>()
 				.HasKey(al => new { al.ApplicantId, al.LanguageId });
+			builder.Entity<ApplicantFile>()
+				.HasIndex(af => af.UniqueName)
+				.IsUnique();
 
 
 			// Configuration of auto-generated columns

@@ -1,5 +1,5 @@
 ﻿@using FreelanceTool.Helpers
-@using Microsoft.AspNetCore.Hosting
+@using FreelanceTool.Models.Enums
 @using Microsoft.AspNetCore.Mvc.Localization
 
 @inject IViewLocalizer Localizer
@@ -8,6 +8,8 @@
 
 @{
 	ViewData["Title"] = "Details";
+	var deletableFilesCount = Model.ApplicantFiles
+		.Count(af => af.Type != ApplicantFileType.Csv);
 }
 
 <div class="body-inner">
@@ -24,11 +26,17 @@
 			@foreach (var file in Model.ApplicantFiles)
 			{
 				<p>
-					<a asp-action="DownloadFile" asp-route-id="@file.Id">@file.OriginalName</a>
+					<a asp-action="DownloadFile" asp-route-fileId="@file.Id">@file.OriginalName</a>
 					- @Math.Ceiling(file.Length / 1024d)kB - @AppLocalizer.LocalizeEnum(file.Type)
 				</p>
 			}
-			<button type="button" class="btn btn-danger extra-margin-vertical">
+
+			<form asp-action="DeleteFiles" asp-route-id="@Model.Id" role="form"
+			      id="delete-files-form"
+			      data-deletable-files-count="@deletableFilesCount">
+			</form>
+			<button type="button" class="btn btn-danger extra-margin-vertical"
+					id="delete-files">
 				Delete Files from Server
 			</button>
 		</div>
@@ -38,3 +46,30 @@
 		<a asp-action="Index" class="pull-right extra-margin-vertical">Back to Search</a>
 	</div>
 </div>
+
+@section Scripts {
+	<script>
+		$(function () {
+
+			// Handle files deletion.
+			(function() {
+				var deletableFiles = parseInt($("form#delete-files-form")
+					.data("deletable-files-count"));
+				var deleteFilesButton = $("#delete-files");
+				if (deletableFiles < 1) {
+					deleteFilesButton.attr("disabled", true);
+				} else {
+					deleteFilesButton.on("click", function () {
+						var isConfirmed = confirm("Möchten Sie die Dateien " +
+							"wirklich unwiderruflich vom Server löschen?");
+
+						if (isConfirmed) {
+							$("form#delete-files-form").submit();
+						}
+					});
+				}
+			}());
+
+		});
+	</script>
+}
