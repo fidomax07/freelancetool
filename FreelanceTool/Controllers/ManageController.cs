@@ -1,22 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using FreelanceTool.Models;
+using FreelanceTool.Services;
+using FreelanceTool.ViewModels.ManageViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using FreelanceTool.Models;
-using FreelanceTool.Services;
-using FreelanceTool.ViewModels.ManageViewModels;
 
 namespace FreelanceTool.Controllers
 {
-    [Authorize]
+	[Authorize]
     [Route("[controller]/[action]")]
     public class ManageController : Controller
     {

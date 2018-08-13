@@ -1,16 +1,75 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using FreelanceTool.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FreelanceTool.Data
 {
 	public static class DbInitializer
 	{
-		public static void Seed(ApplicationDataContext context)
+		public static async Task Init(IServiceProvider serviceProvider, string defaultUserPwd)
+		{
+			var dataContextOptions = serviceProvider
+				.GetRequiredService<DbContextOptions<ApplicationDataContext>>();
+			using (var context = new ApplicationDataContext(dataContextOptions))
+			{
+				// Seed membership
+				var user1Id = await EnsureUser(
+					serviceProvider, defaultUserPwd, "fidomax07@gmail.com");
+				//await EnsureRole(serviceProvider, user1Id, "admin");
+
+				var user2Id = await EnsureUser(
+					serviceProvider, defaultUserPwd, "andreas.mueller@livingtech.ch");
+				//await EnsureRole(serviceProvider, user2Id, "admin");
+
+				// Seed other data
+				SeedData(context);
+			}
+		}
+
+		private static async Task<string> EnsureUser(
+			IServiceProvider serviceProvider, string defaultUserPwd, string userName)
+		{
+			var userManager = serviceProvider.GetService<UserManager<ApplicationUser>>();
+			var user = await userManager.FindByNameAsync(userName);
+			if (user == null)
+			{
+				user = new ApplicationUser { UserName = userName };
+				await userManager.CreateAsync(user, defaultUserPwd);
+			}
+
+			return user.Id;
+		}
+
+		private static async Task<IdentityResult> EnsureRole(
+			IServiceProvider serviceProvider, string userId, string role)
+		{
+			IdentityResult IR = null;
+
+			var roleManager = serviceProvider.GetService<RoleManager<IdentityRole>>();
+			if (!await roleManager.RoleExistsAsync(role))
+			{
+				IR = await roleManager.CreateAsync(new IdentityRole(role));
+			}
+
+			var userManager = serviceProvider.GetService<UserManager<ApplicationUser>>();
+			var user = await userManager.FindByIdAsync(userId);
+
+			var userRoles = await userManager.GetRolesAsync(user);
+			if (!userRoles.Contains(role))
+			{
+				IR = await userManager.AddToRoleAsync(user, role);
+			}
+
+			return IR;
+		}
+
+		public static void SeedData(ApplicationDataContext context)
 		{
 			if (context.Languages.Any()) return;
-
-			context.Database.Migrate();
 
 			var languages = new[]
 			{

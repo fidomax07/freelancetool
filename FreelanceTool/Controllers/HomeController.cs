@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using FreelanceTool.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,7 @@ namespace FreelanceTool.Controllers
 			//return View();
 		}
 
+		[AllowAnonymous]
 		public IActionResult Error()
 		{
 			return View(new ErrorViewModel
@@ -44,6 +46,7 @@ namespace FreelanceTool.Controllers
 		}
 
 		[HttpPost]
+		[AllowAnonymous]
 		public IActionResult SetLanguage(string culture, string returnUrl)
 		{
 			Response.Cookies.Append(

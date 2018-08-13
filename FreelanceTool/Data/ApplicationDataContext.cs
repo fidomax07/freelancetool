@@ -1,5 +1,4 @@
-﻿using System;
-using FreelanceTool.Models;
+﻿using FreelanceTool.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +10,7 @@ namespace FreelanceTool.Data
 		public DbSet<Language> Languages { get; set; }
 		public DbSet<Nationality> Nationalities { get; set; }
 
-		// Add tables based on dependecies with each-other
+		// Add tables based on dependencies with each-other
 		public DbSet<Applicant> Applicants { get; set; }
 		public DbSet<ApplicantLanguage> ApplicantLanguages { get; set; }
 		public DbSet<JSTrainingCertificate> JsTrainingCertificates { get; set; }

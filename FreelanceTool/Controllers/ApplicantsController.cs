@@ -9,6 +9,7 @@ using FreelanceTool.Models;
 using FreelanceTool.Models.Enums;
 using FreelanceTool.Services;
 using FreelanceTool.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -88,6 +89,7 @@ namespace FreelanceTool.Controllers
 		}
 
 		// GET: Applicants/Create
+		[AllowAnonymous]
 		public IActionResult Create()
 		{
 			return View(new ApplicationCreateViewModel(_dataContext, HttpContext));
@@ -95,6 +97,7 @@ namespace FreelanceTool.Controllers
 
 		// POST: Applicants/Create
 		[HttpPost]
+		[AllowAnonymous]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create(
 			ApplicationCreateViewModel viewModel, string[] spokenLanguages)
@@ -127,6 +130,7 @@ namespace FreelanceTool.Controllers
 				.PopulateViewData(spokenLanguages));
 		}
 
+		[AllowAnonymous]
 		public IActionResult CreateSuccess()
 		{
 			return View();
