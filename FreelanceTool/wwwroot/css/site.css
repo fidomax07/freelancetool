@@ -9,9 +9,6 @@
     padding-left: 15px;
     padding-right: 15px;
 }
-.body-inner {
-	min-height: 600px;
-}
 
 /* Carousel */
 .carousel-caption p {
@@ -112,6 +109,9 @@ body {
 /* Admin area styles */
 .extra-margin-vertical {
 	margin: 1.5em 0 0.5em 0;
+}
+.min-height-content {
+	min-height: 400px;
 }
 .applicant-search-container {
 	margin: 5em 0;

@@ -2,8 +2,8 @@
 {
 	public static class Constants
     {
-	    public const string UPLOAD_PATH = "App_Data";
-	    public const string CSV_PATH = "Csv";
+	    public const string UPLOAD_DIRECTORY = @"App_Data";
+	    public const string CSV_DIRECTORY = @"App_Data/Csv";
 	    public const int NATIVE_NATIONALITY_ID = 210;
     }
 }

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using FreelanceTool.Data;
 using FreelanceTool.Helpers;
 using FreelanceTool.Models;
-using FreelanceTool.Models.Enums;
 using FreelanceTool.Services;
 using FreelanceTool.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -16,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using static System.IO.Path;
 using static FreelanceTool.Helpers.Constants;
+using static FreelanceTool.Models.Enums.ApplicantFileType;
 using SystemFile = System.IO.File;
 
 namespace FreelanceTool.Controllers
@@ -69,7 +69,7 @@ namespace FreelanceTool.Controllers
 					.AnyAsync(a => a.Id == idParsed);
 				if (!isApplicantFound) return NotFound();
 
-				return RedirectToAction(nameof(Details), new {id = idParsed});
+				return RedirectToAction(nameof(Details), new { id = idParsed });
 			}
 
 			var applicants = await applicantsQuery.ToListAsync();
@@ -104,17 +104,10 @@ namespace FreelanceTool.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var applicant = viewModel.Applicant;
-				await AttachDependencies(viewModel, spokenLanguages);
-
 				try
 				{
-					await TryAttachProfilePicture(viewModel);
-					_dataContext.Add(applicant);
-					await _dataContext.SaveChangesAsync();
-
-					await TrySaveCsvFile(applicant);
-					await _emailService.SendNewApplicationEmailAsync(applicant);
+					await TrySaveApplicant(viewModel, spokenLanguages);
+					TrySendEmailNotification(viewModel.Applicant);
 
 					return RedirectToAction(nameof(CreateSuccess));
 				}
@@ -144,11 +137,9 @@ namespace FreelanceTool.Controllers
 				.SingleOrDefaultAsync(af => af.Id == fileId);
 			if (file == null) return NotFound();
 
-			var path = UPLOAD_PATH;
-			if (file.Type == ApplicantFileType.Csv)
-				path = Combine(path, CSV_PATH);
-			path = Combine(path, file.UniqueName);
-
+			var directory = file.Type == Csv ?
+				CSV_DIRECTORY : UPLOAD_DIRECTORY;
+			var path = Combine(directory, file.UniqueName);
 			var fileStream = _env
 				.ContentRootFileProvider
 				.GetFileInfo(path)
@@ -170,12 +161,12 @@ namespace FreelanceTool.Controllers
 
 			var filesToDelete = applicant
 				.ApplicantFiles
-				.Where(af => af.Type != ApplicantFileType.Csv)
+				.Where(af => af.Type != Csv)
 				.ToList();
 
 			foreach (var file in filesToDelete)
 			{
-				var path = Combine(_env.ContentRootPath, UPLOAD_PATH, file.UniqueName);
+				var path = Combine(_env.ContentRootPath, UPLOAD_DIRECTORY, file.UniqueName);
 				if (!SystemFile.Exists(path)) continue;
 
 				try
@@ -193,38 +184,78 @@ namespace FreelanceTool.Controllers
 			catch (Exception) { /* File deatach failed. */ }
 
 			return RedirectToAction(
-				nameof(Index), 
+				nameof(Index),
 				new { message = "Files have been deleted successfully." });
 		}
 
 
 		// Private methods
-		private async Task AttachDependencies(
+		private async Task TrySaveApplicant(
 			ApplicationCreateViewModel viewModel, string[] spokenLanguages)
 		{
 			if (spokenLanguages != null)
-			{
 				viewModel.AttachSpokenLanguages(spokenLanguages);
-			}
 
 			viewModel.AttachJSTrainingCertificates();
 
 			if (viewModel.HasOfficialFreelanceStatement)
-			{
-				await viewModel.TryAttachFile(
-					_env,
-					ApplicantFileType.OfficialFreelanceStatement);
-			}
+				await viewModel.TryAttachFile(_env, OfficialFreelanceStatement);
+
+			if (!await viewModel.TryAttachFile(_env, ProfilePicture))
+				throw new FileNotFoundException("Profile picture cannot be uploaded!");
+
+			_dataContext.Add(viewModel.Applicant);
+			await _dataContext.SaveChangesAsync();
+
+			await TrySaveCsvFile(viewModel.Applicant);
 		}
 
-		private async Task TryAttachProfilePicture(ApplicationCreateViewModel viewModel)
+		private async Task<bool> TrySaveCsvFile(Applicant applicant)
 		{
-			var isAttached = await viewModel.TryAttachFile(
-				_env, ApplicantFileType.ProfilePicture);
-			if (!isAttached)
+			var csvModel = await BuildCsvModel(applicant.Id);
+			var csvName = $"{csvModel.DbId}.csv";
+			var csvPath = Combine(_env.ContentRootPath, CSV_DIRECTORY, csvName);
+
+			// Try upload the file
+			bool isSaved;
+			try
 			{
-				throw new FileNotFoundException("Profile picture cannot be uploaded!");
+				using (var csvFile = new StreamWriter(csvPath, false, Encoding.UTF8))
+					await csvFile.WriteAsync(csvModel.GetContent());
+
+				isSaved = SystemFile.Exists(csvPath);
 			}
+			catch (Exception)
+			{
+				isSaved = false;
+			}
+
+			// Try save the file into the database
+			if (isSaved)
+			{
+				var csvFileInfo = _env
+					.ContentRootFileProvider
+					.GetFileInfo(Combine(CSV_DIRECTORY, csvName));
+				applicant.ApplicantFiles.Add(new ApplicantFile(Csv)
+				{
+					ApplicantId = applicant.Id,
+					OriginalName = csvName,
+					UniqueName = csvName,
+					Extension = ".csv",
+					Length = csvFileInfo.Length
+				});
+
+				try
+				{
+					await _dataContext.SaveChangesAsync();
+				}
+				catch (Exception)
+				{
+					isSaved = false;
+				}
+			}
+
+			return isSaved;
 		}
 
 		private async Task<CsvModel> BuildCsvModel(int applicantId)
@@ -250,40 +281,12 @@ namespace FreelanceTool.Controllers
 				.BuildContent(currentCulture);
 		}
 
-		private async Task TrySaveCsvFile(Applicant applicant)
+		private void TrySendEmailNotification(Applicant applicant)
 		{
-			var csvModel = await BuildCsvModel(applicant.Id);
-			var csvName = $"{csvModel.DbId}.csv";
-			var csvPath = Combine(
-				PathHandler.GetCsvPath(_env), csvName);
-			var isSaved = true;
-			try
+			Task.Factory.StartNew(async () =>
 			{
-				using (var csvFile = new StreamWriter(csvPath, false, Encoding.UTF8))
-					await csvFile.WriteAsync(csvModel.GetContent());
-
-				// Verify if file was saved successful
-				if (!SystemFile.Exists(csvPath))
-					isSaved = false;
-			}
-			catch (Exception)
-			{
-				isSaved = false;
-			}
-			
-			if (!isSaved)
-				throw new FileNotFoundException("Csv file cannot be saved!");
-			
-			var csvFileInfo = _env.ContentRootFileProvider.GetFileInfo(csvPath);
-			applicant.ApplicantFiles.Add(new ApplicantFile(ApplicantFileType.Csv)
-			{
-				ApplicantId = applicant.Id,
-				OriginalName = csvName,
-				UniqueName = csvName,
-				Extension = ".csv",
-				Length = csvFileInfo.Length
+				await _emailService.SendNewApplicationEmailAsync(applicant);
 			});
-			await _dataContext.SaveChangesAsync();
 		}
 	}
 }

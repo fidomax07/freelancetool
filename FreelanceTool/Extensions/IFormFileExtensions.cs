@@ -28,10 +28,9 @@ namespace Microsoft.AspNetCore.Http
 	    public static async Task<string> TrySaveFile(
 		    this IFormFile file, IHostingEnvironment env, string path = null)
 	    {
-		    var internalPath = Combine(UPLOAD_PATH, path ?? "");
+		    var internalPath = Combine(UPLOAD_DIRECTORY, path ?? "");
 			var uniqueFileName = file.GetUniqueFileName();
-		    var filePath = Combine(
-			    env.ContentRootPath, internalPath, uniqueFileName);
+		    var filePath = Combine(env.ContentRootPath, internalPath, uniqueFileName);
 		    try
 		    {
 			    using (var stream = new FileStream(filePath, FileMode.Create))

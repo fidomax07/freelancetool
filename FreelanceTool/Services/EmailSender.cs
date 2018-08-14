@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using FreelanceTool.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using static System.IO.Path;
+using static FreelanceTool.Helpers.Constants;
 
 namespace FreelanceTool.Services
 {
@@ -56,8 +58,7 @@ namespace FreelanceTool.Services
 
 			// Attach CSV file
 			var csvName = applicant.Csv.UniqueName;
-			var filePath = Path.Combine(
-				PathHandler.GetCsvPath(_env), csvName);
+			var filePath = Combine(_env.ContentRootPath, CSV_DIRECTORY, csvName);
 			using(var stream = new FileStream(filePath, FileMode.Open))
 			{
 				var att = new Attachment(stream, csvName, "text/csv");
