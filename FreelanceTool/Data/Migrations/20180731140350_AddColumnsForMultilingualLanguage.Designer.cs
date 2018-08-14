@@ -11,7 +11,7 @@ using System;
 
 namespace FreelanceTool.Data.Migrations
 {
-    [DbContext(typeof(ApplicationDataContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20180731140350_AddColumnsForMultilingualLanguage")]
     partial class AddColumnsForMultilingualLanguage
     {

@@ -4,30 +4,39 @@ using System.Threading.Tasks;
 using FreelanceTool.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FreelanceTool.Data
 {
-	public static class DbInitializer
+	public static class DbSeeder
 	{
-		public static async Task Init(IServiceProvider serviceProvider, string defaultUserPwd)
+		public static async Task Run(IServiceProvider serviceProvider)
 		{
-			var dataContextOptions = serviceProvider
-				.GetRequiredService<DbContextOptions<ApplicationDataContext>>();
-			using (var context = new ApplicationDataContext(dataContextOptions))
+			var dbContextOptions = serviceProvider
+				.GetRequiredService<DbContextOptions<ApplicationDbContext>>();
+			using (var dbContext = new ApplicationDbContext(dbContextOptions))
 			{
-				// Seed membership
-				var user1Id = await EnsureUser(
-					serviceProvider, defaultUserPwd, "fidomax07@gmail.com");
-				//await EnsureRole(serviceProvider, user1Id, "admin");
+				dbContext.Database.Migrate();
 
-				var user2Id = await EnsureUser(
-					serviceProvider, defaultUserPwd, "andreas.mueller@livingtech.ch");
-				//await EnsureRole(serviceProvider, user2Id, "admin");
+				await SeedMembership(serviceProvider);
 
-				// Seed other data
-				SeedData(context);
+				await SeedData(dbContext);
 			}
+		}
+
+		private static async Task SeedMembership(IServiceProvider serviceProvider)
+		{
+			var config = serviceProvider.GetRequiredService<IConfiguration>();
+			var defaultPassword = config["seededUserPwd"];
+
+			var user1Id = await EnsureUser(
+				serviceProvider, defaultPassword, "fidomax07@gmail.com");
+			//await EnsureRole(serviceProvider, user1Id, "admin");
+
+			var user2Id = await EnsureUser(
+				serviceProvider, defaultPassword, "andreas.mueller@livingtech.ch");
+			//await EnsureRole(serviceProvider, user2Id, "admin");
 		}
 
 		private static async Task<string> EnsureUser(
@@ -67,7 +76,7 @@ namespace FreelanceTool.Data
 			return IR;
 		}
 
-		public static void SeedData(ApplicationDataContext context)
+		public static async Task SeedData(ApplicationDbContext context)
 		{
 			if (context.Languages.Any()) return;
 
@@ -107,7 +116,7 @@ namespace FreelanceTool.Data
 				}
 			};
 			context.Languages.AddRange(languages);
-			context.SaveChanges();
+			await context.SaveChangesAsync();
 
 			#region Raw query for populating nationalities
 
@@ -356,7 +365,7 @@ namespace FreelanceTool.Data
 				(894, 'ZM', 'ZMB', 'Zambia', 'Zambie')");
 
 			#endregion
-			context.SaveChanges();
+			await context.SaveChangesAsync();
 		}
 	}
 }

@@ -10,7 +10,7 @@ using System;
 
 namespace FreelanceTool.Data.Migrations
 {
-    [DbContext(typeof(ApplicationDataContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20180725193700_AddCustomConstraints")]
     partial class AddCustomConstraints
     {

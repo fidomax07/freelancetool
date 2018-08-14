@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelanceTool.Data
 {
-	public class ApplicationDataContext : IdentityDbContext<ApplicationUser>
+	public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 	{
 		// Static tables first
 		public DbSet<Language> Languages { get; set; }
@@ -19,7 +19,7 @@ namespace FreelanceTool.Data
 
 
 		// Lifecycle
-		public ApplicationDataContext(DbContextOptions<ApplicationDataContext> options)
+		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
 			: base(options)
 		{
 		}

@@ -18,7 +18,7 @@ namespace FreelanceTool.ViewModels
 	public class ApplicationCreateViewModel
 	{
 		// Fields
-		private ApplicationDataContext _dataContext;
+		private ApplicationDbContext _dataContext;
 		private HttpContext _httpContext;
 
 
@@ -95,7 +95,7 @@ namespace FreelanceTool.ViewModels
 			ApplicantDateOfBirth = Applicant.DateOfBirth.ToStringLocale();
 		}
 
-		public ApplicationCreateViewModel(ApplicationDataContext dataContext, HttpContext httpContext)
+		public ApplicationCreateViewModel(ApplicationDbContext dataContext, HttpContext httpContext)
 			: this()
 		{
 			_dataContext = dataContext;
@@ -106,7 +106,7 @@ namespace FreelanceTool.ViewModels
 
 
 		// Public methods
-		public ApplicationCreateViewModel SetDataContext(ApplicationDataContext dataContext)
+		public ApplicationCreateViewModel SetDataContext(ApplicationDbContext dataContext)
 		{
 			_dataContext = dataContext;
 

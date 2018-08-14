@@ -30,14 +30,15 @@ namespace FreelanceTool
 		public void ConfigureServices(IServiceCollection services)
 		{
 			// Add data context
-			services.AddDbContext<ApplicationDataContext>(
+			services.AddDbContext<ApplicationDbContext>(
 				options =>
 				{
 					options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
 				});
 
 			// Add authentication service
-			services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+			services.AddIdentity<ApplicationUser, IdentityRole>(
+				options =>
 				{
 					// Lockout settings
 					options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
@@ -50,9 +51,9 @@ namespace FreelanceTool
 					options.Password.RequireUppercase = false;
 
 					// User settings
-					options.User.RequireUniqueEmail = true;
+					//options.User.RequireUniqueEmail = true;
 				})
-				.AddEntityFrameworkStores<ApplicationDataContext>()
+				.AddEntityFrameworkStores<ApplicationDbContext>()
 				.AddDefaultTokenProviders();
 
 			// Add application custom services.

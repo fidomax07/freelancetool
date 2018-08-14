@@ -23,7 +23,7 @@ namespace FreelanceTool.Controllers
 	public class ApplicantsController : Controller
 	{
 		// Fields
-		private readonly ApplicationDataContext _dataContext;
+		private readonly ApplicationDbContext _dataContext;
 		private readonly IHostingEnvironment _env;
 		private readonly AppLocalizer _appLocalizer;
 		private readonly IEmailSender _emailService;
@@ -32,7 +32,7 @@ namespace FreelanceTool.Controllers
 
 		// Lifecycle
 		public ApplicantsController(
-			ApplicationDataContext dataContext,
+			ApplicationDbContext dataContext,
 			IHostingEnvironment env,
 			AppLocalizer appLocalizer,
 			IEmailSender emailService)

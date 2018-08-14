@@ -17,7 +17,7 @@ namespace FreelanceTool.Controllers
 {
 	public class TestController : Controller
 	{
-		private readonly ApplicationDataContext _dataContext;
+		private readonly ApplicationDbContext _dataContext;
 		private readonly IHostingEnvironment _env;
 		private readonly IConfiguration _configuration;
 		private readonly AppLocalizer _appLocalizer;
@@ -25,7 +25,7 @@ namespace FreelanceTool.Controllers
 
 
 		public TestController(
-			ApplicationDataContext dataContext,
+			ApplicationDbContext dataContext,
 			IHostingEnvironment env,
 			IConfiguration configuration,
 			AppLocalizer appLocalizer,

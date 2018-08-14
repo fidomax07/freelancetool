@@ -5,6 +5,8 @@
 
 @inject IViewLocalizer Localizer
 @inject IOptions<RequestLocalizationOptions> LocOptions
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @{
 	var requestCulture = Context.Features.Get<IRequestCultureFeature>();
@@ -24,31 +26,40 @@
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
 		<div title="@Localizer["Request culture provider:"] @requestCulture?.Provider?.GetType().Name"
-		     class="pull-right language-select-container">
+			 class="pull-right language-select-container">
 			<form id="language-select-form" method="post" class="form-horizontal" role="form"
-			      style="display: none;"
-			      asp-controller="Home"
-			      asp-action="SetLanguage"
-			      asp-route-returnUrl="@Context.Request.Path">
+				  style="display: none;"
+				  asp-controller="Home"
+				  asp-action="SetLanguage"
+				  asp-route-returnUrl="@Context.Request.Path">
 				@*@Localizer["Language:"]*@
 				@*<select name="culture"
-					asp-for="@requestCulture.RequestCulture.UICulture.Name"
-					asp-items="cultureItems">
-				</select>*@
+						asp-for="@requestCulture.RequestCulture.UICulture.Name"
+						asp-items="cultureItems">
+					</select>*@
 				<input type="hidden" name="culture" id="language-select-culture" />
-				<input type="hidden" id="language-select-current-culture" 
-				       value="@currentCulture.Name" />
+				<input type="hidden" id="language-select-current-culture"
+					   value="@currentCulture.Name" />
 			</form>
 			<a href="javascript:void(0);"
 			   class="language-select-provider 
-			   @(currentCulture.Name == deCulture?.Name ? 
-					   " language-select-focus" : "")"
+					@(currentCulture.Name == deCulture?.Name ? " language-select-focus" : "")"
 			   data-culture-name="@deCulture?.Name">German |</a>
 			<a href="javascript:void(0);"
-			   class="language-select-provider 
-			   @(currentCulture.Name == frCulture?.Name ? 
-				     " language-select-focus" : "")"
+			   class="language-select-provider
+					@(currentCulture.Name == frCulture?.Name ? " language-select-focus" : "")"
 			   data-culture-name="@frCulture?.Name">French</a>
+			
+			@* Logout link for Admin area only *@
+			@if (SignInManager.IsSignedIn(User))
+			{
+				<form asp-area="" asp-controller="Account" asp-action="Logout"
+					  method="post" id="logoutForm" class="pull-right"
+					  style="display: none;"></form>
+				<a href="javascript:void(0);" class="btn btn-link logout-button" id="logoutButton">
+					Log out
+				</a>
+			}
 		</div>
 	</div>
 </div>

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FreelanceTool.Data.Migrations
 {
-	[DbContext(typeof(ApplicationDataContext))]
+	[DbContext(typeof(ApplicationDbContext))]
 	[Migration("20180720103753_InitialCreate")]
 	partial class InitialCreate
 	{

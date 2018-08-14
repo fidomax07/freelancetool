@@ -11,13 +11,15 @@ namespace FreelanceTool.Controllers
 {
 	public class HomeController : Controller
 	{
+		[AllowAnonymous]
 		public IActionResult Index()
 		{
-			return RedirectToAction("Create", "Applicants");
+			return RedirectToAction(nameof(ApplicantsController.Create), "Applicants");
 
 			//return View();
 		}
 
+		[AllowAnonymous]
 		public IActionResult About()
 		{
 			return RedirectToAction("Create", "Applicants");
@@ -27,6 +29,7 @@ namespace FreelanceTool.Controllers
 			//return View();
 		}
 
+		[AllowAnonymous]
 		public IActionResult Contact()
 		{
 			return RedirectToAction("Create", "Applicants");

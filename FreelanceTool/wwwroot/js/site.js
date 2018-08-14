@@ -52,6 +52,7 @@ function scrollToError(elementId) {
 	}, 200);
 }
 
+// Select language handler
 (function () {
 	//$("#selectLanguage select").change(function () {
 	//	$(this).parent().submit();
@@ -65,5 +66,13 @@ function scrollToError(elementId) {
 
 			$("input[name='culture']").first().val(culture);
 			$("form#language-select-form").submit();
+		});
+}());
+
+// Logout handler
+(function() {
+	$("#logoutButton").on("click",
+		function() {
+			$("form#logoutForm").submit();
 		});
 }());

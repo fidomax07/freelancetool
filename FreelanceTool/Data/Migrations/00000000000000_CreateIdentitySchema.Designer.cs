@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FreelanceTool.Data.Migrations
 {
-	[DbContext(typeof(ApplicationDataContext))]
+	[DbContext(typeof(ApplicationDbContext))]
 	[Migration("00000000000000_CreateIdentitySchema")]
 	partial class CreateIdentitySchema
 	{
