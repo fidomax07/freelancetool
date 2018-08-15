@@ -31,7 +31,7 @@ namespace FreelanceTool.Controllers
 			AppLocalizer appLocalizer,
 			IEmailSender emailService)
 		{
-			_dataContext = dataContext;
+			_dataContext = dataContext;	
 			_env = env;
 			_configuration = configuration;
 			_appLocalizer = appLocalizer;
@@ -39,9 +39,22 @@ namespace FreelanceTool.Controllers
 		}
 
 		[AllowAnonymous]
-		public object Index()
+		public async Task<object> Index()
 		{
-			return _configuration.GetSection("emailHost");
+			//foreach (var nationality in _dataContext.Nationalities)
+			//{
+			//	var natGerman = await _dataContext
+			//		.NationalityDes
+			//		.AsNoTracking()
+			//		.SingleOrDefaultAsync(nd => nd.Alpha2 == nationality.Alpha2);
+			//	if (natGerman == null) continue;
+
+			//	nationality.NameGerman = natGerman.NameGerman;
+			//}
+
+			//await _dataContext.SaveChangesAsync();
+
+			return "success";
 		}
 	}
 }

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using static FreelanceTool.Models.Nationality;
 
 namespace FreelanceTool.ViewModels
 {
@@ -148,14 +149,10 @@ namespace FreelanceTool.ViewModels
 			}
 
 			// Nationality related data
-			var nationalities = _dataContext.Nationalities
-				.AsNoTracking();
-			nationalities = OrderLocalizedNationalities(
-				nationalities, uiCulture.EnglishName);
+			var nationalities = OrderLocalizedNationalities(
+				_dataContext.Nationalities.AsNoTracking(), uiCulture);
 			NationalitiesList = new SelectList(
-				nationalities, 
-				"Id", 
-				Nationality.GetLocalizedColumnName(uiCulture));
+				nationalities, "Id", GetLocalizedColumnName(uiCulture));
 			NativeNationality = nationalities.SingleOrDefault(n => n.Alpha2 == "CH");
 			Applicant.SetNationality(NativeNationality);
 
@@ -249,10 +246,10 @@ namespace FreelanceTool.ViewModels
 		}
 
 		private IQueryable<Nationality> OrderLocalizedNationalities(
-			IQueryable<Nationality> nationalities, string cultureEnglishName)
+			IQueryable<Nationality> nationalities, CultureInfo culture)
 		{
 			IQueryable<Nationality> nationalitiesOrdered;
-			switch (cultureEnglishName)
+			switch (culture.EnglishName)
 			{
 				case "English":
 					nationalitiesOrdered = nationalities.OrderBy(n => n.NameEnglish);

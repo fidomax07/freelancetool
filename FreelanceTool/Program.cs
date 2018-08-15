@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FreelanceTool.Data;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -12,7 +13,7 @@ namespace FreelanceTool
 		{
 			var host = BuildWebHost(args);
 
-			EnsureDbSeeding(host);
+			EnsureDbSeeding(host).Wait();
 
 			host.Run();
 		}
@@ -24,13 +25,13 @@ namespace FreelanceTool
 				.Build();
 		}
 
-		private static void EnsureDbSeeding(IWebHost host)
+		private static async Task EnsureDbSeeding(IWebHost host)
 		{
 			using (var scope = host.Services.CreateScope())
 			{
 				try
 				{
-					DbSeeder.Run(scope.ServiceProvider).Wait();
+					await DbSeeder.Run(scope.ServiceProvider);
 				}
 				catch (Exception /*ex*/)
 				{
