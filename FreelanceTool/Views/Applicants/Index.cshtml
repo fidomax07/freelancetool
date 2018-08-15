@@ -1,7 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using FreelanceTool.Data;
 
 @inject IViewLocalizer Localizer
-@model IEnumerable<Applicant>
+@model PaginatedList<Applicant>
 
 @{
 	ViewData["Title"] = "Freelancer-Registration Administration";
@@ -50,46 +51,64 @@
 <h3 class="extra-margin-vertical">List of registrations</h3>
 <table class="table">
 	<thead>
-		<tr>
-			<th>
-				@*@Html.DisplayNameFor(model => model.CreatedAt)*@
-				Date
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.LastName)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.FirstName)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Email)
-			</th>
-			<th>Details</th>
-		</tr>
+	<tr>
+		<th>
+			@*@Html.DisplayNameFor(model => model.CreatedAt)*@
+			Date
+		</th>
+		<th>
+			LastName
+		</th>
+		<th>
+			FirstName
+		</th>
+		<th>
+			Email
+		</th>
+		<th>Details</th>
+	</tr>
 	</thead>
 	<tbody>
-		@foreach (var item in Model)
-		{
-			<tr>
-				<td>
-					@Html.DisplayFor(modelItem => item.CreatedAt)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.LastName)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.FirstName)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Email)
-				</td>
-				<td>
-					<a asp-action="Details" asp-route-id="@item.Id">Show Details</a>
-				</td>
-			</tr>
-		}
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.CreatedAt)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.LastName)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.FirstName)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Email)
+			</td>
+			<td>
+				<a asp-action="Details" asp-route-id="@item.Id">Show Details</a>
+			</td>
+		</tr>
+	}
 	</tbody>
 </table>
+
+@if (Model.HasPreviousPage || Model.HasNextPage)
+{
+	var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+	var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+	<div class="row">
+		<div class="col-md-2 col-md-offset-4">
+			<a asp-action="Index" asp-route-page="@(Model.PageIndex - 1)"
+			   class="btn btn-default btn-block @prevDisabled">Previous
+			</a>
+		</div>
+		<div class="col-md-2">
+			<a asp-action="Index" asp-route-page="@(Model.PageIndex + 1)"
+			   class="btn btn-default btn-block @nextDisabled">Next
+			</a>
+		</div>
+	</div>
+}
 
 @section Scripts {
 	<script>

@@ -46,7 +46,7 @@ namespace FreelanceTool.Controllers
 
 
 		// GET: Applicants
-		public async Task<IActionResult> Index(string applicantId, string message)
+		public async Task<IActionResult> Index(int? applicantId, string message, int? page)
 		{
 			ViewData["CurrentApplicantId"] = applicantId;
 			if (!string.IsNullOrEmpty(message))
@@ -60,19 +60,17 @@ namespace FreelanceTool.Controllers
 
 			// Handle searching with applicant id if
 			// a value was provided from the user.
-			if (!string.IsNullOrEmpty(applicantId))
+			if (applicantId != null)
 			{
-				var isIdParsed = int.TryParse(applicantId, out var idParsed);
-				if (!isIdParsed) return NotFound();
-
 				var isApplicantFound = await applicantsQuery
-					.AnyAsync(a => a.Id == idParsed);
+					.AnyAsync(a => a.Id == applicantId);
 				if (!isApplicantFound) return NotFound();
 
-				return RedirectToAction(nameof(Details), new { id = idParsed });
+				return RedirectToAction(nameof(Details), new { id = applicantId });
 			}
 
-			var applicants = await applicantsQuery.ToListAsync();
+			var applicants = await PaginatedList<Applicant>.CreateAsync(
+				applicantsQuery, page ?? 1, DEFAULT_PAGE_SIZE);
 			return View(applicants);
 		}
 
