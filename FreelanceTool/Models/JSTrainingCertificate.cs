@@ -14,7 +14,10 @@ namespace FreelanceTool.Models
 		public DateTime UpdatedAt { get; set; }
 
 		[StringLength(80)]
+		[Display(Name = "Certificate name")]
 		public string Name { get; set; }
+
+		[Display(Name = "Certificate type")]
 		public JsCertificateType? Type { get; set; }
 
 

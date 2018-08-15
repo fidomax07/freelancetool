@@ -117,14 +117,62 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="(Please select)" xml:space="preserve">
+    <value>(Veuillez sélectionner)</value>
+  </data>
   <data name="Accepted formats: JPG and JPEG" xml:space="preserve">
     <value>Formats acceptés: JPG et JPEG</value>
+  </data>
+  <data name="Accepted formats: PDF, JPG, JPEG, TIFF, PNG, GIF" xml:space="preserve">
+    <value>Formats acceptés: PDF, JPG, JPEG, TIFF, PNG, GIF</value>
+  </data>
+  <data name="Address-Information" xml:space="preserve">
+    <value>Informations d'adresse</value>
+  </data>
+  <data name="Administrative Information" xml:space="preserve">
+    <value>Informations administratives</value>
+  </data>
+  <data name="Bank Data" xml:space="preserve">
+    <value>Données bancaires</value>
   </data>
   <data name="Choose file" xml:space="preserve">
     <value>Choisir le fichier</value>
   </data>
+  <data name="Company name is mandatory when occupation is self employed." xml:space="preserve">
+    <value>Le nom de l'entreprise est obligatoire lorsque le travail est indépendant.</value>
+  </data>
+  <data name="Contact Data" xml:space="preserve">
+    <value>Données de contact</value>
+  </data>
+  <data name="Employer is mandatory when occupation is part or full time." xml:space="preserve">
+    <value>Employeur principal est obligatoire lorsque la profession est à temps partiel ou à temps plein.</value>
+  </data>
   <data name="Fill an application" xml:space="preserve">
     <value>Remplir une application</value>
+  </data>
+  <data name="Frame Contract" xml:space="preserve">
+    <value>Contrat cadre</value>
+  </data>
+  <data name="I accept the contractual terms" xml:space="preserve">
+    <value>J'accepte les conditions contractuelles</value>
+  </data>
+  <data name="J+S Training Certificates" xml:space="preserve">
+    <value>Certificats de formation J + S</value>
+  </data>
+  <data name="Miscellaneous Information" xml:space="preserve">
+    <value>Des informations diverses</value>
+  </data>
+  <data name="Personal Data" xml:space="preserve">
+    <value>Données personnelles</value>
+  </data>
+  <data name="Profile picture is mandatory." xml:space="preserve">
+    <value>La photo de profil est obligatoire.</value>
+  </data>
+  <data name="Residence permit is mandatory when selected country is not Switzerland." xml:space="preserve">
+    <value>Le permis de séjour est obligatoire lorsque le pays sélectionné n'est pas la Suisse.</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Soumettre</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Bienvenue sur notre site</value>

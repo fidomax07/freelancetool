@@ -284,8 +284,7 @@ namespace FreelanceTool.Models
 					.GetValue(objectInstance)
 					.ToString();
 				PhoneNumber = string.IsNullOrWhiteSpace(PhoneNumber)
-					? objectPhonePrefix
-					: $"{objectPhonePrefix}{PhoneNumber}";
+					? objectPhonePrefix : $"{objectPhonePrefix}{PhoneNumber}";
 			}
 			else if (propInfo.Name == nameof(Applicant.PhoneNumber))
 			{
@@ -293,8 +292,7 @@ namespace FreelanceTool.Models
 					.GetValue(objectInstance)
 					.ToString();
 				PhoneNumber = string.IsNullOrWhiteSpace(PhoneNumber)
-					? objectPhoneNumber
-					: $"{PhoneNumber}{objectPhoneNumber}";
+					? objectPhoneNumber : $"{PhoneNumber}{objectPhoneNumber}";
 			}
 		}
 

@@ -39,13 +39,15 @@ namespace FreelanceTool.Models
 
 		[Column(TypeName = "date")]
 		[Required, DataType(DataType.Date)]
-		[Display(Name = "Date of birth")]
+		[Display(Name = "Date of Birth")]
 		public DateTime DateOfBirth { get; set; }
 
 		[Required, StringLength(5)]
+		[Display(Name = "Phone prefix")]
 		public string PhonePrefix { get; set; }
 
 		[Required, StringLength(30), RegularExpression(@"^[0-9]*$")]
+		[Display(Name = "Phone number")]
 		public string PhoneNumber { get; set; }
 
 		[Required, StringLength(80), DataType(DataType.EmailAddress)]
@@ -145,6 +147,8 @@ namespace FreelanceTool.Models
 		public ICollection<JSTrainingCertificate> JsTrainingCertificates { get; set; }
 
 		public ICollection<ApplicantFile> ApplicantFiles { get; set; }
+
+		[Display(Name = "Profile picture")]
 		public ApplicantFile ProfilePicture
 		{
 			get
@@ -153,6 +157,8 @@ namespace FreelanceTool.Models
 					f => f.Type == ApplicantFileType.ProfilePicture);
 			}
 		}
+
+		[Display(Name = "Official Freelance Statement")]
 		public ApplicantFile OfficialFrelanceStatement
 		{
 			get
@@ -161,6 +167,8 @@ namespace FreelanceTool.Models
 					f => f.Type == ApplicantFileType.OfficialFreelanceStatement);
 			}
 		}
+
+		[Display(Name = "Csv")]
 		public ApplicantFile Csv
 		{
 			get

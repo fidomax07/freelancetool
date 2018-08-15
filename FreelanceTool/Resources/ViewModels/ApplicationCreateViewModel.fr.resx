@@ -120,4 +120,10 @@
   <data name="Date of Birth" xml:space="preserve">
     <value>Date de naissance</value>
   </data>
+  <data name="Official Freelance Statement" xml:space="preserve">
+    <value>Preuve actuelle du fonds d'indemnisation</value>
+  </data>
+  <data name="Profile picture" xml:space="preserve">
+    <value>Portrait photo en JPG</value>
+  </data>
 </root>

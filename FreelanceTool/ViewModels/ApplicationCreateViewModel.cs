@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using static FreelanceTool.Models.Nationality;
 
 namespace FreelanceTool.ViewModels
 {
@@ -55,9 +54,13 @@ namespace FreelanceTool.ViewModels
 			}
 		}
 		[DataType(DataType.Upload)]
+		[Display(Name = "Official Freelance Statement")]
 		public IFormFile OfficialFreelanceStatement { get; set; }
+
 		[Required, DataType(DataType.Upload)]
+		[Display(Name = "Profile picture")]
 		public IFormFile ProfilePicture { get; set; }
+
 		public JSTrainingCertificate JsTrainingCertificate_1 { get; set; }
 		public JSTrainingCertificate JsTrainingCertificate_2 { get; set; }
 		public JSTrainingCertificate JsTrainingCertificate_3 { get; set; }
@@ -152,7 +155,7 @@ namespace FreelanceTool.ViewModels
 			var nationalities = OrderLocalizedNationalities(
 				_dataContext.Nationalities.AsNoTracking(), uiCulture);
 			NationalitiesList = new SelectList(
-				nationalities, "Id", GetLocalizedColumnName(uiCulture));
+				nationalities, "Id", Nationality.GetLocalizedColumnName(uiCulture));
 			NativeNationality = nationalities.SingleOrDefault(n => n.Alpha2 == "CH");
 			Applicant.SetNationality(NativeNationality);
 

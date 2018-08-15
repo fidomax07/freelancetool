@@ -64,14 +64,13 @@ namespace FreelanceTool
 			services.AddLocalization(options => options.ResourcesPath = "Resources");
 			services.Configure<RequestLocalizationOptions>(options =>
 			{
-				var enCulture = "en";
 				var supportedCultures = new[]
 				{
-					new CultureInfo(enCulture),
+					new CultureInfo("en"),
 					new CultureInfo("de"),
 					new CultureInfo("fr")
 				};
-				options.DefaultRequestCulture = new RequestCulture(enCulture);
+				options.DefaultRequestCulture = new RequestCulture("de");
 				options.SupportedCultures = supportedCultures;
 				options.SupportedUICultures = supportedCultures;
 			});
@@ -105,16 +104,15 @@ namespace FreelanceTool
 			app.UseStatusCodePages();
 
 			// Configure cultures and localization options
-			var enCulture = "en";
 			var supportedCultures = new[]
 			{
-				new CultureInfo(enCulture),
+				new CultureInfo("en"),
 				new CultureInfo("de"),
 				new CultureInfo("fr")
 			};
 			app.UseRequestLocalization(new RequestLocalizationOptions
 			{
-				DefaultRequestCulture = new RequestCulture(enCulture),
+				DefaultRequestCulture = new RequestCulture("de"),
 				// Formatting numbers, dates, etc.
 				SupportedCultures = supportedCultures,
 				// UI strings that we have localized.

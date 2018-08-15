@@ -117,22 +117,88 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Address" xml:space="preserve">
+    <value>Rue, No.</value>
+  </data>
+  <data name="Address information" xml:space="preserve">
+    <value>Adresse supplémentaire</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Lieu</value>
+  </data>
+  <data name="Civil status" xml:space="preserve">
+    <value>État civil</value>
+  </data>
+  <data name="Company name" xml:space="preserve">
+    <value>Nom d'entreprise</value>
+  </data>
+  <data name="Company website" xml:space="preserve">
+    <value>Website</value>
+  </data>
   <data name="Country" xml:space="preserve">
     <value>Pays</value>
+  </data>
+  <data name="Date of Birth" xml:space="preserve">
+    <value>Date de naissance</value>
+  </data>
+  <data name="Driver license B" xml:space="preserve">
+    <value>Permis de conduire B</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Employer" xml:space="preserve">
+    <value>Employeur principal</value>
   </data>
   <data name="First name" xml:space="preserve">
     <value>Prenom</value>
   </data>
+  <data name="IBAN number" xml:space="preserve">
+    <value>Numéro IBAN</value>
+  </data>
   <data name="Last name" xml:space="preserve">
     <value>Nom</value>
   </data>
+  <data name="Main language" xml:space="preserve">
+    <value>Langue de correspondance</value>
+  </data>
+  <data name="Nationality" xml:space="preserve">
+    <value>Nationalité</value>
+  </data>
+  <data name="Number of kids" xml:space="preserve">
+    <value>Nombre d'enfants</value>
+  </data>
+  <data name="Occupation" xml:space="preserve">
+    <value>Situation professionnelle</value>
+  </data>
+  <data name="Phone number" xml:space="preserve">
+    <value>Mobile</value>
+  </data>
+  <data name="Phone prefix" xml:space="preserve">
+    <value>Indicatif</value>
+  </data>
+  <data name="Residence permit" xml:space="preserve">
+    <value>Permis de séjour</value>
+  </data>
   <data name="Sex" xml:space="preserve">
     <value>Titre</value>
+  </data>
+  <data name="Swiss social security number" xml:space="preserve">
+    <value>Nombre asv</value>
+  </data>
+  <data name="T shirt size" xml:space="preserve">
+    <value>Taille de t-shirt</value>
   </data>
   <data name="The &lt;b&gt;{0}&lt;/b&gt; field must be at most {1} characters long." xml:space="preserve">
     <value>Le champ &lt;b&gt;{0}&lt;/b&gt; doit contenir au maximum {1} caractères.</value>
   </data>
   <data name="The {0} field is required." xml:space="preserve">
     <value>Le champ {0} est requis.</value>
+  </data>
+  <data name="Training number" xml:space="preserve">
+    <value>Numéro d'identification J+S</value>
+  </data>
+  <data name="Zip" xml:space="preserve">
+    <value>NPA</value>
   </data>
 </root>
