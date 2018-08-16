@@ -216,6 +216,9 @@
   <data name="Sex" xml:space="preserve">
     <value>Anrede</value>
   </data>
+  <data name="Spoken language English" xml:space="preserve">
+    <value>_SPRACHEE</value>
+  </data>
   <data name="Spoken language French" xml:space="preserve">
     <value>_SPRACHEF</value>
   </data>

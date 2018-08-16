@@ -110,6 +110,9 @@ namespace FreelanceTool.Models
 		[Display(Name = "Spoken language Italian")]
 		public bool SpokenLangugeItalian { get; set; }
 
+		[Display(Name = "Spoken language English")]
+		public bool SpokenLangugeEnglish { get; set; }
+
 		[Display(Name = "Js certificate name 1")]
 		public string JsCertificateName1 { get; set; }
 
@@ -215,6 +218,9 @@ namespace FreelanceTool.Models
 						break;
 					case "it":
 						SpokenLangugeItalian = true;
+						break;
+					case "en":
+						SpokenLangugeEnglish = true;
 						break;
 				}
 			}
@@ -334,7 +340,7 @@ namespace FreelanceTool.Models
 				// Handle nationality value retrieving
 				if (propType == typeof(Nationality))
 				{
-					_csvBuilder.Append($"\"{Nationality.Code}\"|");
+					_csvBuilder.Append($"\"{Nationality.Alpha2}\"|");
 
 					continue;
 				}
