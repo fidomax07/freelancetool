@@ -177,6 +177,9 @@
   <data name="Phone prefix" xml:space="preserve">
     <value>Vorwahl</value>
   </data>
+  <data name="Please enter a valid email address." xml:space="preserve">
+    <value>Bitte geben Sie eine gültige E-Mail-Adresse ein.</value>
+  </data>
   <data name="Residence permit" xml:space="preserve">
     <value>Aufenthaltsbewilligung</value>
   </data>
@@ -189,11 +192,17 @@
   <data name="T shirt size" xml:space="preserve">
     <value>T-Shirt Grösse</value>
   </data>
+  <data name="The &lt;b&gt;{0}&lt;/b&gt; field must be a valid {0}." xml:space="preserve">
+    <value>Das Feld &lt;b&gt;{0}&lt;/b&gt; muss ein gültiges {0} sein.</value>
+  </data>
   <data name="The &lt;b&gt;{0}&lt;/b&gt; field must be at most {1} characters long." xml:space="preserve">
     <value>Das Feld &lt;b&gt;{0}&lt;/b&gt; darf höchstens {1} Zeichen lang sein.</value>
   </data>
   <data name="The {0} field is required." xml:space="preserve">
     <value>Das Feld {0} ist erforderlich.</value>
+  </data>
+  <data name="The {0} must be between {1} and {2}." xml:space="preserve">
+    <value>Die {0} muss zwischen {1} und {2} liegen.</value>
   </data>
   <data name="Training number" xml:space="preserve">
     <value>J+S Personennummer</value>

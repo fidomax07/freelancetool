@@ -35,7 +35,10 @@ function isFileExtensionValid(filePath, fileValidExtensions) {
 }
 
 function isFieldEmpty(inputField) {
-	return inputField.val() === "";
+
+	var isEmpty = inputField.val() === "";
+
+	return isEmpty;
 }
 
 function updateErrorMessage(inputField, errorSpanId) {

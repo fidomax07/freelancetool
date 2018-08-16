@@ -1,11 +1,17 @@
 ﻿@using FreelanceTool.Models.Enums
+@using Microsoft.AspNetCore.Builder
 @using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
 
 @inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
 @model ApplicationCreateViewModel
 
 @{
 	ViewData["Title"] = Localizer["Fill an application"];
+	var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+	var currentCulture = requestCulture.RequestCulture.UICulture;
 }
 
 <h2 class="body-title">@Localizer["Fill an application"]</h2>
@@ -14,7 +20,7 @@
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
 		<form asp-action="Create" enctype="multipart/form-data" id="applicant-create-form">
-		
+
 			@* Validation errors summary *@
 			<div class="panel panel-danger" id="validation-summary-container" style="display: none;">
 				<div class="panel-heading">
@@ -73,7 +79,9 @@
 						<div class="form-group">
 							<label asp-for="@Model.Applicant.PhonePrefix" class="sr-only"></label>
 							<select asp-for="@Model.Applicant.PhonePrefix" class="form-control"
-									asp-items="@Model.PhonePrefixesList"></select>
+									asp-items="@Model.PhonePrefixesList">
+								<option value="">@Localizer["(Please select)"]</option>
+							</select>
 							<span asp-validation-for="@Model.Applicant.PhonePrefix" class="text-danger"></span>
 						</div>
 						<div class="form-group">
@@ -143,7 +151,9 @@
 					<div class="form-group">
 						<label asp-for="@Model.Applicant.CivilStatus" class="control-label"></label>
 						<select asp-for="@Model.Applicant.CivilStatus" class="form-control"
-								asp-items="Html.GetEnumSelectList<CivilStatus>()"></select>
+								asp-items="Html.GetEnumSelectList<CivilStatus>()">
+							<option value="">@Localizer["(Please select)"]</option>
+						</select>
 						<span asp-validation-for="@Model.Applicant.CivilStatus" class="text-danger"></span>
 					</div>
 					<div class="form-group">
@@ -155,7 +165,9 @@
 						<label asp-for="@Model.Applicant.Nationality" class="control-label"></label>
 						<select asp-for="@Model.Applicant.NationalityId" class="form-control"
 								asp-items="@Model.NationalitiesList"
-								data-native-nationality-id="@Model.NativeNationality.Id"></select>
+								data-native-nationality-id="@Model.NativeNationality.Id">
+							<option value="">@Localizer["(Please select)"]</option>
+						</select>
 						<span asp-validation-for="@Model.Applicant.NationalityId" class="text-danger"></span>
 					</div>
 					<div class="form-group" style="display: none;">
@@ -171,7 +183,9 @@
 					<div class="form-group">
 						<label asp-for="@Model.Applicant.Occupation" class="control-label"></label>
 						<select asp-for="@Model.Applicant.Occupation" class="form-control"
-								asp-items="Html.GetEnumSelectList<Occupation>()"></select>
+								asp-items="Html.GetEnumSelectList<Occupation>()">
+							<option value="">@Localizer["(Please select)"]</option>
+						</select>
 						<span asp-validation-for="@Model.Applicant.Occupation" class="text-danger"></span>
 					</div>
 					<div class="form-group" style="display: none;">
@@ -198,8 +212,8 @@
 						<input asp-for="@Model.OfficialFreelanceStatement" class="form-control"
 							   style="display: none;"
 							   data-val-accepted-formats="@Localizer["Accepted formats: PDF, JPG, JPEG, TIFF, PNG, GIF"]" />
-						<button type="button" data-input-file-id="@nameof(Model.OfficialFreelanceStatement)" 
-						        class="btn btn-info btn-upload">
+						<button type="button" data-input-file-id="@nameof(Model.OfficialFreelanceStatement)"
+								class="btn btn-info btn-upload">
 							@Localizer["Choose file"]
 						</button>
 						<p id="@nameof(Model.OfficialFreelanceStatement)_Info" class="help-block">
@@ -234,7 +248,9 @@
 					<div class="form-group">
 						<label asp-for="@Model.Applicant.TShirtSize" class="control-label"></label>
 						<select asp-for="@Model.Applicant.TShirtSize" class="form-control"
-								asp-items="Html.GetEnumSelectList<TShirtSize>()"></select>
+								asp-items="Html.GetEnumSelectList<TShirtSize>()">
+							<option value="">@Localizer["(Please select)"]</option>
+						</select>
 						<span asp-validation-for="@Model.Applicant.TShirtSize" class="text-danger"></span>
 					</div>
 					<div class="form-group">
@@ -250,8 +266,8 @@
 						<input asp-for="@Model.ProfilePicture" class="form-control" style="display: none;"
 							   data-val-required-cond="@Localizer["Profile picture is mandatory."]"
 							   data-val-accepted-formats="@Localizer["Accepted formats: JPG and JPEG"]" />
-						<button type="button" data-input-file-id="@nameof(Model.ProfilePicture)" 
-						        class="btn btn-info btn-upload">
+						<button type="button" data-input-file-id="@nameof(Model.ProfilePicture)"
+								class="btn btn-info btn-upload">
 							@Localizer["Choose file"]
 						</button>
 						<p id="@nameof(Model.ProfilePicture)_Info" class="help-block">
@@ -273,16 +289,20 @@
 					<div>
 						<div class="form-group">
 							<label asp-for="@Model.JsTrainingCertificate_1.Name" class="control-label"></label>
-							<input asp-for="@Model.JsTrainingCertificate_1.Name" class="form-control" />
-							<span asp-validation-for="@Model.JsTrainingCertificate_1.Name" class="text-danger"></span>
+							<input asp-for="@Model.JsTrainingCertificate_1.Name" class="form-control"
+								   data-val-required-cond="@Localizer["JS Training Name is required if JS Training Type is not empty."]" />
+							<span asp-validation-for="@Model.JsTrainingCertificate_1.Name" class="text-danger"
+								  id="js-certificate-1-name-error"></span>
 						</div>
 						<div class="form-group">
 							<label asp-for="@Model.JsTrainingCertificate_1.Type" class="control-label"></label>
 							<select asp-for="@Model.JsTrainingCertificate_1.Type" class="form-control"
-									asp-items="Html.GetEnumSelectList<JsCertificateType>()">
+									asp-items="Html.GetEnumSelectList<JsCertificateType>()"
+									data-val-required-cond="@Localizer["JS Training Type is required if JS Training Name is not empty."]">
 								<option value="">@Localizer["(Please select)"]</option>
 							</select>
-							<span asp-validation-for="@Model.JsTrainingCertificate_1.Type" class="text-danger"></span>
+							<span asp-validation-for="@Model.JsTrainingCertificate_1.Type" class="text-danger"
+								  id="js-certificate-1-type-error"></span>
 						</div>
 					</div>
 
@@ -290,16 +310,20 @@
 						<hr />
 						<div class="form-group">
 							<label asp-for="@Model.JsTrainingCertificate_2.Name" class="control-label"></label>
-							<input asp-for="@Model.JsTrainingCertificate_2.Name" class="form-control" />
-							<span asp-validation-for="@Model.JsTrainingCertificate_2.Name" class="text-danger"></span>
+							<input asp-for="@Model.JsTrainingCertificate_2.Name" class="form-control"
+								   data-val-required-cond="@Localizer["JS Training Name is required if JS Training Type is not empty."]" />
+							<span asp-validation-for="@Model.JsTrainingCertificate_2.Name" class="text-danger"
+								  id="js-certificate-2-name-error"></span>
 						</div>
 						<div class="form-group">
 							<label asp-for="@Model.JsTrainingCertificate_2.Type" class="control-label"></label>
 							<select asp-for="@Model.JsTrainingCertificate_2.Type" class="form-control"
-									asp-items="Html.GetEnumSelectList<JsCertificateType>()">
+									asp-items="Html.GetEnumSelectList<JsCertificateType>()"
+									data-val-required-cond="@Localizer["JS Training Type is required if JS Training Name is not empty."]">
 								<option value="">@Localizer["(Please select)"]</option>
 							</select>
-							<span asp-validation-for="@Model.JsTrainingCertificate_2.Type" class="text-danger"></span>
+							<span asp-validation-for="@Model.JsTrainingCertificate_2.Type" class="text-danger"
+								  id="js-certificate-2-type-error"></span>
 						</div>
 					</div>
 
@@ -307,16 +331,20 @@
 						<hr />
 						<div class="form-group">
 							<label asp-for="@Model.JsTrainingCertificate_3.Name" class="control-label"></label>
-							<input asp-for="@Model.JsTrainingCertificate_3.Name" class="form-control" />
-							<span asp-validation-for="@Model.JsTrainingCertificate_3.Name" class="text-danger"></span>
+							<input asp-for="@Model.JsTrainingCertificate_3.Name" class="form-control"
+								   data-val-required-cond="@Localizer["JS Training Name is required if JS Training Type is not empty."]" />
+							<span asp-validation-for="@Model.JsTrainingCertificate_3.Name" class="text-danger"
+								  id="js-certificate-3-name-error"></span>
 						</div>
 						<div class="form-group">
 							<label asp-for="@Model.JsTrainingCertificate_3.Type" class="control-label"></label>
 							<select asp-for="@Model.JsTrainingCertificate_3.Type" class="form-control"
-									asp-items="Html.GetEnumSelectList<JsCertificateType>()">
+									asp-items="Html.GetEnumSelectList<JsCertificateType>()"
+									data-val-required-cond="@Localizer["JS Training Type is required if JS Training Name is not empty."]">
 								<option value="">@Localizer["(Please select)"]</option>
 							</select>
-							<span asp-validation-for="@Model.JsTrainingCertificate_3.Type" class="text-danger"></span>
+							<span asp-validation-for="@Model.JsTrainingCertificate_3.Type" class="text-danger"
+								  id="js-certificate-3-type-error"></span>
 						</div>
 					</div>
 
@@ -324,16 +352,20 @@
 						<hr />
 						<div class="form-group">
 							<label asp-for="@Model.JsTrainingCertificate_4.Name" class="control-label"></label>
-							<input asp-for="@Model.JsTrainingCertificate_4.Name" class="form-control" />
-							<span asp-validation-for="@Model.JsTrainingCertificate_4.Name" class="text-danger"></span>
+							<input asp-for="@Model.JsTrainingCertificate_4.Name" class="form-control"
+								   data-val-required-cond="@Localizer["JS Training Name is required if JS Training Type is not empty."]" />
+							<span asp-validation-for="@Model.JsTrainingCertificate_4.Name" class="text-danger"
+								  id="js-certificate-4-name-error"></span>
 						</div>
 						<div class="form-group">
 							<label asp-for="@Model.JsTrainingCertificate_4.Type" class="control-label"></label>
 							<select asp-for="@Model.JsTrainingCertificate_4.Type" class="form-control"
-									asp-items="Html.GetEnumSelectList<JsCertificateType>()">
+									asp-items="Html.GetEnumSelectList<JsCertificateType>()"
+									data-val-required-cond="@Localizer["JS Training Type is required if JS Training Name is not empty."]">
 								<option value="">@Localizer["(Please select)"]</option>
 							</select>
-							<span asp-validation-for="@Model.JsTrainingCertificate_4.Type" class="text-danger"></span>
+							<span asp-validation-for="@Model.JsTrainingCertificate_4.Type" class="text-danger"
+								  id="js-certificate-4-type-error"></span>
 						</div>
 					</div>
 
@@ -341,16 +373,20 @@
 						<hr />
 						<div class="form-group">
 							<label asp-for="@Model.JsTrainingCertificate_5.Name" class="control-label"></label>
-							<input asp-for="@Model.JsTrainingCertificate_5.Name" class="form-control" />
-							<span asp-validation-for="@Model.JsTrainingCertificate_5.Name" class="text-danger"></span>
+							<input asp-for="@Model.JsTrainingCertificate_5.Name" class="form-control"
+								   data-val-required-cond="@Localizer["JS Training Name is required if JS Training Type is not empty."]" />
+							<span asp-validation-for="@Model.JsTrainingCertificate_5.Name" class="text-danger"
+								  id="js-certificate-5-name-error"></span>
 						</div>
 						<div class="form-group">
 							<label asp-for="@Model.JsTrainingCertificate_5.Type" class="control-label"></label>
 							<select asp-for="@Model.JsTrainingCertificate_5.Type" class="form-control"
-									asp-items="Html.GetEnumSelectList<JsCertificateType>()">
+									asp-items="Html.GetEnumSelectList<JsCertificateType>()"
+									data-val-required-cond="@Localizer["JS Training Type is required if JS Training Name is not empty."]">
 								<option value="">@Localizer["(Please select)"]</option>
 							</select>
-							<span asp-validation-for="@Model.JsTrainingCertificate_5.Type" class="text-danger"></span>
+							<span asp-validation-for="@Model.JsTrainingCertificate_5.Type" class="text-danger"
+								  id="js-certificate-5-type-error"></span>
 						</div>
 					</div>
 
@@ -370,8 +406,7 @@
 				<div class="panel-body">
 					<div class="form-group">
 						<label asp-for="@Model.Applicant.IbanNumber" class="control-label"></label>
-						<input asp-for="@Model.Applicant.IbanNumber" class="form-control"
-							   type="number" />
+						<input asp-for="@Model.Applicant.IbanNumber" class="form-control" />
 						<span asp-validation-for="@Model.Applicant.IbanNumber" class="text-danger"></span>
 					</div>
 				</div>
@@ -410,7 +445,7 @@
 		$(function () {
 
 			// Check validation summary container
-			(function() {
+			(function () {
 				var modelHasErrors = $("#validation-summary")
 					.hasClass("validation-summary-errors");
 				var valSummaryContainer = $("#validation-summary-container");
@@ -422,12 +457,15 @@
 
 
 			// Initialize date-picker for the applicant's date of birth
+			//$.datepicker.setDefaults($.datepicker.regional["fr"]);
 			$("#ApplicantDateOfBirth").datepicker({
 				dateFormat: "dd.mm.yy",
 				changeMonth: true,
 				changeYear: true,
 				showButtonPanel: true,
-				yearRange: "-100:+0"
+				yearRange: "-100:+0",
+				firstDay: 1,
+				defaultDate: "-20y"
 			});
 
 
@@ -574,26 +612,65 @@
 				});
 
 
-			// Handle displaying and hiding of additional js-certificates
+			// Handle displaying of additional JS Training
+			// Certificates, and conditional validation.
+			function areJSCertificatesValid() {
+				for (var i = 1; i <= 5; i++)
+					if (!isJSCertificateValid(i)) return false;
+
+				return true;
+			}
+			function isJSCertificateValid(certificationIndex) {
+
+				var index = certificationIndex;
+
+				var certName = $("#JsTrainingCertificate_" + index + "_Name");
+				var certType = $("#JsTrainingCertificate_" + index + "_Type");
+				var certNameErrorId = "#js-certificate-" + index + "-name-error";
+				var certTypeErrorId = "#js-certificate-" + index + "-type-error";
+
+				var isValid = false;
+				var isEmpty = isFieldEmpty(certName) && isFieldEmpty(certType);
+				var isFilled = !isFieldEmpty(certName) && !isFieldEmpty(certType);
+				if (isEmpty || isFilled) {
+					isValid = true;
+					clearJsCertificateError(certNameErrorId);
+					clearJsCertificateError(certTypeErrorId);
+				}
+				else if (!isFieldEmpty(certName) && isFieldEmpty(certType)) {
+					isValid = false;
+					clearJsCertificateError(certNameErrorId);
+					updateErrorMessage(certType, certTypeErrorId);
+					scrollToError("#js-training-certificates");
+				}
+				else if (!isFieldEmpty(certType) && isFieldEmpty(certName)) {
+					isValid = false;
+					clearJsCertificateError(certTypeErrorId);
+					updateErrorMessage(certName, certNameErrorId);
+					scrollToError("#js-training-certificates");
+				}
+
+				return isValid;
+			}
+			function clearJsCertificateError(errorSpanId) {
+				$(errorSpanId).text("");
+			}
 			function handleShowingNextJsCertification(certificationIndex) {
 
 				var index = certificationIndex;
-				var currentCertName = "#JsTrainingCertificate_" + index + "_Name";
-				var currentCertType = "#JsTrainingCertificate_" + index + "_Type";
+				var certName = $("#JsTrainingCertificate_" + index + "_Name");
+				var certType = $("#JsTrainingCertificate_" + index + "_Type");
 				var nextCertContainer = "#additional-js-certificate-" + (index + 1);
 
-				$(currentCertName).on("change",
+				certName.on("change",
 					function () {
-						var isNameValid = $(this).val().trim() !== "";
-						var isTypeValid = $(currentCertType).val() !== "";
-						if (isNameValid && isTypeValid) $(nextCertContainer).show();
+						if (!isFieldEmpty(certName) && !isFieldEmpty(certType))
+							$(nextCertContainer).show();
 					});
 
-				$(currentCertType).on("change",
+				certType.on("change",
 					function () {
-						var isNameValid = $(currentCertName).val().trim() !== "";
-						var isTypeValid = $(this).val() !== "";
-						if (isNameValid && isTypeValid) {
+						if (!isFieldEmpty(certName) && !isFieldEmpty(certType)) {
 							$(nextCertContainer).show();
 						}
 					});
@@ -650,6 +727,9 @@
 						scrollToError("#miscellaneous-information");
 						return;
 					}
+
+					// Validate JSTrainingCertificates
+					if (!areJSCertificatesValid()) return;
 
 					// Finally submit the form if terms are checked
 					var areTermsChecked = $("#terms").prop("checked");

@@ -34,7 +34,7 @@ namespace FreelanceTool.ViewModels
 		public Applicant Applicant { get; set; }
 		private string _applicantDateOfBirth;
 
-		[Required]
+		[Required(ErrorMessage = "The {0} field is required.")]
 		[DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
 		[Display(Name = "Date of Birth")]
 		public string ApplicantDateOfBirth
@@ -53,11 +53,13 @@ namespace FreelanceTool.ViewModels
 				Applicant.DateOfBirth = dateParsed;
 			}
 		}
+
 		[DataType(DataType.Upload)]
 		[Display(Name = "Official Freelance Statement")]
 		public IFormFile OfficialFreelanceStatement { get; set; }
 
-		[Required, DataType(DataType.Upload)]
+		[Required(ErrorMessage = "The {0} field is required.")]
+		[DataType(DataType.Upload)]
 		[Display(Name = "Profile picture")]
 		public IFormFile ProfilePicture { get; set; }
 
@@ -96,7 +98,7 @@ namespace FreelanceTool.ViewModels
 			PhonePrefixesList = new List<SelectListItem>();
 
 			Applicant = new Applicant();
-			ApplicantDateOfBirth = Applicant.DateOfBirth.ToStringLocale();
+			//ApplicantDateOfBirth = Applicant.DateOfBirth.ToStringLocale();
 		}
 
 		public ApplicationCreateViewModel(ApplicationDbContext dataContext, HttpContext httpContext)
@@ -157,7 +159,7 @@ namespace FreelanceTool.ViewModels
 			NationalitiesList = new SelectList(
 				nationalities, "Id", Nationality.GetLocalizedColumnName(uiCulture));
 			NativeNationality = nationalities.SingleOrDefault(n => n.Alpha2 == "CH");
-			Applicant.SetNationality(NativeNationality);
+			//Applicant.SetNationality(NativeNationality);
 
 			return this;
 		}

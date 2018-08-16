@@ -159,6 +159,12 @@
   <data name="J+S Training Certificates" xml:space="preserve">
     <value>J + S Trainingszertifikate</value>
   </data>
+  <data name="JS Training Name is required if JS Training Type is not empty." xml:space="preserve">
+    <value>J + S Ausbildung (Sportart) ist erforderlich, wenn Ausbildungsart nicht leer ist.</value>
+  </data>
+  <data name="JS Training Type is required if JS Training Name is not empty." xml:space="preserve">
+    <value>Ausbildungsart ist erforderlich, wenn J + S Ausbildung (Sportart) nicht leer ist.</value>
+  </data>
   <data name="Miscellaneous Information" xml:space="preserve">
     <value>Sonstige Informationen</value>
   </data>
