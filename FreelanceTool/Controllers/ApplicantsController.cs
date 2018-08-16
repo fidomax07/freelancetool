@@ -46,12 +46,14 @@ namespace FreelanceTool.Controllers
 
 
 		// GET: Applicants
-		public async Task<IActionResult> Index(int? applicantId, string message, int? page)
+		public async Task<IActionResult> Index(
+			int? applicantId, string message, bool? success, int? page)
 		{
 			ViewData["CurrentApplicantId"] = applicantId;
 			if (!string.IsNullOrEmpty(message))
 			{
 				ViewBag.Message = message;
+				ViewBag.Success = success;
 			}
 
 			var applicantsQuery = _dataContext.Applicants
@@ -64,7 +66,12 @@ namespace FreelanceTool.Controllers
 			{
 				var isApplicantFound = await applicantsQuery
 					.AnyAsync(a => a.Id == applicantId);
-				if (!isApplicantFound) return NotFound();
+				if (!isApplicantFound)
+				{
+					return RedirectToAction(
+						nameof(Index),
+						new { message = "The applicant is not found!", success = false });
+				}
 
 				return RedirectToAction(nameof(Details), new { id = applicantId });
 			}
@@ -183,7 +190,7 @@ namespace FreelanceTool.Controllers
 
 			return RedirectToAction(
 				nameof(Index),
-				new { message = "Files have been deleted successfully." });
+				new { message = "Files have been deleted successfully.", success = true });
 		}
 
 
