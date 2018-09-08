@@ -134,13 +134,14 @@ namespace FreelanceTool.Controllers
 			return View();
 		}
 
-		public async Task<IActionResult> DownloadFile(int fileId)
+		public async Task<IActionResult> DownloadFile(int id)
 		{
-			var file = await _dataContext
+            var file = await _dataContext
 				.ApplicantFiles
 				.AsNoTracking()
-				.SingleOrDefaultAsync(af => af.Id == fileId);
-			if (file == null) return NotFound();
+				.SingleOrDefaultAsync(af => af.Id == id);
+
+            if (file == null) return NotFound();
 
 			var directory = file.Type == Csv ?
 				CSV_DIRECTORY : UPLOAD_DIRECTORY;

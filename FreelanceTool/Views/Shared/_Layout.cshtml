@@ -1,31 +1,39 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+
+@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+<!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>@ViewData["Title"] - FreelanceTool</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Language" content="@Localizer["Language Code"]" />
 
-	@await Html.PartialAsync("_ApplicationStylesPartial")
-	@RenderSection("Styles", required: false)
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>@ViewData["Title"] - @Localizer["Cleven Stiftung"]</title>
+    <link rel="icon" type="image/png" href="~/images/favicons/favicon_16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="~/images/favicons/favicon_32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="~/images/favicons/favicon_96.png" sizes="96x96">
+
+    @await Html.PartialAsync("_ApplicationStylesPartial")
+    @RenderSection("Styles", required: false)
 </head>
 <body>
 
-	@await Html.PartialAsync("_ApplicationNavigationPartial")
+    @await Html.PartialAsync("_ApplicationNavigationPartial")
 
-	<div class="container body-content">
-		
-		@* The body of the view goes here *@
-		@RenderBody()
+    <div class="container body-content">
+        @RenderBody()
+    </div>
 
-		<hr />
-		
-		<footer>
-			<p class="application-footer">&copy; @DateTime.Now.Year - Freelance Tool</p>
-		</footer>
-	</div>
+    @await Html.PartialAsync("_FooterPartial")
 
-	
-	@await Html.PartialAsync("_ApplicationScriptsPartial")
-	@RenderSection("Scripts", required: false)
+
+    @await Html.PartialAsync("_ApplicationScriptsPartial")
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

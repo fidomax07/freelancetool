@@ -28,7 +28,7 @@ namespace FreelanceTool.CustomValidators
 
 		private string GetErrorMessage()
 		{
-			return $"Company-name field is required if occupation is: {_selfEmployedOccupation}";
+			return "Company name is required when occupation is self-employed.";
 		}
 	}
 }

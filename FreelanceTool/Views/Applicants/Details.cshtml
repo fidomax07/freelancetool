@@ -7,68 +7,90 @@
 @model Applicant
 
 @{
-	ViewData["Title"] = "Details";
-	var deletableFilesCount = Model.ApplicantFiles
-		.Count(af => af.Type != ApplicantFileType.Csv);
+    ViewData["Title"] = @Localizer["Seitentitel"].Value + @Model.FirstName + " " + @Model.LastName; ;
+    var deletableFilesCount = Model.ApplicantFiles.Count(af => af.Type != ApplicantFileType.Csv);
 }
 
-<h2 class="extra-margin-vertical">@ViewData["Title"]</h2>
-<p>
-	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in turpis eu nunc hendrerit faucibus. Aliquam lacus nisl, vestibulum eget pharetra nec, molestie in libero. Integer quis erat sit amet risus hendrerit lobortis. Curabitur molestie mi feugiat, ullamcorper tortor sed, dictum mi. Nam aliquet tortor ex, gravida ornare justo ultrices condimentum. Interdum et malesuada fames ac ante ipsum primis in faucibus. In nec dui ante. Vivamus quis neque nibh. Maecenas at est elementum, pretium est id, porta dolor. Nulla convallis ante vel erat fringilla, eu ornare sapien euismod. Curabitur dapibus eu diam quis volutpat.
+<h1>@Localizer["Title"] @Model.FirstName @Model.LastName</h1>
 
-	Vestibulum ullamcorper nibh eu nisl volutpat lobortis. Morbi feugiat consectetur tortor, sed faucibus purus semper nec. Proin tincidunt tempus risus, eget sodales lorem vestibulum vitae. Etiam lobortis tortor sapien. Nam eget accumsan neque. Mauris id orci nisl. Vestibulum laoreet, sapien ut rhoncus bibendum, leo urna scelerisque leo, at volutpat dui tellus sed nisl.
-</p>
-<div class="row min-height-content">
-	<div class="col-md-8">
-		<h3 class="applicant-details-header">Your search for @Model.LastName @Model.FirstName returned</h3>
+<div class="card note text-white text-left p-3">
+    <blockquote class="blockquote mb-0">
+        <p>@Localizer["Introduction"]</p>
+    </blockquote>
+</div>
+<i class="divider-thick"></i>
 
-		@foreach (var file in Model.ApplicantFiles)
-		{
-			<p>
-				<a asp-action="DownloadFile" asp-route-fileId="@file.Id">@file.OriginalName</a>
-				- @Math.Ceiling(file.Length / 1024d)kB - @AppLocalizer.LocalizeEnum(file.Type)
-			</p>
-		}
+<h3>@Localizer["List Title"] @Model.FirstName @Model.LastName (@Model.Id)</h3>
 
-		<form asp-action="DeleteFiles" asp-route-id="@Model.Id" role="form"
-		      id="delete-files-form"
-		      data-deletable-files-count="@deletableFilesCount">
-		</form>
-		<button type="button" class="btn btn-danger extra-margin-vertical"
-		        id="delete-files">
-			Delete Files from Server
-		</button>
-	</div>
-	<div class="col-md-8 col-md-offset-4">
-		@*<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |*@
-		<a asp-action="Index" class="pull-right extra-margin-vertical">Back to Search</a>
-	</div>
+<table id="applications-list" class="table table-hover table-sm table-striped applicants-table" cellspacing="0" width="100%" style="width: 100%">
+    <thead>
+        <tr>
+            <th>
+                @Localizer["List Header Download"]
+            </th>
+            <th>
+                @Localizer["List Header Description"]
+            </th>
+            <th class="last-column">
+                @Localizer["List Header Size"]
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var file in Model.ApplicantFiles)
+        {
+        <tr>
+            <td>
+                <a asp-action="DownloadFile" asp-route-id="@file.Id" class="detail-link">@file.OriginalName</a>
+            </td>
+            <td>
+                @AppLocalizer.LocalizeEnum(file.Type)
+            </td>
+            <td class="last-column">
+                @Math.Ceiling(file.Length / 1024d) @Localizer["kb"]
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<div class="row align-items-center">
+    <div class="col-6">
+        <a asp-action="Index" class="cleven-link">@Localizer["Back Link Text"]</a>
+    </div>
+    <div class="col-6">
+        <form asp-action="DeleteFiles" asp-route-id="@Model.Id" role="form" id="delete-files-form" data-deletable-files-count="@deletableFilesCount">
+            <div class="md-form" style="text-align: right; margin-bottom: 0;">
+                <button type="button" class="btn btn-info btn-upload submit" id="delete-files">
+                    @Localizer["Delete Button Text"]
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
 
+<div style="height: 45px;"></div>
 
 @section Scripts {
-	<script>
-		$(function () {
+    <script>
+        $(function () {
 
-			// Handle files deletion.
-			(function() {
-				var deletableFiles = parseInt($("form#delete-files-form")
-					.data("deletable-files-count"));
-				var deleteFilesButton = $("#delete-files");
-				if (deletableFiles < 1) {
-					deleteFilesButton.attr("disabled", true);
-				} else {
-					deleteFilesButton.on("click", function () {
-						var isConfirmed = confirm("Möchten Sie die Dateien " +
-							"wirklich unwiderruflich vom Server löschen?");
+            // Handle files deletion.
+            (function () {
+                var deletableFiles = parseInt($("form#delete-files-form").data("deletable-files-count"));
+                var deleteFilesButton = $("#delete-files");
+                if (deletableFiles < 1) {
+                    deleteFilesButton.attr("disabled", true);
+                } else {
+                    deleteFilesButton.on("click", function () {
+                        var isConfirmed = confirm("@Localizer["Delete Form Confirmation"]");
 
-						if (isConfirmed) {
-							$("form#delete-files-form").submit();
-						}
-					});
-				}
-			}());
+                        if (isConfirmed) {
+                            $("form#delete-files-form").submit();
+                        }
+                    });
+                }
+            }());
 
-		});
-	</script>
+        });
+    </script>
 }

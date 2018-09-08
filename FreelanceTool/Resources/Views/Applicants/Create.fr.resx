@@ -138,20 +138,23 @@
   <data name="Choose file" xml:space="preserve">
     <value>Choisir le fichier</value>
   </data>
-  <data name="Company name is mandatory when occupation is self employed." xml:space="preserve">
+  <data name="Company name is required when occupation is self-employed." xml:space="preserve">
     <value>Le nom de l'entreprise est obligatoire lorsque le travail est indépendant.</value>
   </data>
   <data name="Contact Data" xml:space="preserve">
     <value>Données de contact</value>
   </data>
-  <data name="Employer is mandatory when occupation is part or full time." xml:space="preserve">
-    <value>Employeur principal est obligatoire lorsque la profession est à temps partiel ou à temps plein.</value>
+  <data name="Drivers License Type" xml:space="preserve">
+    <value>Permis de conduire</value>
   </data>
-  <data name="Fill an application" xml:space="preserve">
-    <value>Remplir une application</value>
+  <data name="Employer is required when occupation is part or full-time." xml:space="preserve">
+    <value>Employeur principal est obligatoire lorsque la profession est à temps partiel ou à temps plein.</value>
   </data>
   <data name="Frame Contract" xml:space="preserve">
     <value>Contrat cadre</value>
+  </data>
+  <data name="Frame Contract Text" xml:space="preserve">
+    <value>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel ornare neque. Praesent mattis mi in ullamcorper rutrum. Proin ac urna tellus. In aliquam purus massa, vel euismod felis convallis et. Nam facilisis nulla ac euismod blandit. Proin cursus felis leo, at pretium ligula tempus ac. Praesent porta porttitor scelerisque. Sed mattis, dui interdum euismod ornare, velit mauris posuere elit, sit amet pulvinar turpis eros egestas sapien. Aenean dapibus urna velit, non feugiat elit congue id. Quisque cursus sodales erat, non finibus nisl elementum at. Nullam at commodo nibh, vitae mollis felis. Etiam erat nulla, vulputate vitae varius ut, eleifend id ex. Maecenas erat metus, elementum in interdum et, iaculis eu nulla. Vestibulum in velit arcu. Maecenas dapibus arcu non nulla scelerisque posuere. Donec metus turpis, consectetur vel vestibulum lacinia, iaculis ut tortor. Nulla neque mi, tincidunt sit amet ipsum vel, pharetra dignissim nunc. Ut sed neque eu purus tempor tincidunt sed nec nisl. Vestibulum interdum, ligula ut sagittis tempor, dolor mi finibus metus, in placerat magna lorem ut ipsum. Proin eleifend, neque a scelerisque malesuada, est lectus bibendum tellus, id euismod velit ante quis augue.</value>
   </data>
   <data name="I accept the contractual terms" xml:space="preserve">
     <value>J'accepte les conditions contractuelles</value>
@@ -165,17 +168,26 @@
   <data name="JS Training Type is required if JS Training Name is not empty." xml:space="preserve">
     <value>Le type de formation est requis si la formation J + S (sport) n'est pas vide.</value>
   </data>
+  <data name="Main Title" xml:space="preserve">
+    <value>Inscription de freelance</value>
+  </data>
   <data name="Miscellaneous Information" xml:space="preserve">
     <value>Des informations diverses</value>
   </data>
   <data name="Personal Data" xml:space="preserve">
     <value>Données personnelles</value>
   </data>
+  <data name="Please accept the contractual terms!" xml:space="preserve">
+    <value>Veuillez accepter les conditions contractuelles!</value>
+  </data>
   <data name="Profile picture is mandatory." xml:space="preserve">
     <value>La photo de profil est obligatoire.</value>
   </data>
-  <data name="Residence permit is mandatory when selected country is not Switzerland." xml:space="preserve">
+  <data name="Residence permit is required when selected country is not Switzerland." xml:space="preserve">
     <value>Le permis de séjour est obligatoire lorsque le pays sélectionné n'est pas la Suisse.</value>
+  </data>
+  <data name="Spoken Languages" xml:space="preserve">
+    <value>Langues parlées</value>
   </data>
   <data name="Submit" xml:space="preserve">
     <value>Soumettre</value>

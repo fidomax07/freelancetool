@@ -79,3 +79,8 @@ function scrollToError(elementId) {
 			$("form#logoutForm").submit();
 		});
 }());
+
+// Initializer for Material Design
+(function () {
+    $('.mdb-select').material_select();
+}());

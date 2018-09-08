@@ -1,0 +1,28 @@
+﻿@using FreelanceTool.Models.Enums
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+
+@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+<footer>
+    <div class="inner">
+        <div class="row no-gutters">
+            <div class="col">
+                <h5>@Localizer["Copyright"]</h5>
+                <p>&copy; @DateTime.Now.Year @Localizer["by"] @Localizer["Cleven Foundation"]</p>
+            </div>
+            <div class="col pull-right">
+                <h5>@Localizer["Contact"]</h5>
+                <p>
+                    @Localizer["Cleven Foundation"]<br />
+                    Ruessenstrasse 6<br />
+                    6341 Baar
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>

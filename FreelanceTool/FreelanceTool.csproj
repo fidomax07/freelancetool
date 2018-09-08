@@ -26,6 +26,55 @@
 
 	<ItemGroup>
 		<None Include="bower.json" />
+		<None Include="wwwroot\lib\mdb\font\roboto\Roboto-Bold.woff2" />
+		<None Include="wwwroot\lib\mdb\font\roboto\Roboto-Light.woff2" />
+		<None Include="wwwroot\lib\mdb\font\roboto\Roboto-Medium.woff2" />
+		<None Include="wwwroot\lib\mdb\font\roboto\Roboto-Regular.woff2" />
+		<None Include="wwwroot\lib\mdb\font\roboto\Roboto-Thin.woff2" />
+		<None Include="wwwroot\lib\mdb\img\lightbox\default-skin.svg" />
+		<None Include="wwwroot\lib\mdb\img\svg\arrow_left.svg" />
+		<None Include="wwwroot\lib\mdb\img\svg\arrow_right.svg" />
+		<None Include="wwwroot\lib\mdb\js\addons\datatables.js" />
+		<None Include="wwwroot\lib\mdb\js\addons\datatables.min.js" />
+		<None Include="wwwroot\lib\mdb\js\bootstrap.js" />
+		<None Include="wwwroot\lib\mdb\js\bootstrap.min.js" />
+		<None Include="wwwroot\lib\mdb\js\jquery-3.3.1.min.js" />
+		<None Include="wwwroot\lib\mdb\js\mdb.js" />
+		<None Include="wwwroot\lib\mdb\js\mdb.min.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\buttons.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\cards.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\character-counter.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\chart.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\chips.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\collapsible.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\dropdown.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\enhanced-modals.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\file-input.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\forms-free.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\hammer.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\jarallax-video.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\jarallax.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\jquery.easing.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\jquery.easypiechart.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\jquery.hammer.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\jquery.sticky.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\lightbox.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\material-select.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\mdb-autocomplete.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\picker-date.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\picker-time.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\picker.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\preloading.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\range-input.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\scrollbar.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\scrolling-navbar.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\sidenav.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\smooth-scroll.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\toastr.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\velocity.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\waves.js" />
+		<None Include="wwwroot\lib\mdb\js\modules\wow.js" />
+		<None Include="wwwroot\lib\mdb\js\popper.min.js" />
 	</ItemGroup>
 
 	<ProjectExtensions>

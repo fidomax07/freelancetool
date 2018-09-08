@@ -132,6 +132,9 @@
   <data name="Company name" xml:space="preserve">
     <value>Nom d'entreprise</value>
   </data>
+  <data name="Company name is required when occupation is self-employed." xml:space="preserve">
+    <value>Le nom de l'entreprise est obligatoire lorsque le travail est indépendant.</value>
+  </data>
   <data name="Company website" xml:space="preserve">
     <value>Website</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="Employer" xml:space="preserve">
     <value>Employeur principal</value>
+  </data>
+  <data name="Employer is required when occupation is part or full-time." xml:space="preserve">
+    <value>Employeur principal est obligatoire lorsque la profession est à temps partiel ou à temps plein.</value>
   </data>
   <data name="First name" xml:space="preserve">
     <value>Prenom</value>
@@ -182,6 +188,9 @@
   </data>
   <data name="Residence permit" xml:space="preserve">
     <value>Permis de séjour</value>
+  </data>
+  <data name="Residence permit is required when selected country is not Switzerland." xml:space="preserve">
+    <value>Le permis de séjour est obligatoire lorsque le pays sélectionné n'est pas la Suisse.</value>
   </data>
   <data name="Sex" xml:space="preserve">
     <value>Titre</value>

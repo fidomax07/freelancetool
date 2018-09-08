@@ -1,9 +1,4 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-}
-
-/* Wrapping element */
+﻿/* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -55,10 +50,7 @@
 	line-height: 20px;
 	text-align: center;
 }
-/* Shift body for more pixels down since navbar height is increased */
-body {
-	padding-top: 100px;
-}
+
 .body-title {
 	text-align: center;
 }
@@ -76,36 +68,19 @@ body {
 .form-group-second-inline {
 	margin-left: 10px;
 }
-.btn-upload {
-	width: 150px;
-	display: block;
-}
-/* Make terms of agreement textarea non-resizable */
-.terms-of-agreement {
-	resize: none;
-}
 /* Position index link */
 .index-link {
 	margin-top: 50px;
 	text-align: center;
 	font-size: 1.2em;
 }
-/* Language select style */
-.language-select-container {
-	margin-bottom: 10px;
-}
+
 @media screen and (max-width: 767px) {
 	.language-select-container {
 		padding-right: 15px;
 	}
 }
-.language-select-provider {
-	text-decoration: underline;
-	font-weight: bold;
-}
-.language-select-focus {
-	color: #23527c;
-}
+
 /* Admin area styles */
 .extra-margin-vertical {
 	margin: 1.5em 0 0.5em 0;
@@ -120,6 +95,391 @@ body {
 	margin: 2em 0 1em 0;
 }
 .logout-button {
-	margin-left: 20px;
-	padding: 0;
+	padding: 0 5px;
+    position: relative;
+    top: -2px;
+    color: #fff;
+    margin-right: 25px;
+}
+
+
+
+/* Fonts */
+body {
+    padding-top: 0;
+    padding-bottom: 20px;
+    font-family: 'Brandon Grotesque', Roboto, sans-serif !important;
+}
+
+h1, h2, h3, h4 {
+    color: #ec671b;
+    font-weight: lighter;
+}
+h1
+{
+    font-weight: bold;
+    font-size: 3.25rem;
+    color: #4B0726;
+    text-align: center;
+    padding: 3.5rem 0 2.25rem 0;
+}
+h3 {
+    color: #ec661a;
+    text-transform: uppercase;
+    font-size: .9rem;
+    text-align: center;
+    margin: 0;
+    padding: 65px 0 30px 0;
+}
+
+/* Global Design */
+body > div > .inner, 
+.header div > .inner, 
+footer > .inner
+{
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+/* Special Elements */
+.divider-thick {
+    width: 5%;
+    max-width: 85px;
+    min-width: 50px;
+    height: 5px;
+    background-color: #ec661a;
+    margin: 0 auto 2rem auto;
+    display: block;
+}
+
+/* Header-Design */
+.header {
+    background: #fff;
+}
+.header .row
+{
+    margin: 0;
+    padding: 0 15px;
+
+}
+.header .toprow {
+    background-color: #4a0c27;
+    padding: 10px 0;
+}
+.header .main .col
+{
+    padding: 30px 0;
+}
+
+/* Language-Selection */
+.header .languageselect, 
+.header .languageselect a {
+    color: #fff;
+    text-decoration: none;
+}
+.header .languageselect span.divider
+{
+    padding: 0 3px;
+    position: relative;
+    top: -2px;
+    font-size: .95rem;
+}
+.header .languageselect a.language-select-focus {
+    color:#ec661a;
+}
+
+/* Footer-Design */
+footer
+{
+    background-color: #4B0726;
+    padding: 45px 0 70px 0;
+    margin-top: 45px;
+}
+footer .pull-right
+{
+    text-align: right;
+}
+footer p
+{
+    color: #87989e;
+    font-size: 18px;
+    padding: 0;
+    margin: 0;
+    line-height: 24px;
+}
+footer h5
+{
+    color: #ec661a;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: .05rem;
+    margin: 0 0 15px 0;
+    padding: 0;
+}
+
+/* Form-Design */
+.formcontainer
+{
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+}
+.md-form {
+    margin-top: 0px;
+}
+.md-form label
+{
+    top: .9rem;
+    left: .9rem;
+}
+.md-form.selectbox label, 
+.md-form label.active {
+    font-size: .6rem;
+    transform: translate(2px, -50%);
+    color: #a2a2a2;
+}
+.md-form input[type="text"],
+.md-form input[type="number"],
+.md-form input[type="date"],
+.md-form input[type="datetime-local"],
+.md-form input[type="email"],
+.md-form input[type="password"],
+.md-form input[type="search"],
+.md-form input[type="search-md"],
+.md-form input[type="tel"],
+.md-form input[type="time"],
+.md-form input[type="url"],
+.md-form textarea.md-textarea
+{
+    border-left: 1px solid #ced4da;
+    border-top: 1px solid #ced4da;
+    border-right: 1px solid #ced4da;
+    padding: 20px 10px 5px 15px;
+    box-sizing: border-box;
+}
+.md-form input[type="number"]::-webkit-inner-spin-button,
+.md-form input[type="number"]::-webkit-outer-spin-button
+{
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Dropdown */
+.md-form.selectbox input.select-dropdown
+{
+    min-height: 51px;
+}
+.md-form.selectbox input.select-dropdown.valid {
+    padding-left: 7px;
+}
+.md-form.selectbox .caret
+{
+    right: 1rem;
+}
+.dropdown-primary .dropdown-content li a,
+.dropdown-primary .dropdown-content li span:hover,
+.dropdown-primary .dropdown-content li.active
+{
+    background-color: #ec661a !important;
+}
+.dropdown-content li > a, 
+.dropdown-content li > span
+{
+    color: #000;
+}
+/* Checkboxes */
+.form-check {
+    padding-left: 0;
+}
+.form-check label
+{
+    top: 0;
+    left: 0;
+}
+.form-check-input[type=checkbox]:checked + label:before,
+label.btn input[type=checkbox]:checked + label:before
+{
+    border-right: 2px solid #ec661a;
+    border-bottom: 2px solid #ec661a;
+    top: -2px;
+    left: 0;
+    width: 8px;
+    height: 1.1rem;
+}
+
+/* File-Input */
+.md-form.fileinput label {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+    box-sizing: border-box;
+    padding-left: 3px;
+}
+.md-form.fileinput button[type="button"]
+{
+    position: relative;
+    left: -5px;
+}
+.md-form.fileinput .help-block
+{
+    display: inline-block;
+}
+
+/* Contract */
+.terms {
+    height: 150px;
+    max-height: 30vh;
+    border: none;
+    padding: 10px 20px 10px 10px;
+    background-color: #e3e9f0;
+    overflow: auto;
+    font-size: 0.85rem;
+}
+.terms p
+{
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+/* Buttons */
+input[type=submit],
+.btn:active,
+.btn:focus,
+.btn:hover,
+.btn-primary:not([disabled]):not(.disabled).active,
+.btn-primary:not([disabled]):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle,
+.btn-info:not([disabled]):not(.disabled).active,
+.btn-info:not([disabled]):not(.disabled):active,
+.show > .btn-info.dropdown-toggle,
+.btn-info:not([disabled]):not(.disabled).active:focus,
+.btn-info:not([disabled]):not(.disabled):active:focus,
+.show > .btn-info.dropdown-toggle:focus
+.btn-info.focus,
+.btn-info:focus,
+.btn-info,
+.btn-info:hover,
+.btn {
+    background-color: #ec661a !important;
+    color: #fff !important;
+    box-shadow: none;
+    webkit-box-shadow: none;
+    transition: none;
+    webkit-transition: none;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+}
+button .fa
+{
+    padding-right: 15px;
+}
+
+/* Form-Borders */
+/* Default */
+.md-form input[type=date].valid,
+.md-form input[type=date]:focus.valid,
+.md-form input[type=datetime-local].valid,
+.md-form input[type=datetime-local]:focus.valid,
+.md-form input[type=email].valid,
+.md-form input[type=email]:focus.valid,
+.md-form input[type=number].valid,
+.md-form input[type=number]:focus.valid,
+.md-form input[type=password].valid,
+.md-form input[type=password]:focus.valid,
+.md-form input[type=search-md].valid,
+.md-form input[type=search-md]:focus.valid,
+.md-form input[type=search].valid,
+.md-form input[type=search]:focus.valid,
+.md-form input[type=tel].valid,
+.md-form input[type=tel]:focus.valid,
+.md-form input[type=text].valid,
+.md-form input[type=text]:focus.valid,
+.md-form input[type=time].valid,
+.md-form input[type=time]:focus.valid,
+.md-form input[type=url].valid,
+.md-form input[type=url]:focus.valid,
+.md-form textarea.md-textarea.valid,
+.md-form textarea.md-textarea:focus.valid
+{
+    border-bottom: 1px solid #ec661a;
+    -webkit-box-shadow: 0 1px 0 0 #ec661a;
+    box-shadow: 0 1px 0 0 #ec661a;
+}
+
+/* Focus */
+.md-form input[type=date]:focus:not([readonly]),
+.md-form input[type=datetime-local]:focus:not([readonly]),
+.md-form input[type=email]:focus:not([readonly]),
+.md-form input[type=number]:focus:not([readonly]),
+.md-form input[type=password]:focus:not([readonly]),
+.md-form input[type=search-md]:focus:not([readonly]),
+.md-form input[type=search]:focus:not([readonly]),
+.md-form input[type=tel]:focus:not([readonly]),
+.md-form input[type=text]:focus:not([readonly]),
+.md-form input[type=time]:focus:not([readonly]),
+.md-form input[type=url]:focus:not([readonly]),
+.md-form textarea.md-textarea:focus:not([readonly])
+{
+    -webkit-box-shadow: 0 1px 0 0 #ec661a;
+    box-shadow: 0 1px 0 0 #ec661a;
+    border-bottom: 1px solid #ec661a;
+}
+
+/* Error */
+.md-form input[type=date].input-validation-error,
+.md-form input[type=date]:focus.input-validation-error,
+.md-form input[type=datetime-local].input-validation-error,
+.md-form input[type=datetime-local]:focus.input-validation-error,
+.md-form input[type=email].input-validation-error,
+.md-form input[type=email]:focus.input-validation-error,
+.md-form input[type=number].input-validation-error,
+.md-form input[type=number]:focus.input-validation-error,
+.md-form input[type=password].input-validation-error,
+.md-form input[type=password]:focus.input-validation-error,
+.md-form input[type=search-md].input-validation-error,
+.md-form input[type=search-md]:focus.input-validation-error,
+.md-form input[type=search].input-validation-error,
+.md-form input[type=search]:focus.input-validation-error,
+.md-form input[type=tel].input-validation-error,
+.md-form input[type=tel]:focus.input-validation-error,
+.md-form input[type=text].input-validation-error,
+.md-form input[type=text]:focus.input-validation-error,
+.md-form input[type=time].input-validation-error,
+.md-form input[type=time]:focus.input-validation-error,
+.md-form input[type=url].input-validation-error,
+.md-form input[type=url]:focus.input-validation-error,
+.md-form textarea.md-textarea.input-validation-error,
+.md-form textarea.md-textarea:focus.input-validation-error {
+    border-bottom: 1px solid #cf121f;
+    -webkit-box-shadow: 0 1px 0 0 #cf121f;
+    box-shadow: 0 1px 0 0 #cf121f;
+}
+
+/* Administration */
+.card.note
+{
+    background-color: #ec661a;
+    margin-bottom: 45px;
+}
+.card.note > .blockquote
+{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.card.note p {
+    padding: 0;
+    margin: 0;
+    font-size: 0.95rem;
+}
+.applicants-table .detail-link, 
+.cleven-link
+{
+    color: #ec661a !important;
+    text-decoration: underline;
+}
+.applicants-table .last-column
+{
+    text-align: right;
 }

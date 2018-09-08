@@ -1,16 +1,22 @@
-﻿
+﻿@using FreelanceTool.Models.Enums
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+
+@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+@model ApplicationCreateViewModel
 @{
-	ViewData["Title"] = "CreateSuccess";
+    ViewData["Title"] = Localizer["Main Title"];
 }
 
 <div class="body-content min-height-content">
-	<h2 class="body-title">Thank you very much</h2>
-	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque rutrum turpis nec turpis dictum, imperdiet fringilla ipsum varius. Etiam fermentum quam ac quam pharetra, in sagittis mi convallis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Duis feugiat consequat molestie. Aliquam sed ante non elit mollis suscipit id eget sem. Sed facilisis leo quis sapien fringilla lacinia. Nullam posuere vel lorem non venenatis.Duis cursus mauris sapien, ut dictum nunc molestie ultrices. Duis sed mattis diam. Vivamus iaculis, orci quis pharetra varius, quam odio euismod lorem, sit amet hendrerit lacus massa eget lorem. Fusce fermentum erat eget ornare ultricies. Integer bibendum sed elit sit amet tristique. Praesent id leo ornare, sollicitudin eros a, dictum enim. Vestibulum sagittis tortor est, eu tempus leo eleifend vitae. Interdum et malesuada fames ac ante ipsum primis in faucibus. Etiam dolor lacus, dignissim eu posuere sed, commodo et mi. Nam posuere ex pretium leo rhoncus eleifend. Vivamus cursus, elit ut viverra viverra, est quam sagittis dolor, tempus tempus erat erat id enim. Proin a lorem interdum, commodo massa et, scelerisque est. Donec pulvinar vitae lorem quis lobortis. Cras sit amet arcu ante. Vivamus eu lacus sagittis, imperdiet nibh at, semper urna. Quisque lobortis justo nulla, ac pulvinar mi pulvinar quis.</p>
+    <h1>@Localizer["Main Title"]</h1>
+    <i class="divider-thick"></i>
 
-	<div class="index-link">
-		<a asp-action="Create">To Main-Page</a>
-	</div>
-
+    <h3>@Localizer["Sub Title"]</h3>
+    <p style="padding-bottom: 75px;">@Localizer["Explanation Text"]</p>
 </div>
 
 

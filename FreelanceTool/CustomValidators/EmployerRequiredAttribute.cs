@@ -54,8 +54,7 @@ namespace FreelanceTool.CustomValidators
 
 		private string GetErrorMessage()
 	    {
-		    return "Employer field is required if occupation is: " +
-		           $"{Occupation.PT} or {Occupation.FT}";
+		    return "Employer is required when occupation is part or full-time.";
 	    }
     }
 }
