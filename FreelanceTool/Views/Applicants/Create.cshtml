@@ -46,17 +46,17 @@
 					</div>
 					<div class="md-form">
 						<label asp-for="@Model.Applicant.LastName"></label>
-						<input asp-for="@Model.Applicant.LastName" class="form-control" autocomplete="no-autocomplete"/>
+						<input asp-for="@Model.Applicant.LastName" class="form-control" autocomplete="no-autocomplete" />
 						<span asp-validation-for="@Model.Applicant.LastName" class="text-danger"></span>
 					</div>
 					<div class="md-form">
 						<label asp-for="@Model.Applicant.FirstName"></label>
-						<input asp-for="@Model.Applicant.FirstName" class="form-control" autocomplete="no-autocomplete"/>
+						<input asp-for="@Model.Applicant.FirstName" class="form-control" autocomplete="no-autocomplete" />
 						<span asp-validation-for="@Model.Applicant.FirstName" class="text-danger"></span>
 					</div>
 					<div class="md-form">
 						<label asp-for="@Model.ApplicantDateOfBirth"></label>
-						<input asp-for="@Model.ApplicantDateOfBirth" class="form-control" autocomplete="no-autocomplete"/>
+						<input asp-for="@Model.ApplicantDateOfBirth" class="form-control" autocomplete="no-autocomplete" />
 						<span asp-validation-for="@Model.ApplicantDateOfBirth" class="text-danger"></span>
 					</div>
 					<div class="md-form selectbox">
@@ -164,18 +164,18 @@
 					</div>
 					<div class="md-form selectbox">
 						<label asp-for="@Model.Applicant.Nationality" class="control-label"></label>
-						<select asp-for="@Model.Applicant.NationalityId" class="mdb-select colorful-select dropdown-primary" 
-						        asp-items="@Model.NationalitiesList" 
-						        data-native-nationality-id="@Model.NativeNationality.Id">
+						<select asp-for="@Model.Applicant.NationalityId" class="mdb-select colorful-select dropdown-primary"
+								asp-items="@Model.NationalitiesList"
+								data-native-nationality-id="@Model.NativeNationality.Id">
 							<option value="">@Localizer["(Please select)"]</option>
 						</select>
 						<span asp-validation-for="@Model.Applicant.NationalityId" class="text-danger"></span>
 					</div>
 					<div class="md-form selectbox" style="display: none;">
 						<label asp-for="@Model.Applicant.ResidencePermit" class="control-label"></label>
-						<select asp-for="@Model.Applicant.ResidencePermit" class="mdb-select colorful-select dropdown-primary" 
-						        asp-items="Html.GetEnumSelectList<ResidencePermit>()" 
-						        data-val-required-cond="@Localizer["Residence permit is required when selected country is not Switzerland."]">
+						<select asp-for="@Model.Applicant.ResidencePermit" class="mdb-select colorful-select dropdown-primary"
+								asp-items="Html.GetEnumSelectList<ResidencePermit>()"
+								data-val-required-cond="@Localizer["Residence permit is required when selected country is not Switzerland."]">
 							<option value="">@Localizer["(Please select)"]</option>
 						</select>
 						<span asp-validation-for="@Model.Applicant.ResidencePermit" class="text-danger" id="residence-permit-error"></span>
@@ -189,14 +189,14 @@
 					</div>
 					<div class="md-form" style="display: none;">
 						<label asp-for="@Model.Applicant.Employer" class="control-label"></label>
-						<input asp-for="@Model.Applicant.Employer" class="form-control" autocomplete="no-autocomplete" 
-						       data-val-required-cond="@Localizer["Employer is required when occupation is part or full-time."]" />
+						<input asp-for="@Model.Applicant.Employer" class="form-control" autocomplete="no-autocomplete"
+							   data-val-required-cond="@Localizer["Employer is required when occupation is part or full-time."]" />
 						<span asp-validation-for="@Model.Applicant.Employer" class="text-danger" id="employer-error"></span>
 					</div>
 					<div class="md-form" style="display: none;">
 						<label asp-for="@Model.Applicant.CompanyName" class="control-label"></label>
-						<input asp-for="@Model.Applicant.CompanyName" class="form-control" autocomplete="no-autocomplete" 
-						       data-val-required-cond="@Localizer["Company name is required when occupation is self-employed."]" />
+						<input asp-for="@Model.Applicant.CompanyName" class="form-control" autocomplete="no-autocomplete"
+							   data-val-required-cond="@Localizer["Company name is required when occupation is self-employed."]" />
 						<span asp-validation-for="@Model.Applicant.CompanyName" class="text-danger" id="company-name-error"></span>
 					</div>
 					<div class="md-form" style="display: none;">
@@ -270,84 +270,33 @@
 					<h3 class="panel-title">@Localizer["J+S Training Certificates"]</h3>
 				</div>
 				<div class="panel-body">
-					<div>
-						<div class="md-form">
-							<label asp-for="@Model.JsTrainingCertificate_1.Name"></label>
-							<input asp-for="@Model.JsTrainingCertificate_1.Name" class="form-control" autocomplete="no-autocomplete" data-val-required-cond="@Localizer["JS Training Name is required if JS Training Type is not empty."]" />
-							<span asp-validation-for="@Model.JsTrainingCertificate_1.Name" class="text-danger" id="js-certificate-1-name-error"></span>
+					@{
+						var jsCertificatesCount = Model.JsTrainingCertificates.Count; 
+						var mainAttributes = "id=\"main-js-certificate\"" +
+						    $" data-js-certificates-count=\"{jsCertificatesCount}\"";
+					}
+					@for (var i = 0; i < jsCertificatesCount; i++)
+					{
+						var additionalAttributes = $"id=\"additional-js-certificate-{i}\"" +
+												   " style=\"display: none;\"";
+						<div @Html.Raw(i == 0 ? mainAttributes : additionalAttributes)>
+							<div class="md-form">
+								<label asp-for="@Model.JsTrainingCertificates[i].Name"></label>
+								<input asp-for="@Model.JsTrainingCertificates[i].Name" class="form-control" autocomplete="no-autocomplete"
+									   data-val-required-cond="@Localizer["JS Training Name is required if JS Training Type is not empty."]" />
+								<span asp-validation-for="@Model.JsTrainingCertificates[i].Name" class="text-danger" id="js-certificate-1-name-error"></span>
+							</div>
+							<div class="md-form selectbox">
+								<label asp-for="@Model.JsTrainingCertificates[i].Type"></label>
+								<select asp-for="@Model.JsTrainingCertificates[i].Type" class="mdb-select colorful-select dropdown-primary"
+										asp-items="Html.GetEnumSelectList<JsCertificateType>()"
+										data-val-required-cond="@Localizer["JS Training Type is required if JS Training Name is not empty."]">
+									<option value="">@Localizer["(Please select)"]</option>
+								</select>
+								<span asp-validation-for="@Model.JsTrainingCertificates[i].Type" class="text-danger" id="js-certificate-1-type-error"></span>
+							</div>
 						</div>
-						<div class="md-form selectbox">
-							<label asp-for="@Model.JsTrainingCertificate_1.Type"></label>
-							<select asp-for="@Model.JsTrainingCertificate_1.Type" class="mdb-select colorful-select dropdown-primary" asp-items="Html.GetEnumSelectList<JsCertificateType>()" data-val-required-cond="@Localizer["JS Training Type is required if JS Training Name is not empty."]">
-								<option value="">@Localizer["(Please select)"]</option>
-							</select>
-							<span asp-validation-for="@Model.JsTrainingCertificate_1.Type" class="text-danger" id="js-certificate-1-type-error"></span>
-						</div>
-					</div>
-
-					<div id="additional-js-certificate-2" style="display: none;">
-						<hr />
-						<div class="md-form">
-							<label asp-for="@Model.JsTrainingCertificate_2.Name"></label>
-							<input asp-for="@Model.JsTrainingCertificate_2.Name" class="form-control" autocomplete="no-autocomplete" data-val-required-cond="@Localizer["JS Training Name is required if JS Training Type is not empty."]" />
-							<span asp-validation-for="@Model.JsTrainingCertificate_2.Name" class="text-danger" id="js-certificate-2-name-error"></span>
-						</div>
-						<div class="md-form selectbox">
-							<label asp-for="@Model.JsTrainingCertificate_2.Type"></label>
-							<select asp-for="@Model.JsTrainingCertificate_2.Type" class="mdb-select colorful-select dropdown-primary" asp-items="Html.GetEnumSelectList<JsCertificateType>()" data-val-required-cond="@Localizer["JS Training Type is required if JS Training Name is not empty."]">
-								<option value="">@Localizer["(Please select)"]</option>
-							</select>
-							<span asp-validation-for="@Model.JsTrainingCertificate_2.Type" class="text-danger" id="js-certificate-2-type-error"></span>
-						</div>
-					</div>
-
-					<div id="additional-js-certificate-3" style="display: none;">
-						<hr />
-						<div class="md-form">
-							<label asp-for="@Model.JsTrainingCertificate_3.Name"></label>
-							<input asp-for="@Model.JsTrainingCertificate_3.Name" class="form-control" autocomplete="no-autocomplete" data-val-required-cond="@Localizer["JS Training Name is required if JS Training Type is not empty."]" />
-							<span asp-validation-for="@Model.JsTrainingCertificate_3.Name" class="text-danger" id="js-certificate-3-name-error"></span>
-						</div>
-						<div class="md-form selectbox">
-							<label asp-for="@Model.JsTrainingCertificate_3.Type"></label>
-							<select asp-for="@Model.JsTrainingCertificate_3.Type" class="mdb-select colorful-select dropdown-primary" asp-items="Html.GetEnumSelectList<JsCertificateType>()" data-val-required-cond="@Localizer["JS Training Type is required if JS Training Name is not empty."]">
-								<option value="">@Localizer["(Please select)"]</option>
-							</select>
-							<span asp-validation-for="@Model.JsTrainingCertificate_3.Type" class="text-danger" id="js-certificate-3-type-error"></span>
-						</div>
-					</div>
-
-					<div id="additional-js-certificate-4" style="display: none;">
-						<hr />
-						<div class="md-form">
-							<label asp-for="@Model.JsTrainingCertificate_4.Name"></label>
-							<input asp-for="@Model.JsTrainingCertificate_4.Name" class="form-control" autocomplete="no-autocomplete" data-val-required-cond="@Localizer["JS Training Name is required if JS Training Type is not empty."]" />
-							<span asp-validation-for="@Model.JsTrainingCertificate_4.Name" class="text-danger" id="js-certificate-4-name-error"></span>
-						</div>
-						<div class="md-form selectbox">
-							<label asp-for="@Model.JsTrainingCertificate_4.Type"></label>
-							<select asp-for="@Model.JsTrainingCertificate_4.Type" class="mdb-select colorful-select dropdown-primary" asp-items="Html.GetEnumSelectList<JsCertificateType>()" data-val-required-cond="@Localizer["JS Training Type is required if JS Training Name is not empty."]">
-								<option value="">@Localizer["(Please select)"]</option>
-							</select>
-							<span asp-validation-for="@Model.JsTrainingCertificate_4.Type" class="text-danger" id="js-certificate-4-type-error"></span>
-						</div>
-					</div>
-
-					<div id="additional-js-certificate-5" style="display: none;">
-						<hr />
-						<div class="md-form">
-							<label asp-for="@Model.JsTrainingCertificate_5.Name"></label>
-							<input asp-for="@Model.JsTrainingCertificate_5.Name" class="form-control" autocomplete="no-autocomplete" data-val-required-cond="@Localizer["JS Training Name is required if JS Training Type is not empty."]" />
-							<span asp-validation-for="@Model.JsTrainingCertificate_5.Name" class="text-danger" id="js-certificate-5-name-error"></span>
-						</div>
-						<div class="md-form selectbox">
-							<label asp-for="@Model.JsTrainingCertificate_5.Type"></label>
-							<select asp-for="@Model.JsTrainingCertificate_5.Type" class="mdb-select colorful-select dropdown-primary" asp-items="Html.GetEnumSelectList<JsCertificateType>()" data-val-required-cond="@Localizer["JS Training Type is required if JS Training Name is not empty."]">
-								<option value="">@Localizer["(Please select)"]</option>
-							</select>
-							<span asp-validation-for="@Model.JsTrainingCertificate_5.Type" class="text-danger" id="js-certificate-5-type-error"></span>
-						</div>
-					</div>
+					}
 
 					<div class="md-form">
 						<label asp-for="@Model.Applicant.TrainingNumber"></label>
@@ -382,7 +331,7 @@
 				<div class="md-form">
 					<div class="form-check">
 						<input type="checkbox" class="form-check-input" id="terms"
-						       data-val-required="@Localizer["Please accept the contractual terms!"]">
+							   data-val-required="@Localizer["Please accept the contractual terms!"]">
 						<label class="form-check-label" for="terms">@Localizer["I accept the contractual terms"]</label>
 						<span id="terms-error" class="text-danger"></span>
 					</div>
@@ -451,7 +400,7 @@
 					var residencePermitContainer =
 						$("#Applicant_ResidencePermit").closest("div.selectbox");
 					if (!isNativeNationalitySelected())
-						residencePermitContainer.show(); 
+						residencePermitContainer.show();
 					else
 						residencePermitContainer.hide();
 				});
@@ -624,8 +573,8 @@
 			function handleShowingNextJsCertification(certificationIndex) {
 
 				var index = certificationIndex;
-				var certName = $("#JsTrainingCertificate_" + index + "_Name");
-				var certType = $("#JsTrainingCertificate_" + index + "_Type");
+				var certName = $("#JsTrainingCertificates_" + index + "__Name");
+				var certType = $("#JsTrainingCertificates_" + index + "__Type");
 				var nextCertContainer = "#additional-js-certificate-" + (index + 1);
 
 				certName.on("change",
@@ -641,10 +590,12 @@
 						}
 					});
 			}
-			handleShowingNextJsCertification(1);
-			handleShowingNextJsCertification(2);
-			handleShowingNextJsCertification(3);
-			handleShowingNextJsCertification(4);
+			(function () {
+				var jsCertificatesCount = $("#main-js-certificate")
+					.data("js-certificates-count");
+				for (var i = 0; i < jsCertificatesCount-1; i++)
+					handleShowingNextJsCertification(i);
+			}());
 
 
 			// Check custom-clinet-side validations

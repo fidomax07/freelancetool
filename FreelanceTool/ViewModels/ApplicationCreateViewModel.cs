@@ -63,28 +63,14 @@ namespace FreelanceTool.ViewModels
 		[Display(Name = "Profile picture")]
 		public IFormFile ProfilePicture { get; set; }
 
-		public JSTrainingCertificate JsTrainingCertificate_1 { get; set; }
+		/*public JSTrainingCertificate JsTrainingCertificate_1 { get; set; }
 		public JSTrainingCertificate JsTrainingCertificate_2 { get; set; }
 		public JSTrainingCertificate JsTrainingCertificate_3 { get; set; }
 		public JSTrainingCertificate JsTrainingCertificate_4 { get; set; }
-		public JSTrainingCertificate JsTrainingCertificate_5 { get; set; }
-
+		public JSTrainingCertificate JsTrainingCertificate_5 { get; set; }*/
+		public List<JSTrainingCertificate> JsTrainingCertificates;
 
 		// Helper properties
-		public List<JSTrainingCertificate> JsTrainingCertificates
-		{
-			get
-			{
-				return new List<JSTrainingCertificate>
-				{
-					JsTrainingCertificate_1,
-					JsTrainingCertificate_2,
-					JsTrainingCertificate_3,
-					JsTrainingCertificate_4,
-					JsTrainingCertificate_5
-				};
-			}
-		}
 		public bool HasProfilePicture => ProfilePicture?.Length > 0;
 		public bool HasOfficialFreelanceStatement => OfficialFreelanceStatement?.Length > 0;
 
@@ -96,6 +82,14 @@ namespace FreelanceTool.ViewModels
 			// Initialize collections
 			SpokenLanguages = new List<ApplicantLanguageViewModel>();
 			PhonePrefixesList = new List<SelectListItem>();
+			JsTrainingCertificates = new List<JSTrainingCertificate>
+			{
+				new JSTrainingCertificate(),
+				new JSTrainingCertificate(),
+				new JSTrainingCertificate(),
+				new JSTrainingCertificate(),
+				new JSTrainingCertificate()
+			};
 
 			Applicant = new Applicant();
 			//ApplicantDateOfBirth = Applicant.DateOfBirth.ToStringLocale();

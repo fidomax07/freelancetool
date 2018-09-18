@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
@@ -82,6 +83,8 @@ namespace FreelanceTool
 						.RequireAuthenticatedUser()
 						.Build();
 					config.Filters.Add(new AuthorizeFilter(policy));
+
+					//config.Filters.Add(new ValidateAntiForgeryTokenAttribute());
 				})
 				.AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
 				.AddDataAnnotationsLocalization();
