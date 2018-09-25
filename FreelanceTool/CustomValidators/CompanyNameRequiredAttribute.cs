@@ -20,15 +20,16 @@ namespace FreelanceTool.CustomValidators
 			if (currentOccupation == _selfEmployedOccupation &&
 				string.IsNullOrWhiteSpace(value.ToString()))
 			{
-				return new ValidationResult(GetErrorMessage());
+				//return new ValidationResult(GetErrorMessage());
+				return new ValidationResult(ErrorMessage);
 			}
 
 			return ValidationResult.Success;
 		}
 
-		private string GetErrorMessage()
+		/*private string GetErrorMessage()
 		{
 			return "Company name is required when occupation is self-employed.";
-		}
+		}*/
 	}
 }

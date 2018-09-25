@@ -8,7 +8,7 @@ using FreelanceTool.Models.Enums;
 
 namespace FreelanceTool.Models
 {
-	public class Applicant
+	public class Applicant : ApplicationModel
 	{
 		// Properties
 		[NotMapped]
@@ -103,7 +103,7 @@ namespace FreelanceTool.Models
 		[Display(Name = "Number of kids")]
 		public int ChildrenCount { get; set; }
 
-		[ResidencePermitRequired]
+		[ResidencePermitRequired(ErrorMessage = "Heyy!! Residence permit is required when selected country is not Switzerland.")]
 		[Display(Name = "Residence permit")]
 		public ResidencePermit? ResidencePermit { get; set; }
 
@@ -113,14 +113,14 @@ namespace FreelanceTool.Models
 
 		// Make this property required, if Occupation is
 		// Occupation.PartTime or Occupation.FullTime.
-		[EmployerRequired]
+		[EmployerRequired(ErrorMessage = "Employer is required when occupation is part or full-time.")]
 		[StringLength(40, ErrorMessage = "The <b>{0}</b> field must be at most {1} characters long.")]
 		[Display(Name = "Employer")]
 		public string Employer { get; set; }
 
 		// Make this property required, only if the
 		// Occupation is Occupation.SelfEmployed.
-		[CompanyNameRequired]
+		[CompanyNameRequired(ErrorMessage = "Company name is required when occupation is self-employed.")]
 		[StringLength(80, ErrorMessage = "The <b>{0}</b> field must be at most {1} characters long.")]
 		[Display(Name = "Company name")]
 		public string CompanyName { get; set; }

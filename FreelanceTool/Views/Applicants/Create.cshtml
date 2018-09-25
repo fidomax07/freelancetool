@@ -1,4 +1,5 @@
-﻿@using FreelanceTool.Models.Enums
+﻿@using FreelanceTool.CustomValidators
+@using FreelanceTool.Models.Enums
 @using Microsoft.AspNetCore.Builder
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Microsoft.AspNetCore.Localization
@@ -11,7 +12,7 @@
 @{
 	ViewData["Title"] = Localizer["Main Title"];
 	var requestCulture = Context.Features.Get<IRequestCultureFeature>();
-	var currentCulture = requestCulture.RequestCulture.UICulture;
+	//var currentCulture = requestCulture.RequestCulture.UICulture;
 }
 
 <h1>@Localizer["Main Title"]</h1>
@@ -165,17 +166,21 @@
 					<div class="md-form selectbox">
 						<label asp-for="@Model.Applicant.Nationality" class="control-label"></label>
 						<select asp-for="@Model.Applicant.NationalityId" class="mdb-select colorful-select dropdown-primary"
-								asp-items="@Model.NationalitiesList"
-								data-native-nationality-id="@Model.NativeNationality.Id">
+						        asp-items="@Model.NationalitiesList"
+						        data-native-nationality-id="@Model.NativeNationality.Id">
 							<option value="">@Localizer["(Please select)"]</option>
 						</select>
 						<span asp-validation-for="@Model.Applicant.NationalityId" class="text-danger"></span>
 					</div>
+					@{
+						var residencePermitRequiredErrorMessage = Model.Applicant
+							.GetAttributeErrorMessage<ResidencePermitRequiredAttribute>(nameof(Applicant.ResidencePermit));
+					}
 					<div class="md-form selectbox" style="display: none;">
 						<label asp-for="@Model.Applicant.ResidencePermit" class="control-label"></label>
 						<select asp-for="@Model.Applicant.ResidencePermit" class="mdb-select colorful-select dropdown-primary"
 								asp-items="Html.GetEnumSelectList<ResidencePermit>()"
-								data-val-required-cond="@Localizer["Residence permit is required when selected country is not Switzerland."]">
+								data-val-required-cond="@Localizer[residencePermitRequiredErrorMessage]">
 							<option value="">@Localizer["(Please select)"]</option>
 						</select>
 						<span asp-validation-for="@Model.Applicant.ResidencePermit" class="text-danger" id="residence-permit-error"></span>
@@ -187,16 +192,24 @@
 						</select>
 						<span asp-validation-for="@Model.Applicant.Occupation" class="text-danger"></span>
 					</div>
+					@{
+						var employerRequiredErrorMessage = Model.Applicant
+							.GetAttributeErrorMessage<EmployerRequiredAttribute>(nameof(Applicant.Employer));
+					}
 					<div class="md-form" style="display: none;">
 						<label asp-for="@Model.Applicant.Employer" class="control-label"></label>
 						<input asp-for="@Model.Applicant.Employer" class="form-control" autocomplete="no-autocomplete"
-							   data-val-required-cond="@Localizer["Employer is required when occupation is part or full-time."]" />
+						       data-val-required-cond="@Localizer[employerRequiredErrorMessage]" />
 						<span asp-validation-for="@Model.Applicant.Employer" class="text-danger" id="employer-error"></span>
 					</div>
+					@{
+						var companyNameRequiredErrorMessage = Model.Applicant
+							.GetAttributeErrorMessage<CompanyNameRequiredAttribute>(nameof(Applicant.CompanyName));
+					}
 					<div class="md-form" style="display: none;">
 						<label asp-for="@Model.Applicant.CompanyName" class="control-label"></label>
 						<input asp-for="@Model.Applicant.CompanyName" class="form-control" autocomplete="no-autocomplete"
-							   data-val-required-cond="@Localizer["Company name is required when occupation is self-employed."]" />
+							   data-val-required-cond="@Localizer[companyNameRequiredErrorMessage]" />
 						<span asp-validation-for="@Model.Applicant.CompanyName" class="text-danger" id="company-name-error"></span>
 					</div>
 					<div class="md-form" style="display: none;">
@@ -215,7 +228,7 @@
 							@Localizer["Accepted formats: PDF, JPG, JPEG, TIFF, PNG, GIF"]
 						</p>
 						<span asp-validation-for="@Model.OfficialFreelanceStatement" class="text-danger"></span>
-					</div>
+					</div>	
 				</div>
 			</div>
 

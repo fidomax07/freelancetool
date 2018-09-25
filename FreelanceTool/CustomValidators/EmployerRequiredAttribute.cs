@@ -22,39 +22,40 @@ namespace FreelanceTool.CustomValidators
 			if (_occupationEmployerValues.Contains(applicant.Occupation) &&
 			    string.IsNullOrWhiteSpace(value.ToString()))
 		    {
-			    return new ValidationResult(GetErrorMessage());
-			}
+			    //return new ValidationResult(GetErrorMessage());
+			    return new ValidationResult(ErrorMessage);
+		    }
 
 			return ValidationResult.Success;
 		}
 
-	    //public void AddValidation(ClientModelValidationContext context)
-	    //{
-		   // if (context == null)
-			  //  throw new ArgumentNullException(nameof(context));
+		/*public void AddValidation(ClientModelValidationContext context)
+		{
+			if (context == null)
+				throw new ArgumentNullException(nameof(context));
 
-		   // MergeAttribute(context.Attributes, "data-val", "true");
-		   // MergeAttribute(context.Attributes, "data-val-employer-conditional-required", GetErrorMessage());
+			MergeAttribute(context.Attributes, "data-val", "true");
+			MergeAttribute(context.Attributes, "data-val-employer-conditional-required", GetErrorMessage());
 
-		   // MergeAttribute(context.Attributes, 
-			  //  "data-val-occupation-employer-values", 
-			  //  JsonConvert.SerializeObject(_occupationEmployerValues));
-	    //}
+			MergeAttribute(context.Attributes,
+				"data-val-occupation-employer-values",
+				JsonConvert.SerializeObject(_occupationEmployerValues));
+		}
 
-	    //private bool MergeAttribute(IDictionary<string, string> attributes, string key, string value)
-	    //{
-		   // if (attributes.ContainsKey(key))
-		   // {
-			  //  return false;
-		   // }
+		private bool MergeAttribute(IDictionary<string, string> attributes, string key, string value)
+		{
+			if (attributes.ContainsKey(key))
+			{
+				return false;
+			}
 
-		   // attributes.Add(key, value);
-		   // return true;
-	    //}
+			attributes.Add(key, value);
+			return true;
+		}*/
 
-		private string GetErrorMessage()
+		/*private string GetErrorMessage()
 	    {
 		    return "Employer is required when occupation is part or full-time.";
-	    }
-    }
+	    }*/
+	}
 }

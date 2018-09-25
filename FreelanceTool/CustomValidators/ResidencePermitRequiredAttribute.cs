@@ -12,15 +12,16 @@ namespace FreelanceTool.CustomValidators
 		    if (applicant.NationalityId != Constants.NATIVE_NATIONALITY_ID &&
 		        applicant.ResidencePermit == null)
 		    {
-				return new ValidationResult(GetErrorMessage());
+				//return new ValidationResult(GetErrorMessage());
+				return new ValidationResult(ErrorMessage);
 		    }
 
 			return ValidationResult.Success;
 		}
 
-	    private string GetErrorMessage()
+	    /*private string GetErrorMessage()
 	    {
 		    return "Residence permit is required when selected country is not Switzerland.";
-	    }
+	    }*/
     }
 }
