@@ -23,11 +23,11 @@ namespace FreelanceTool.ViewModels
 
 
 		// View Data
-		public SelectList MainLanguageList { get; private set; }
+		public SelectList MainLanguageList { get; set; }
 		public List<ApplicantLanguageViewModel> SpokenLanguages { get; }
 		public List<SelectListItem> PhonePrefixesList { get; }
-		public SelectList NationalitiesList { get; private set; }
-		public Nationality NativeNationality { get; private set; }
+		public SelectList NationalitiesList { get; set; }
+		public Nationality NativeNationality { get; set; }
 
 
 		// Binding properties
