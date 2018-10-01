@@ -1,40 +1,38 @@
-@using FreelanceTool.Models.Enums
 @using Microsoft.AspNetCore.Builder
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Microsoft.AspNetCore.Localization
 @using Microsoft.Extensions.Options
 
 @inject IViewLocalizer Localizer
-@inject IOptions<RequestLocalizationOptions> LocOptions
+@inject IOptions<RequestLocalizationOptions> ReqLocOptions
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
 @{
-	var cultureItems = LocOptions.Value.SupportedUICultures
+	/*var cultureItems = ReqLocOptions.Value.SupportedUICultures
 		//.Where(c => c.Name != "en")
 		.Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
 		.ToList();
 	var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ?
-		"~/" : $"~{Context.Request.Path.Value}";
+		"~/" : $"~{Context.Request.Path.Value}";*/
 
-	var requestCultureFeature = Context.Features.Get<IRequestCultureFeature>();
-	var currentCulture = requestCultureFeature
+	var requestCulture = Context.Features.Get<IRequestCultureFeature>()
 		.RequestCulture
 		.UICulture;
-	var deCulture = LocOptions.Value.SupportedUICultures
+	var deCulture = ReqLocOptions.Value.SupportedUICultures
 		.SingleOrDefault(c => c.Name == "de");
-	var frCulture = LocOptions.Value.SupportedUICultures
+	var frCulture = ReqLocOptions.Value.SupportedUICultures
 		.SingleOrDefault(c => c.Name == "fr");
 }
 
 <div class="pull-right languageselect">
 	<form id="language-select-form" method="post" class="form-horizontal" role="form" style="display: none;"
-	      asp-controller="Home" 
-	      asp-action="SetLanguage" 
-	      asp-route-returnUrl="@Context.Request.Path">
+		  asp-controller="Home"
+		  asp-action="SetLanguage"
+		  asp-route-returnUrl="@Context.Request.Path">
 		<input type="hidden" name="culture" id="language-select-culture" />
-		<input type="hidden" id="language-select-current-culture" value="@currentCulture.Name" />
+		<input type="hidden" id="language-select-current-culture" value="@requestCulture.Name" />
 	</form>
 
 	@* Logout link for Admin area only *@
@@ -50,16 +48,18 @@
 	</div>
 	@*}*@
 
-	<a href="javascript:void(0);" 
-	   class="language-select-provider@(currentCulture.Name == deCulture?.Name ? " language-select-focus" : "")" 
-	   data-culture-name="@deCulture?.Name" 
-	   title="@Localizer["Change Language to German"]">@Localizer["German"]
+	<a href="javascript:void(0);"
+	   class="language-select-provider@(requestCulture.Name == deCulture?.Name ? " language-select-focus" : "")"
+	   data-culture-name="@deCulture?.Name"
+	   title="@Localizer["Change Language to German"]">
+		@Localizer["German"]
 	</a>
 	<span class="divider">|</span>
-	<a href="javascript:void(0);" 
-	   class="language-select-provider@(currentCulture.Name == frCulture?.Name ? " language-select-focus" : "")" 
-	   data-culture-name="@frCulture?.Name" 
-	   title="@Localizer["Change Language to French"]">@Localizer["French"]
+	<a href="javascript:void(0);"
+	   class="language-select-provider@(requestCulture.Name == frCulture?.Name ? " language-select-focus" : "")"
+	   data-culture-name="@frCulture?.Name"
+	   title="@Localizer["Change Language to French"]">
+		@Localizer["French"]
 	</a>
 </div>
 
