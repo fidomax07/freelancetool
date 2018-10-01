@@ -11,41 +11,55 @@
 @inject UserManager<ApplicationUser> UserManager
 
 @{
-    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
-    var cultureItems = LocOptions.Value.SupportedUICultures
-        //.Where(c => c.Name != "en")
-        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
-        .ToList();
-    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ?
-        "~/" : $"~{Context.Request.Path.Value}";
-    var currentCulture = requestCulture.RequestCulture.UICulture;
-    var deCulture = LocOptions.Value.SupportedUICultures
-        .SingleOrDefault(c => c.Name == "de");
-    var frCulture = LocOptions.Value.SupportedUICultures
-        .SingleOrDefault(c => c.Name == "fr");
+	var cultureItems = LocOptions.Value.SupportedUICultures
+		//.Where(c => c.Name != "en")
+		.Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+		.ToList();
+	var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ?
+		"~/" : $"~{Context.Request.Path.Value}";
+
+	var requestCultureFeature = Context.Features.Get<IRequestCultureFeature>();
+	var currentCulture = requestCultureFeature
+		.RequestCulture
+		.UICulture;
+	var deCulture = LocOptions.Value.SupportedUICultures
+		.SingleOrDefault(c => c.Name == "de");
+	var frCulture = LocOptions.Value.SupportedUICultures
+		.SingleOrDefault(c => c.Name == "fr");
 }
 
 <div class="pull-right languageselect">
-    <form id="language-select-form" method="post" class="form-horizontal" role="form" style="display: none;" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path">
-        <input type="hidden" name="culture" id="language-select-culture" />
-        <input type="hidden" id="language-select-current-culture" value="@currentCulture.Name" />
-    </form>
+	<form id="language-select-form" method="post" class="form-horizontal" role="form" style="display: none;"
+	      asp-controller="Home" 
+	      asp-action="SetLanguage" 
+	      asp-route-returnUrl="@Context.Request.Path">
+		<input type="hidden" name="culture" id="language-select-culture" />
+		<input type="hidden" id="language-select-current-culture" value="@currentCulture.Name" />
+	</form>
 
-    @* Logout link for Admin area only *@
-    @*@if (SignInManager.IsSignedIn(User))
-    {*@
-	    <div condition="SignInManager.IsSignedIn(User)" class="d-inline">
-		    <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" 
-		          id="logoutForm" class="pull-right" style="display: none;"></form>
-	        <a href="javascript:void(0);" class="btn btn-link logout-button" id="logoutButton">
-	            <i class="fa fa-sign-out"></i>
-	            @Localizer["Log out"]
-	        </a>
-	    </div>
-    @*}*@
+	@* Logout link for Admin area only *@
+	@*@if (SignInManager.IsSignedIn(User))
+		{*@
+	<div condition="SignInManager.IsSignedIn(User)" class="d-inline">
+		<form asp-area="" asp-controller="Account" asp-action="Logout" method="post"
+			  id="logoutForm" class="pull-right" style="display: none;"></form>
+		<a href="javascript:void(0);" class="btn btn-link logout-button" id="logoutButton">
+			<i class="fa fa-sign-out"></i>
+			@Localizer["Log out"]
+		</a>
+	</div>
+	@*}*@
 
-    <a href="javascript:void(0);" class="language-select-provider@(currentCulture.Name == deCulture?.Name ? " language-select-focus" : "")" data-culture-name="@deCulture?.Name" title="@Localizer["Change Language to German"]">@Localizer["German"]</a>
-    <span class="divider">|</span>
-    <a href="javascript:void(0);" class="language-select-provider@(currentCulture.Name == frCulture?.Name ? " language-select-focus" : "")" data-culture-name="@frCulture?.Name" title="@Localizer["Change Language to French"]">@Localizer["French"]</a>
+	<a href="javascript:void(0);" 
+	   class="language-select-provider@(currentCulture.Name == deCulture?.Name ? " language-select-focus" : "")" 
+	   data-culture-name="@deCulture?.Name" 
+	   title="@Localizer["Change Language to German"]">@Localizer["German"]
+	</a>
+	<span class="divider">|</span>
+	<a href="javascript:void(0);" 
+	   class="language-select-provider@(currentCulture.Name == frCulture?.Name ? " language-select-focus" : "")" 
+	   data-culture-name="@frCulture?.Name" 
+	   title="@Localizer["Change Language to French"]">@Localizer["French"]
+	</a>
 </div>
 

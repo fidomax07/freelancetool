@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using FreelanceTool.Data;
 using FreelanceTool.Helpers;
@@ -9,12 +10,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace FreelanceTool
 {
@@ -61,19 +62,16 @@ namespace FreelanceTool
 			services.AddTransient<IEmailSender, EmailSender>();
 			services.AddTransient<AppLocalizer>();
 
-			// Add and configure supported cultures and localization options
-			services.AddLocalization(options => options.ResourcesPath = "Resources");
+			// Add and configure supported cultures and localization options.
+			services.AddLocalization(options =>
+			{
+				options.ResourcesPath = "Resources";
+			});
 			services.Configure<RequestLocalizationOptions>(options =>
 			{
-				var supportedCultures = new[]
-				{
-					new CultureInfo("en"),
-					new CultureInfo("de"),
-					new CultureInfo("fr")
-				};
-				options.DefaultRequestCulture = new RequestCulture("de");
-				options.SupportedCultures = supportedCultures;
-				options.SupportedUICultures = supportedCultures;
+				options.DefaultRequestCulture = GetDefaultCulture();
+				options.SupportedCultures = GetSupportedCultures();
+				options.SupportedUICultures = GetSupportedCultures();
 			});
 
 			// Add and configure MVC
@@ -106,26 +104,22 @@ namespace FreelanceTool
 			}
 			app.UseStatusCodePages();
 
-			// Configure cultures and localization options
-			var supportedCultures = new[]
+			// Instead of again specifying options for the UseRequestLocalization
+			// middleware we can use the same options specified above when the
+			// RequestLocalizationOptions option was configured in services.
+			/*app.UseRequestLocalization(new RequestLocalizationOptions
 			{
-				new CultureInfo("en"),
-				new CultureInfo("de"),
-				new CultureInfo("fr")
-			};
-			app.UseRequestLocalization(new RequestLocalizationOptions
-			{
-				DefaultRequestCulture = new RequestCulture("de"),
+				DefaultRequestCulture = GetDefaultCulture(),
 				// Formatting numbers, dates, etc.
-				SupportedCultures = supportedCultures,
+				SupportedCultures = GetSupportedCultures(),
 				// UI strings that we have localized.
-				SupportedUICultures = supportedCultures
-			});
+				SupportedUICultures = GetSupportedCultures()
+			});*/
+			app.UseRequestLocalization(
+				app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>().Value);
 
-			//app.UseRewriter(new RewriteOptions().AddRedirectToHttpsPermanent());
 			app.UseStaticFiles();
 
-			//app.UseCookiePolicy();
 			app.UseAuthentication();
 
 			app.UseMvc(routes =>
@@ -134,6 +128,21 @@ namespace FreelanceTool
 					name: "default",
 					template: "{controller=Applicants}/{action=Create}/{id?}");
 			});
+		}
+
+		private List<CultureInfo> GetSupportedCultures()
+		{
+			return new List<CultureInfo>
+			{
+				new CultureInfo("en"),
+				new CultureInfo("de"),
+				new CultureInfo("fr")
+			};
+		}
+
+		private RequestCulture GetDefaultCulture()
+		{
+			return new RequestCulture("de");
 		}
 	}
 }
